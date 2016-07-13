@@ -259,7 +259,7 @@
               
                 
                 <a class="post-title-link" href="/2016/07/13/Vivado-IO-Constrain/" itemprop="url">
-                  未命名
+                  Vivado IO Constrain
                 </a>
               
             
@@ -278,123 +278,6 @@
           </span>
 
           
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<p>title: Vivado IO Constrain<br>date: 2016-07-13 17:10:18<br>tags:</p>
-<ul>
-<li>Vivado</li>
-<li>Fpga<br>categories:</li>
-<li>学习小记</li>
-</ul>
-<hr>
-<h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
-<p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:</p>
-<pre><code class="tcl">create_clock -name sysClk -period <span class="number">10</span> [get_ports CLK0]
-set_input_delay -<span class="keyword">clock</span> sysClk -max <span class="number">4</span> [get_ports DIN]
-set_input_delay -<span class="keyword">clock</span> sysClk -min <span class="number">1</span> [get_ports DIN]
-</code></pre>
-<p>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
-<h3 id="Output-delay"><a href="#Output-delay" class="headerlink" title="Output delay"></a>Output delay</h3><hr>
-<p>数据相对于上升沿往前的延迟。即原点在目标时钟的上升沿，正半轴朝往前面的时间。<br><img src="/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png" alt="outputDelay_1" title="outputDelay_1"><br>如果设定trce_dly都等于0的话（即板级延迟忽略），那么：</p>
-<blockquote>
-<p>The set_output_delay -max should be the setup requirement of the external device; The set_output_delay -min should be the negative of the hold requirement.</p>
-</blockquote>
-<p>Example code:</p>
-<pre><code class="tcl">set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">clock</span>&gt; <span class="number">0.6</span> [get_ports NWAIT]
-set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">clock</span>&gt; <span class="number">-3.2</span> -min [get_ports NWAIT]
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/13/first-article/" itemprop="url">
-                  first article
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-13T15:09:36+08:00" content="2016-07-13">
-              2016-07-13
-            </time>
-          </span>
-
-          
             <span class="post-category" >
               &nbsp; | &nbsp;
               <span class="post-meta-item-icon">
@@ -403,20 +286,8 @@ set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">c
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/fuck/" itemprop="url" rel="index">
-                    <span itemprop="name">fuck</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/fuck/shit/" itemprop="url" rel="index">
-                    <span itemprop="name">shit</span>
+                  <a href="/categories/学习小记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习小记</span>
                   </a>
                 </span>
 
@@ -449,10 +320,15 @@ set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">c
 
       
         
-          
-            <p>just a try</p>
-
-          
+          <h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
+<p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create_clock -name sysClk -period <span class="number">10</span> [get_ports CLK0]</div><div class="line">set_input_delay -<span class="keyword">clock</span> sysClk -max <span class="number">4</span> [get_ports DIN]</div><div class="line">set_input_delay -<span class="keyword">clock</span> sysClk -min <span class="number">1</span> [get_ports DIN]</div></pre></td></tr></table></figure>
+<p>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/13/Vivado-IO-Constrain/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -622,7 +498,7 @@ set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">c
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -630,7 +506,7 @@ set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">c
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
