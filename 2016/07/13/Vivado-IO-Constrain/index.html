@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Vivado,Fpga," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,25 +84,49 @@
 
 
 
-<meta name="description" content="IO delayInput delay
+<meta name="description" content="title: Vivado IO Constraindate: 2016-07-13 17:10:18tags:
+
+Vivado
+Fpgacategories:
+学习小记
+
+
+IO delayInput delay
 数据相对于上升沿往后的延迟。Example code:
-123create_clock -name sysClk -period 10 [get_ports CLK0]set_input_delay -clock sysClk -max 4 [get_ports DIN]set_input_delay -clock sysClk -min 1 [get_po">
+create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vivado IO Constrain">
+<meta property="og:title" content="Peng Wei">
 <meta property="og:url" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/index.html">
 <meta property="og:site_name" content="Peng Wei">
-<meta property="og:description" content="IO delayInput delay
+<meta property="og:description" content="title: Vivado IO Constraindate: 2016-07-13 17:10:18tags:
+
+Vivado
+Fpgacategories:
+学习小记
+
+
+IO delayInput delay
 数据相对于上升沿往后的延迟。Example code:
-123create_clock -name sysClk -period 10 [get_ports CLK0]set_input_delay -clock sysClk -max 4 [get_ports DIN]set_input_delay -clock sysClk -min 1 [get_po">
+create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input">
 <meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png">
-<meta property="og:updated_time" content="2016-07-13T09:49:34.482Z">
+<meta property="og:updated_time" content="2016-07-13T14:04:04.162Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vivado IO Constrain">
-<meta name="twitter:description" content="IO delayInput delay
+<meta name="twitter:title" content="Peng Wei">
+<meta name="twitter:description" content="title: Vivado IO Constraindate: 2016-07-13 17:10:18tags:
+
+Vivado
+Fpgacategories:
+学习小记
+
+
+IO delayInput delay
 数据相对于上升沿往后的延迟。Example code:
-123create_clock -name sysClk -period 10 [get_ports CLK0]set_input_delay -clock sysClk -max 4 [get_ports DIN]set_input_delay -clock sysClk -min 1 [get_po">
+create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input">
 <meta name="twitter:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png">
 
 
@@ -126,7 +150,7 @@
 
   <link rel="canonical" href="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/"/>
 
-  <title> Vivado IO Constrain | Peng Wei </title>
+  <title>  | Peng Wei </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +290,7 @@
             
             
               
-                Vivado IO Constrain
+                
               
             
           </h1>
@@ -283,25 +307,6 @@
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习小记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习小记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
@@ -325,16 +330,30 @@
       
 
       
-        <h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
+        <hr>
+<p>title: Vivado IO Constrain<br>date: 2016-07-13 17:10:18<br>tags:</p>
+<ul>
+<li>Vivado</li>
+<li>Fpga<br>categories:</li>
+<li>学习小记</li>
+</ul>
+<hr>
+<h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
 <p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create_clock -name sysClk -period 10 [get_ports CLK0]</div><div class="line"><span class="built_in">set</span>_input_delay -clock sysClk -max 4 [get_ports DIN]</div><div class="line"><span class="built_in">set</span>_input_delay -clock sysClk -min 1 [get_ports DIN]</div></pre></td></tr></table></figure>
+<pre><code class="tcl">create_clock -name sysClk -period <span class="number">10</span> [get_ports CLK0]
+set_input_delay -<span class="keyword">clock</span> sysClk -max <span class="number">4</span> [get_ports DIN]
+set_input_delay -<span class="keyword">clock</span> sysClk -min <span class="number">1</span> [get_ports DIN]
+</code></pre>
 <p>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
-<h2 id="Output-delay"><a href="#Output-delay" class="headerlink" title="Output delay"></a>Output delay</h2><hr>
+<h3 id="Output-delay"><a href="#Output-delay" class="headerlink" title="Output delay"></a>Output delay</h3><hr>
 <p>数据相对于上升沿往前的延迟。即原点在目标时钟的上升沿，正半轴朝往前面的时间。<br><img src="/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png" alt="outputDelay_1" title="outputDelay_1"><br>如果设定trce_dly都等于0的话（即板级延迟忽略），那么：</p>
 <blockquote>
 <p>The set_output_delay -max should be the setup requirement of the external device; The set_output_delay -min should be the negative of the hold requirement.</p>
 </blockquote>
-<p>Example code:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span>_output_delay -clock &lt;clock&gt; 0.6 [get_ports NWAIT]</div><div class="line"><span class="built_in">set</span>_output_delay -clock &lt;clock&gt; -3.2 -min [get_ports NWAIT]</div></pre></td></tr></table></figure></p>
+<p>Example code:</p>
+<pre><code class="tcl">set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">clock</span>&gt; <span class="number">0.6</span> [get_ports NWAIT]
+set_output_delay -<span class="keyword">clock</span> &lt;<span class="keyword">clock</span>&gt; <span class="number">-3.2</span> -min [get_ports NWAIT]
+</code></pre>
 
       
     </div>
@@ -354,14 +373,6 @@
     </div>
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Vivado/" rel="tag">#Vivado</a>
-          
-            <a href="/tags/Fpga/" rel="tag">#Fpga</a>
-          
-        </div>
       
 
       
@@ -450,7 +461,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -459,7 +470,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -502,7 +513,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IO-delay"><span class="nav-number">1.</span> <span class="nav-text">IO delay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-delay"><span class="nav-number">1.1.</span> <span class="nav-text">Input delay</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Output-delay"><span class="nav-number">2.</span> <span class="nav-text">Output delay</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IO-delay"><span class="nav-number">1.</span> <span class="nav-text">IO delay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-delay"><span class="nav-number">1.1.</span> <span class="nav-text">Input delay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-delay"><span class="nav-number">1.2.</span> <span class="nav-text">Output delay</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
