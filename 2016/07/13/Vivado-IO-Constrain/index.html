@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Vivado,Fpga," />
 
 
 
@@ -84,19 +84,29 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="IO delayInput delay
+数据相对于上升沿往后的延迟。Example code:create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input_delay -clock sysClk -max 4 [get_ports DIN]
+set_input_delay -clock sysClk -min 1 [get_port">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://bonewp.github.io.git/2016/07/13/hello-world/index.html">
+<meta property="og:title" content="Vivado IO Constrain">
+<meta property="og:url" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/index.html">
 <meta property="og:site_name" content="Peng Wei">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-07-13T06:54:51.295Z">
+<meta property="og:description" content="IO delayInput delay
+数据相对于上升沿往后的延迟。Example code:create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input_delay -clock sysClk -max 4 [get_ports DIN]
+set_input_delay -clock sysClk -min 1 [get_port">
+<meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png">
+<meta property="og:updated_time" content="2016-07-13T09:34:33.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="Vivado IO Constrain">
+<meta name="twitter:description" content="IO delayInput delay
+数据相对于上升沿往后的延迟。Example code:create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input_delay -clock sysClk -max 4 [get_ports DIN]
+set_input_delay -clock sysClk -min 1 [get_port">
+<meta name="twitter:image" content="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png">
 
 
 
@@ -117,9 +127,9 @@ Quick">
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/2016/07/13/hello-world/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/"/>
 
-  <title> Hello World | Peng Wei </title>
+  <title> Vivado IO Constrain | Peng Wei </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +269,7 @@ Quick">
             
             
               
-                Hello World
+                Vivado IO Constrain
               
             
           </h1>
@@ -271,11 +281,30 @@ Quick">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-13T14:54:51+08:00" content="2016-07-13">
+            <time itemprop="dateCreated" datetime="2016-07-13T17:10:18+08:00" content="2016-07-13">
               2016-07-13
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习小记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习小记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -299,15 +328,17 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
+<p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:<br><code>create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input_delay -clock sysClk -max 4 [get_ports DIN]
+set_input_delay -clock sysClk -min 1 [get_ports DIN]</code><br>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
+<h2 id="Output-delay"><a href="#Output-delay" class="headerlink" title="Output delay"></a>Output delay</h2><hr>
+<p>数据相对于上升沿往前的延迟。即原点在目标时钟的上升沿，正半轴朝往前面的时间。<br><img src="/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png" alt="outputDelay_1" title="outputDelay_1"><br>如果设定trce_dly都等于0的话（即板级延迟忽略），那么：</p>
+<blockquote>
+<p>The set_output_delay -max should be the setup requirement of the external device; The set_output_delay -min should be the negative of the hold requirement.</p>
+</blockquote>
+<p>Example code:<br><code>set_output_delay -clock &lt;clock&gt; 0.6 [get_ports NWAIT]
+set_output_delay -clock &lt;clock&gt; -3.2 -min [get_ports NWAIT]</code></p>
 
       
     </div>
@@ -328,18 +359,26 @@ Quick">
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Vivado/" rel="tag">#Vivado</a>
+          
+            <a href="/tags/Fpga/" rel="tag">#Fpga</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/07/13/first-article/" rel="next" title="first article">
+                <i class="fa fa-chevron-left"></i> first article
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/13/first-article/" rel="prev" title="first article">
-                first article <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -467,7 +506,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IO-delay"><span class="nav-number">1.</span> <span class="nav-text">IO delay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-delay"><span class="nav-number">1.1.</span> <span class="nav-text">Input delay</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Output-delay"><span class="nav-number">2.</span> <span class="nav-text">Output delay</span></a></li></ol></div>
             
           </div>
         </section>

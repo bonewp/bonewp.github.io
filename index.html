@@ -258,6 +258,129 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/13/Vivado-IO-Constrain/" itemprop="url">
+                  Vivado IO Constrain
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-13T17:10:18+08:00" content="2016-07-13">
+              2016-07-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习小记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习小记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
+<p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:<br><code>create_clock -name sysClk -period 10 [get_ports CLK0]
+set_input_delay -clock sysClk -max 4 [get_ports DIN]
+set_input_delay -clock sysClk -min 1 [get_ports DIN]</code><br>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
+<h2 id="Output-delay"><a href="#Output-delay" class="headerlink" title="Output delay"></a>Output delay</h2><hr>
+<p>数据相对于上升沿往前的延迟。即原点在目标时钟的上升沿，正半轴朝往前面的时间。<br><img src="/2016/07/13/Vivado-IO-Constrain/outputDelay_1.png" alt="outputDelay_1" title="outputDelay_1"><br>如果设定trce_dly都等于0的话（即板级延迟忽略），那么：</p>
+<blockquote>
+<p>The set_output_delay -max should be the setup requirement of the external device; The set_output_delay -min should be the negative of the hold requirement.</p>
+</blockquote>
+<p>Example code:<br><code>set_output_delay -clock &lt;clock&gt; 0.6 [get_ports NWAIT]
+set_output_delay -clock &lt;clock&gt; -3.2 -min [get_ports NWAIT]</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/13/first-article/" itemprop="url">
                   first article
                 </a>
@@ -288,6 +411,18 @@
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/fuck/" itemprop="url" rel="index">
                     <span itemprop="name">fuck</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/fuck/shit/" itemprop="url" rel="index">
+                    <span itemprop="name">shit</span>
                   </a>
                 </span>
 
@@ -493,7 +628,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -501,7 +636,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -510,7 +645,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -528,6 +663,20 @@
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/bonewp" title="Github" target="_blank">Github</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
       </section>
