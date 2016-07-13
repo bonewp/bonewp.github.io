@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[Vivado IO Constrain]]></title>
+      <title><![CDATA[Vivado IO Constraint]]></title>
       <url>http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/</url>
       <content type="html"><![CDATA[<h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
 <p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:</p>
