@@ -4,6 +4,13 @@
   
     
     <entry>
+      <title><![CDATA[clock chip lmk03806]]></title>
+      <url>http://bonewp.github.io.git/2016/07/26/clock-chip-lmk03806/</url>
+      <content type="html"><![CDATA[<p>ちょっと待って</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Vivado IO Constraint]]></title>
       <url>http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/</url>
       <content type="html"><![CDATA[<h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>

@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://bonewp.github.io.git/2016/07/26/clock-chip-lmk03806/</loc>
+    
+    <lastmod>2016-07-26T10:03:20.573Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://bonewp.github.io.git/about/index.html</loc>
+    
+    <lastmod>2016-07-26T09:48:03.622Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://bonewp.github.io.git/tags/index.html</loc>
+    
+    <lastmod>2016-07-26T08:56:57.457Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://bonewp.github.io.git/categories/index.html</loc>
+    
+    <lastmod>2016-07-26T08:56:44.352Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://bonewp.github.io.git/2016/07/13/Vivado-IO-Constrain/</loc>
     
     <lastmod>2016-07-13T15:34:39.840Z</lastmod>
@@ -12,27 +40,6 @@
     <loc>http://bonewp.github.io.git/2016/07/13/hello-world/</loc>
     
     <lastmod>2016-07-13T13:01:49.112Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://bonewp.github.io.git/about/index.html</loc>
-    
-    <lastmod>2016-07-13T08:29:51.704Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://bonewp.github.io.git/tags/index.html</loc>
-    
-    <lastmod>2016-07-13T08:27:51.394Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://bonewp.github.io.git/categories/index.html</loc>
-    
-    <lastmod>2016-07-13T08:27:16.714Z</lastmod>
     
   </url>
   
