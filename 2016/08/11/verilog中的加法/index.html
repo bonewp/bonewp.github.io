@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="verilog," />
 
 
 
@@ -86,15 +86,19 @@
 
 
 
-<meta name="description" content="search great things and do it">
-<meta property="og:type" content="website">
-<meta property="og:title" content="bonewp blog">
-<meta property="og:url" content="http://bonewp.github.io.git/categories/学习小记/index.html">
+<meta name="description" content="这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊
+符号数的加法用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。12345wire [31:0] sig_1;wire [31:0] sig_2;wire [31:0] add_ans;assign add_ans = sig_1 + sig_2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="verilog中的加法">
+<meta property="og:url" content="http://bonewp.github.io.git/2016/08/11/verilog中的加法/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="search great things and do it">
+<meta property="og:description" content="这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊
+符号数的加法用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。12345wire [31:0] sig_1;wire [31:0] sig_2;wire [31:0] add_ans;assign add_ans = sig_1 + sig_2">
+<meta property="og:updated_time" content="2016-08-11T10:20:49.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bonewp blog">
-<meta name="twitter:description" content="search great things and do it">
+<meta name="twitter:title" content="verilog中的加法">
+<meta name="twitter:description" content="这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊
+符号数的加法用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。12345wire [31:0] sig_1;wire [31:0] sig_2;wire [31:0] add_ans;assign add_ans = sig_1 + sig_2">
 
 
 
@@ -115,9 +119,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/categories/学习小记/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2016/08/11/verilog中的加法/"/>
 
-  <title> 分类: 学习小记 | bonewp blog </title>
+  <title> verilog中的加法 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -147,7 +151,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,75 +272,155 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        学习小记
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/11/verilog中的加法/" itemprop="url">
-              
-                <span itemprop="name">verilog中的加法</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-11T18:00:01+08:00"
-              content="2016-08-11" >
-          08-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/07/13/Vivado-IO-Constrain/" itemprop="url">
-              
-                <span itemprop="name">Vivado IO Constraint</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-07-13T17:10:18+08:00"
-              content="2016-07-13" >
-          07-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
+  
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                verilog中的加法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T18:00:01+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习小记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习小记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/11/verilog中的加法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/verilog中的加法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊</p>
+<h3 id="符号数的加法"><a href="#符号数的加法" class="headerlink" title="符号数的加法"></a>符号数的加法</h3><p>用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_1;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_2;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] add_ans;</div><div class="line"></div><div class="line">assign add_ans = sig_1 + sig_2;</div></pre></td></tr></table></figure></p>
+<h3 id="加法溢出的处理"><a href="#加法溢出的处理" class="headerlink" title="加法溢出的处理"></a>加法溢出的处理</h3><p>然而固定位数的加法会出现溢出的问题，要为结果考虑进位，因此为结果多添加一位。此时一定要注意！</p>
+<p><strong>符号数加法要进行符号位扩展！！</strong></p>
+<p>当时没有注意到这个，死活不知道为什么结果的进位消失了…示例代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [31:0] sig_1;</div><div class="line">wire [31:0] sig_2;</div><div class="line">wire [32:0] add_ans;</div><div class="line"></div><div class="line">assign add_ans = &#123;sig_1[31], sig_1&#125; + &#123;sig_2[31], sig_2&#125;;</div></pre></td></tr></table></figure>
+<h3 id="加法溢出限幅处理"><a href="#加法溢出限幅处理" class="headerlink" title="加法溢出限幅处理"></a>加法溢出限幅处理</h3><p>如果加法结果溢出了，但是要传至的信号位数是固定的，那么就需要限幅。</p>
+<p>相对来说这个也很简单，这里占个坑，以后有需要再来填。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/verilog/" rel="tag">#verilog</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/09/写markdown时用到的特殊用法/" rel="next" title="写markdown时用到的特殊用法">
+                <i class="fa fa-chevron-left"></i> 写markdown时用到的特殊用法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +428,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/11/verilog中的加法/"
+           data-title="verilog中的加法" data-url="http://bonewp.github.io.git/2016/08/11/verilog中的加法/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -363,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/k_on_1.png"
@@ -428,6 +529,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号数的加法"><span class="nav-number">1.</span> <span class="nav-text">符号数的加法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法溢出的处理"><span class="nav-number">2.</span> <span class="nav-text">加法溢出的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法溢出限幅处理"><span class="nav-number">3.</span> <span class="nav-text">加法溢出限幅处理</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -524,6 +636,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
