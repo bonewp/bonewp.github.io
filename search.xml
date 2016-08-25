@@ -26,16 +26,12 @@
 <blockquote>
 <p>“五合一”信号设计<br>(1) 频分制的下行双载波: 一个用于测控(TT&amp;C)，另一个用于数传(DDT)。TT&amp;C 和 DDT 可同时存在。<br>(2) 频分制的 TT&amp;C 副载波： 下行为遥测和测距音组三种副载波，上行为遥控、话音和测距音组等四种副载波， TT&amp;C 载波采用调相/调相(PM/PM)调制。<br>(3) 时分制的 DDT 载波: 完全用作数据传输，采用 PCM/QPSK 调制。以2兆比特/秒码速传输下行话音、电视、遥测、GPS、交会雷达和科学实验数据等多路信息。<br>(4) FM 遥测载波： 航天器可用另一个载波发射高码速的遥测信号，调制方式为 PCM-FM 。 TT&amp;C 和 FM 可同时存在，为频分工作。</p>
 </blockquote>
-<h3 id="相关发展及感想"><a href="#相关发展及感想" class="headerlink" title="相关发展及感想"></a>相关发展及感想</h3><p>虽然吹了USB体制这么多，目前也确实是相对成熟的一套体制，，不过其一些缺点不足我觉得也是有的，如设备重复度高，这是频分复用的特点造成的；保密的问题；多目标测控时副载波之间的干扰等。  </p>
-<p>为了往未来天基测控进而深空测控的方向发展，其使用的各种技术都还会提升，如使用扩频测控，频带往更高的频段发展等等。当然这些都是后话了，作为一个小硕我还是老老实实地去想算法写代码吧 ( &gt;﹏&lt;。)～</p>
+<h3 id="相关发展及感想"><a href="#相关发展及感想" class="headerlink" title="相关发展及感想"></a>相关发展及感想</h3><p>虽然吹了USB体制这么多，目前也确实是相对成熟的一套体制，，不过其一些缺点不足我觉得也是有的，如设备重复度高，这是频分复用的特点造成的；保密的问题；多目标测控时副载波之间的干扰等。<br>为了往未来天基测控进而深空测控的方向发展，其使用的各种技术都还会提升，如使用扩频测控，频带往更高的频段发展等等。当然这些都是后话了，作为一个小硕我还是老老实实地去想算法写代码吧 ( &gt;﹏&lt;。)～</p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
 <li><span id="1"> </span> 刘嘉兴. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=9&amp;CurRec=1&amp;recid=&amp;filename=DATE902.000&amp;dbname=CJFD9899&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;uid=WEEvREcwSlJHSldTTGJhYlRaSXVoREFFTWF3MEF2VFBwN1NmS3NlQ3RtWU8=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;v=MDc0NDFTemZhN3E0SE0vTXI0OHFGNTRPZmdnNXpoQVU0amg0T1g2VHJIMDNlYk9TUmJLZFl1UnVGU2puVVE9PUk=" target="_blank" rel="external">航天测控技术的过去、现在和未来</a>、现在和未来[J]. 电讯技术,1999,02:3+5-10.</li>
-<li><p><span id="2"> </span> <a href="www.nssc.cas.cn/xwzx/kydt/201307/W020130717344100734922.pdf">CSDS 概述 - 国家空间科学中心 - 中国科学院</a></p>
-</li>
-<li><p><span id="3"> </span> 刘嘉兴. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=0&amp;CurRec=1&amp;recid=&amp;filename=YHXB200506013&amp;dbname=CJFD2005&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;v=MzEzMjJYVGJMRzRIdFRNcVk5RVo0UjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTHlmYitScUZDdmdVYnZQUEM=" target="_blank" rel="external">载人航天USB测控系统及其关键技术</a>[J]. 宇航学报,2005,06:743-747.</p>
-</li>
-<li><p><span id="3"> </span> 饶启龙. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=12&amp;CurRec=1&amp;recid=&amp;filename=OXXT201103017&amp;dbname=CJFD2011&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;uid=WEEvREcwSlJHSldTTGJhYlRaSXVoREFFTWF3MEF2VFBwN1NmS3NlQ3RtWU8=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;v=MjYyOTk4ZVgxTHV4WVM3RGgxVDNxVHJXTTFGckNVUkx5ZmIrUnFGQ25oVjdyQktqWFRlckc0SDlETXJJOUVZNFI=" target="_blank" rel="external">航天测控技术及其发展方向</a>[J]. 信息通信技术,2011,03:77-83.</p>
-</li>
+<li><span id="2"> </span> <a href="www.nssc.cas.cn/xwzx/kydt/201307/W020130717344100734922.pdf">CSDS 概述 - 国家空间科学中心 - 中国科学院</a>  </li>
+<li><span id="3"> </span> 刘嘉兴. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=0&amp;CurRec=1&amp;recid=&amp;filename=YHXB200506013&amp;dbname=CJFD2005&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;v=MzEzMjJYVGJMRzRIdFRNcVk5RVo0UjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTHlmYitScUZDdmdVYnZQUEM=" target="_blank" rel="external">载人航天USB测控系统及其关键技术</a>[J]. 宇航学报,2005,06:743-747.  </li>
+<li><span id="3"> </span> 饶启龙. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=12&amp;CurRec=1&amp;recid=&amp;filename=OXXT201103017&amp;dbname=CJFD2011&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;uid=WEEvREcwSlJHSldTTGJhYlRaSXVoREFFTWF3MEF2VFBwN1NmS3NlQ3RtWU8=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;v=MjYyOTk4ZVgxTHV4WVM3RGgxVDNxVHJXTTFGckNVUkx5ZmIrUnFGQ25oVjdyQktqWFRlckc0SDlETXJJOUVZNFI=" target="_blank" rel="external">航天测控技术及其发展方向</a>[J]. 信息通信技术,2011,03:77-83.</li>
 </ol>
 ]]></content>
     </entry>
