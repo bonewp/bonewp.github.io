@@ -7,8 +7,9 @@
       <title><![CDATA[usb体制及测控技术相关]]></title>
       <url>http://bonewp.github.io.git/2016/08/25/usb%E4%BD%93%E5%88%B6%E5%8F%8A%E6%B5%8B%E6%8E%A7%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B3/</url>
       <content type="html"><![CDATA[<p>最近做的项目是基于USB体制下的相关算法，于是找了些资料把这个体制给了解了一下，在此做一下总结。</p>
-<h3 id="USB体制来源"><a href="#USB体制来源" class="headerlink" title="USB体制来源"></a>USB体制来源</h3><p>USB(Unified S Band)全称统一S波段测控体制，最早是由美方提出并在1966年用于“阿波罗”登月计划，为解决原测控网中多种频段设备的复杂、电磁兼容性差、作用距离不够等问题缺陷，将跟踪测轨、遥控、遥测综合为一体，为测控技术发展史上的一个里程碑<sup><a href="#1">1</a></sup>。</p>
-<h3 id="USB基本原理"><a href="#USB基本原理" class="headerlink" title="USB基本原理"></a>USB基本原理</h3><h3 id="USB体制特点"><a href="#USB体制特点" class="headerlink" title="USB体制特点"></a>USB体制特点</h3><h3 id="USB体制应用"><a href="#USB体制应用" class="headerlink" title="USB体制应用"></a>USB体制应用</h3><h3 id="测控技术相关发展"><a href="#测控技术相关发展" class="headerlink" title="测控技术相关发展"></a>测控技术相关发展</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<h3 id="USB体制来源"><a href="#USB体制来源" class="headerlink" title="USB体制来源"></a>USB体制来源</h3><p>USB(Unified S Band)全称统一S波段测控体制，最早是由美方提出并在1966年用于“阿波罗”登月计划，为解决原测控网中多种频段设备的复杂、电磁兼容性差、作用距离不够等问题缺陷，将跟踪测轨、遥控、遥测综合为一体，为测控技术发展史上的一个里程碑<sup><a href="#1">[1]</a></sup>。</p>
+<h3 id="USB基本原理"><a href="#USB基本原理" class="headerlink" title="USB基本原理"></a>USB基本原理</h3><a id="more"></a>
+<h3 id="USB体制特点"><a href="#USB体制特点" class="headerlink" title="USB体制特点"></a>USB体制特点</h3><h3 id="USB体制应用"><a href="#USB体制应用" class="headerlink" title="USB体制应用"></a>USB体制应用</h3><h3 id="测控技术相关发展"><a href="#测控技术相关发展" class="headerlink" title="测控技术相关发展"></a>测控技术相关发展</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
 <li><span id="1"> </span> 刘嘉兴. <a href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=9&amp;CurRec=1&amp;recid=&amp;filename=DATE902.000&amp;dbname=CJFD9899&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;uid=WEEvREcwSlJHSldTTGJhYlRaSXVoREFFTWF3MEF2VFBwN1NmS3NlQ3RtWU8=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;v=MDc0NDFTemZhN3E0SE0vTXI0OHFGNTRPZmdnNXpoQVU0amg0T1g2VHJIMDNlYk9TUmJLZFl1UnVGU2puVVE9PUk=" target="_blank" rel="external">航天测控技术的过去、现在和未来</a>、现在和未来[J]. 电讯技术,1999,02:3+5-10.</li>
 </ol>
 ]]></content>
