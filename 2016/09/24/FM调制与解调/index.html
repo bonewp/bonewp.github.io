@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="bonewp blog">
 <meta property="og:description" content="之前做的项目中有FM调制解调的算法，然后重新拾起通信原理来复习，惊奇地发现我脑子里记得FM信号表达式一直是错的…简直是再一次对不起学通信这个名号啊（我为什么要说又..）  
 首先我知道FM的频率表达式是$f=f_0+f(t)$，然后我理所当然地、头脑短路地认为FM信号表达式为$f(t)=A\cos[2\pi(f_0+f(t))+\theta]$。简直啪啪地打脸…完完全去去地错误，我还天真地以为这是">
-<meta property="og:updated_time" content="2016-09-24T14:32:42.141Z">
+<meta property="og:updated_time" content="2016-09-24T14:34:00.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM调制与解调">
 <meta name="twitter:description" content="之前做的项目中有FM调制解调的算法，然后重新拾起通信原理来复习，惊奇地发现我脑子里记得FM信号表达式一直是错的…简直是再一次对不起学通信这个名号啊（我为什么要说又..）  
@@ -361,7 +361,7 @@
       
         <p>之前做的项目中有FM调制解调的算法，然后重新拾起通信原理来复习，惊奇地发现我脑子里记得FM信号表达式一直是错的…简直是再一次对不起学通信这个名号啊（我为什么要说又..）  </p>
 <p>首先我知道FM的频率表达式是$f=f_0+f(t)$，然后我理所当然地、头脑短路地认为FM信号表达式为$f(t)=A\cos[2\pi(f_0+f(t))+\theta]$。简直啪啪地打脸…完完全去去地错误，我还天真地以为这是正确的表达式好长一段时间。  </p>
-<p><strong>正确的思路</strong> 应该是由频率表达式得出全相位表达式，进而得到余弦信号表达式。<br>首先知道瞬时角频率为$\omega_F(t)=\omega_c+K_F\upsilon(t)$<br>由于调频波在不同时刻的旋转角频率不同，则从$t=0$到$t$时刻所旋转的全相角为瞬时角频率在此时间间隔内的积分，即$$$\psi_F(t)=\int_0^t\omega_F(t)\,dt=\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0$<br>那么FM信号的表达式即$\upsilon<em>F(t)=V</em>{cm}\cos[\psi<em>F(t)]=V</em>{cm}\cos{\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0}$<br>相比较而言PM的表达式就只是少了一个积分号$\upsilon<em>P(t)=V</em>{cm}\cos{\omega_ct+K_P\upsilon(t)+\theta_0}$<br>扩展一下，接收机中可以统一使用PM调制解调，而当要使用FM时，调制模块先对输入信号作积分，解调模块对输出信号作微分即可实现FM。  </p>
+<p><strong>正确的思路</strong> 应该是由频率表达式得出全相位表达式，进而得到余弦信号表达式。<br>首先知道瞬时角频率为$\omega_F(t)=\omega_c+K_F\upsilon(t)$<br>由于调频波在不同时刻的旋转角频率不同，则从$t=0$到$t$时刻所旋转的全相角为瞬时角频率在此时间间隔内的积分，即$\psi_F(t)=\int_0^t\omega_F(t)\,dt=\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0$<br>那么FM信号的表达式即$\upsilon<em>F(t)=V</em>{cm}\cos[\psi<em>F(t)]=V</em>{cm}\cos{\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0}$<br>相比较而言PM的表达式就只是少了一个积分号$\upsilon<em>P(t)=V</em>{cm}\cos{\omega_ct+K_P\upsilon(t)+\theta_0}$<br>扩展一下，接收机中可以统一使用PM调制解调，而当要使用FM时，调制模块先对输入信号作积分，解调模块对输出信号作微分即可实现FM。  </p>
 <p>而除了刚才提到的PM解调后微分的方法，FM解调还可使用鉴频器的方法，先偷个懒截图上原理。待后续填坑。<br></p>
 
       
