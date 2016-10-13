@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++," />
+  <meta name="keywords" content="工程项目," />
 
 
 
@@ -86,22 +86,28 @@
 
 
 
-<meta name="description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
+<meta name="description" content="这个星期在做硕士论文开题，中间刘老师提到了一句话，让我有种豁然开朗的感觉，大致意思就是：
+
+论指标论好了，把选型和方案确定，就可以说一个项目做了一半了，剩下的就是结合细节去实现。  
+
+这让我对现在即将参与和之前负责的项目有了新的认识。自己以前就是个打杂工，老师已经确定下了具体的方案，自己照着去执行就行了，并没有发现有什么问题，还自我感觉良好。但是自己在上一个做的USB体制下的卫星模拟器时，就感觉">
 <meta property="og:type" content="article">
-<meta property="og:title" content="const限定符相关">
-<meta property="og:url" content="http://bonewp.github.io.git/2016/08/18/const限定符相关/index.html">
+<meta property="og:title" content="任务书中指标要求的重要性">
+<meta property="og:url" content="http://bonewp.github.io.git/2016/10/13/任务书中指标要求的重要性/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
-<meta property="og:updated_time" content="2016-08-18T11:13:47.295Z">
+<meta property="og:description" content="这个星期在做硕士论文开题，中间刘老师提到了一句话，让我有种豁然开朗的感觉，大致意思就是：
+
+论指标论好了，把选型和方案确定，就可以说一个项目做了一半了，剩下的就是结合细节去实现。  
+
+这让我对现在即将参与和之前负责的项目有了新的认识。自己以前就是个打杂工，老师已经确定下了具体的方案，自己照着去执行就行了，并没有发现有什么问题，还自我感觉良好。但是自己在上一个做的USB体制下的卫星模拟器时，就感觉">
+<meta property="og:updated_time" content="2016-10-13T09:40:10.559Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="const限定符相关">
-<meta name="twitter:description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
+<meta name="twitter:title" content="任务书中指标要求的重要性">
+<meta name="twitter:description" content="这个星期在做硕士论文开题，中间刘老师提到了一句话，让我有种豁然开朗的感觉，大致意思就是：
+
+论指标论好了，把选型和方案确定，就可以说一个项目做了一半了，剩下的就是结合细节去实现。  
+
+这让我对现在即将参与和之前负责的项目有了新的认识。自己以前就是个打杂工，老师已经确定下了具体的方案，自己照着去执行就行了，并没有发现有什么问题，还自我感觉良好。但是自己在上一个做的USB体制下的卫星模拟器时，就感觉">
 
 
 
@@ -122,9 +128,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/2016/08/18/const限定符相关/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2016/10/13/任务书中指标要求的重要性/"/>
 
-  <title> const限定符相关 | bonewp blog </title>
+  <title> 任务书中指标要求的重要性 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -296,7 +302,7 @@
             
             
               
-                const限定符相关
+                任务书中指标要求的重要性
               
             
           </h1>
@@ -308,8 +314,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T18:48:24+08:00" content="2016-08-18">
-              2016-08-18
+            <time itemprop="dateCreated" datetime="2016-10-13T17:12:03+08:00" content="2016-10-13">
+              2016-10-13
             </time>
           </span>
 
@@ -322,8 +328,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/read-C-Primer-5th/" itemprop="url" rel="index">
-                    <span itemprop="name">read C++ Primer 5th</span>
+                  <a href="/categories/随记/" itemprop="url" rel="index">
+                    <span itemprop="name">随记</span>
                   </a>
                 </span>
 
@@ -338,8 +344,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/18/const限定符相关/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/const限定符相关/" itemprop="commentsCount"></span>
+                <a href="/2016/10/13/任务书中指标要求的重要性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/任务书中指标要求的重要性/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -362,15 +368,11 @@
       
 
       
-        <p>阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。</p>
-<p>在需要定义变量的值不能被改变的时候，使用const加以限定，如<code>const int buffSize = 512;</code>这里是指变量本身是常量。</p>
-<p>而在定义引用和指针的时候，注意是指<strong>引用或指针是指向常量的引用或指针</strong>，如<code>const int *p;</code>，这里指针p是<strong>指向常量的指针(pointer to const)</strong>， p指向的值必须是一个const类型，而p本身的值（即所存储的地址）则可以改变。这里一定要明确的概念就是<strong>指向常量的引用/指针不能用于改变其绑定/所指对象的值</strong>。</p>
-<p>由于引用在初始化后不能再更改绑定对象，不用多说。而要让指针本身是常量的话，需要使用<code>*const</code>来定义<strong>常量指针(const pointer)</strong>。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *<span class="keyword">const</span> p = &amp;i;  <span class="comment">//p本身的值不能再改变，始终指向i</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> pip = &amp;pi; <span class="comment">//pip是一个指向常量的常量指针</span></div></pre></td></tr></table></figure></p>
-<p>由此可见，指针本身是常量和指向的对象是常量为两个独立问题。</p>
+        <p>这个星期在做硕士论文开题，中间刘老师提到了一句话，让我有种豁然开朗的感觉，大致意思就是：</p>
 <blockquote>
-<p>用名词<strong>顶层const(top-level const)</strong>表示指针本身为 常量，而用名词<strong>底层const(low-level const)</strong>表示指针所指的对象为一个常量。  </p>
+<p>论指标论好了，把选型和方案确定，就可以说一个项目做了一半了，剩下的就是结合细节去实现。  </p>
 </blockquote>
-<p>顶层const可用于基本类型在内的任意对像，而底层const则与指针和引用等复合类型的基本类型部分有关。</p>
+<p>这让我对现在即将参与和之前负责的项目有了新的认识。自己以前就是个打杂工，老师已经确定下了具体的方案，自己照着去执行就行了，并没有发现有什么问题，还自我感觉良好。<br>但是自己在上一个做的USB体制下的卫星模拟器时，就感觉到了任务指标与设计方案的重要性。自己半路从张老师手中接收过来，从画板子开始。结果板子画完自己写程序写到FPGA管脚分配时，发现7系列的FPGA的HR Bank和HP Bank的区别，特别是管脚电压与AD/DA/CLK芯片的不匹配，进一步又发现了供电电压也给错了…充分暴露了方案设计时的论证不充分，接着就调板子之后再改第二版，结果在第二版调试全部完成之后，发现AD前级缺少模拟AGC，接收功率动态范围根本达不到…<br>从这次经历可以看出来，一方面是使用新的芯片特别是用FPGA时，要对其特性有充分的考察；另一方面就是重点了，要结合任务指标要求，设计好方案及选型，以能达到指标要求。像是第二点，如果在方案设计时就注意到了动态范围的要求，就不会忘记加模拟AGC了。<br>说了这么多话，其实说到底，就是设计方案的重要性以及其难度。就像在组织中领导的重要性，决定好了方向，下级实施者才知道怎么去做，这需要大量的经验基础和专业知识，毕竟下级做着做着做不下去了，可不是实施者的错，是领导决定方向的锅。项目的方案就是领导方向，充分论证了咱们用这些芯片、这种结构能实现目标要求，咱们才接着去干，否则就会发生各种我之前遇到的，做都做完了发现某个地方不对，这时候已经耗费了大量资源了。<br>当然，不会说一点错误都不范，只是在已知范围内尽量地减少错误发生，毕竟未知情况多得去了。<br>最后就是对现在的项目，刘老师提醒了我几次，深入地去认识任务书的要求，为什么要这么要求，我们设计方案时选用这种芯片/结构为什么这么选、能够对应实现要求中的哪个指标，都能搞明白了，也就对这个项目认识了一大半了。<br>所以说呐，作为一只小硕，还是好好地去看任务书和方案吧，只是画画/调调板子、写写程序还是远远不够哒。</p>
 
       
     </div>
@@ -393,7 +395,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag">#C++</a>
+            <a href="/tags/工程项目/" rel="tag">#工程项目</a>
           
         </div>
       
@@ -402,17 +404,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/17/术语：何为对象/" rel="next" title="术语：何为对象">
-                <i class="fa fa-chevron-left"></i> 术语：何为对象
+              <a href="/2016/09/24/FM调制与解调/" rel="next" title="FM调制与解调">
+                <i class="fa fa-chevron-left"></i> FM调制与解调
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/20/给marika感动得不要不要的/" rel="prev" title="给marika感动得不要不要的">
-                给marika感动得不要不要的 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -438,8 +436,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/18/const限定符相关/"
-           data-title="const限定符相关" data-url="http://bonewp.github.io.git/2016/08/18/const限定符相关/">
+      <div class="ds-thread" data-thread-key="2016/10/13/任务书中指标要求的重要性/"
+           data-title="任务书中指标要求的重要性" data-url="http://bonewp.github.io.git/2016/10/13/任务书中指标要求的重要性/">
       </div>
     
   </div>

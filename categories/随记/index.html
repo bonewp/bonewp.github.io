@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,22 +86,15 @@
 
 
 
-<meta name="description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
-<meta property="og:type" content="article">
-<meta property="og:title" content="const限定符相关">
-<meta property="og:url" content="http://bonewp.github.io.git/2016/08/18/const限定符相关/index.html">
+<meta name="description" content="search great things and do it">
+<meta property="og:type" content="website">
+<meta property="og:title" content="bonewp blog">
+<meta property="og:url" content="http://bonewp.github.io.git/categories/随记/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
-<meta property="og:updated_time" content="2016-08-18T11:13:47.295Z">
+<meta property="og:description" content="search great things and do it">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="const限定符相关">
-<meta name="twitter:description" content="阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。
-在需要定义变量的值不能被改变的时候，使用const加以限定，如const int buffSize = 512;这里是指变量本身是常量。
-而在定义引用和指针的时候，注意是指引用或指针是指向常量的引用或指针，如const int *p;，这里指针p是指向常量的指针(pointer to const)， p指向的值必须是一个">
+<meta name="twitter:title" content="bonewp blog">
+<meta name="twitter:description" content="search great things and do it">
 
 
 
@@ -122,9 +115,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/2016/08/18/const限定符相关/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/categories/随记/"/>
 
-  <title> const限定符相关 | bonewp blog </title>
+  <title> 分类: 随记 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +147,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -275,160 +268,47 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                const限定符相关
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T18:48:24+08:00" content="2016-08-18">
-              2016-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/read-C-Primer-5th/" itemprop="url" rel="index">
-                    <span itemprop="name">read C++ Primer 5th</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/18/const限定符相关/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/const限定符相关/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。</p>
-<p>在需要定义变量的值不能被改变的时候，使用const加以限定，如<code>const int buffSize = 512;</code>这里是指变量本身是常量。</p>
-<p>而在定义引用和指针的时候，注意是指<strong>引用或指针是指向常量的引用或指针</strong>，如<code>const int *p;</code>，这里指针p是<strong>指向常量的指针(pointer to const)</strong>， p指向的值必须是一个const类型，而p本身的值（即所存储的地址）则可以改变。这里一定要明确的概念就是<strong>指向常量的引用/指针不能用于改变其绑定/所指对象的值</strong>。</p>
-<p>由于引用在初始化后不能再更改绑定对象，不用多说。而要让指针本身是常量的话，需要使用<code>*const</code>来定义<strong>常量指针(const pointer)</strong>。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *<span class="keyword">const</span> p = &amp;i;  <span class="comment">//p本身的值不能再改变，始终指向i</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> pip = &amp;pi; <span class="comment">//pip是一个指向常量的常量指针</span></div></pre></td></tr></table></figure></p>
-<p>由此可见，指针本身是常量和指向的对象是常量为两个独立问题。</p>
-<blockquote>
-<p>用名词<strong>顶层const(top-level const)</strong>表示指针本身为 常量，而用名词<strong>底层const(low-level const)</strong>表示指针所指的对象为一个常量。  </p>
-</blockquote>
-<p>顶层const可用于基本类型在内的任意对像，而底层const则与指针和引用等复合类型的基本类型部分有关。</p>
-
-      
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        随记
+        <small>分类</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-
-      
-    </div>
-
-    <div>
-      
+            <a class="post-title-link" href="/2016/10/13/任务书中指标要求的重要性/" itemprop="url">
+              
+                <span itemprop="name">任务书中指标要求的重要性</span>
+              
+            </a>
         
+      </h1>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-10-13T17:12:03+08:00"
+              content="2016-10-13" >
+          10-13
+        </time>
+      </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/C/" rel="tag">#C++</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/08/17/术语：何为对象/" rel="next" title="术语：何为对象">
-                <i class="fa fa-chevron-left"></i> 术语：何为对象
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/20/给marika感动得不要不要的/" rel="prev" title="给marika感动得不要不要的">
-                给marika感动得不要不要的 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+
 
 
           </div>
@@ -436,14 +316,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/08/18/const限定符相关/"
-           data-title="const限定符相关" data-url="http://bonewp.github.io.git/2016/08/18/const限定符相关/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -463,17 +335,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/k_on_1.png"
@@ -537,17 +400,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">此文章未包含目录</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -644,10 +496,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
