@@ -8,23 +8,12 @@
       <url>http://bonewp.github.io.git/2017/02/22/%E5%85%A5vivado%E5%9D%91%E4%B9%8B%E8%81%94%E5%90%88modelsim%E4%BB%BF%E7%9C%9F/</url>
       <content type="html"><![CDATA[<p>最近跟着调PCIE接口，要用Xilinx高端大气上档次的vivado开发环境，然而新入就是坑啊，泪目。</p>
 <p>首先背景是，已有在其他电脑上可编译可仿真的工程，在我电脑2016.2版本vivado上可综合通过，但是联合modelsim仿真卡在compiling一步， 于是放弃2016.2版本，装了其他电脑一样的2014.4版本，结果就是漫无止境的填坑过程…</p>
+<a id="more"></a>
 <p>问题是，联合modelsim进行仿真时，始终会出现错误<code>(vlog-2155) Global declarations are illegal in Verilog 2001 syntax.</code>，根据理解和网上搜索结果，是因为对应的<code>function.vh</code>文件里有<code>function</code>函数，但<code>function</code>和<code>task</code>不能定义在<code>module</code>之外，而调用文件中<code>`include &quot;function.vh&quot;</code>在<code>module</code>之外，导致出错。若改为vivado自带的仿真器，则会有错误<code>Root Scope Declartion Not Allowed In Verilog 95/2k</code>，应该也是同样的错误。  </p>
 <p>神奇的地方在于，按照语法标准来说这确实会出错，但在之前的调试人员电脑上居然能够正常通过，于是找寻各种方法想在不修改源文件的情况下能编译通过。其中搜到的有价值的信息中，有提到过单独定义<code>function</code>和<code>task</code>的<code>.vh</code>后缀文件不加入modelsim仿真编译，但如何才能让其不编译这个文件就是个迷了。</p>
 <p>经过两天的苦苦尝试，换了modelsim版本，重装了vivado2016.4，最后还是采用的修改源文件的解决方法，把调用的<code>function</code>全都集中在<code>function.vh</code>文件中，再把<code>`include &quot;function.vh&quot;</code>命令放在<code>module</code>定义里面，而包括了<code>\</code>define<code>命令的</code>.vh<code>文件则保持放在</code>module`定义之外。</p>
 <p>最终结论，单独定义<code>function</code>和<code>task</code>的头文件要放在<code>module</code>中调用，而至于为什么之前的电脑上没这么做却通过了，未知…</p>
 ]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[1553B总线及B64843芯片使用]]></title>
-      <url>http://bonewp.github.io.git/2016/11/03/1553B%E6%80%BB%E7%BA%BF%E5%8F%8AB64843%E8%8A%AF%E7%89%87%E4%BD%BF%E7%94%A8/</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[信号隔离器]]></title>
-      <url>http://bonewp.github.io.git/2016/11/03/%E4%BF%A1%E5%8F%B7%E9%9A%94%E7%A6%BB%E5%99%A8/</url>
-      <content type="html"></content>
     </entry>
     
     <entry>
