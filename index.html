@@ -292,6 +292,331 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/22/入vivado坑之联合modelsim仿真/" itemprop="url">
+                  入vivado坑之联合modelsim仿真
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-22T11:52:26+08:00" content="2017-02-22">
+              2017-02-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具使用/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/22/入vivado坑之联合modelsim仿真/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/22/入vivado坑之联合modelsim仿真/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近跟着调PCIE接口，要用Xilinx高端大气上档次的vivado开发环境，然而新入就是坑啊，泪目。</p>
+<p>首先背景是，已有在其他电脑上可编译可仿真的工程，在我电脑2016.2版本vivado上可综合通过，但是联合modelsim仿真卡在compiling一步， 于是放弃2016.2版本，装了其他电脑一样的2014.4版本，结果就是漫无止境的填坑过程…</p>
+<p>问题是，联合modelsim进行仿真时，始终会出现错误<code>(vlog-2155) Global declarations are illegal in Verilog 2001 syntax.</code>，根据理解和网上搜索结果，是因为对应的<code>function.vh</code>文件里有<code>function</code>函数，但<code>function</code>和<code>task</code>不能定义在<code>module</code>之外，而调用文件中<code>`include &quot;function.vh&quot;</code>在<code>module</code>之外，导致出错。若改为vivado自带的仿真器，则会有错误<code>Root Scope Declartion Not Allowed In Verilog 95/2k</code>，应该也是同样的错误。  </p>
+<p>神奇的地方在于，按照语法标准来说这确实会出错，但在之前的调试人员电脑上居然能够正常通过，于是找寻各种方法想在不修改源文件的情况下能编译通过。其中搜到的有价值的信息中，有提到过单独定义<code>function</code>和<code>task</code>的<code>.vh</code>后缀文件不加入modelsim仿真编译，但如何才能让其不编译这个文件就是个迷了。</p>
+<p>经过两天的苦苦尝试，换了modelsim版本，重装了vivado2016.4，最后还是采用的修改源文件的解决方法，把调用的<code>function</code>全都集中在<code>function.vh</code>文件中，再把<code>`include &quot;function.vh&quot;</code>命令放在<code>module</code>定义里面，而包括了<code>\</code>define<code>命令的</code>.vh<code>文件则保持放在</code>module`定义之外。</p>
+<p>最终结论，单独定义<code>function</code>和<code>task</code>的头文件要放在<code>module</code>中调用，而至于为什么之前的电脑上没这么做却通过了，未知…</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/03/1553B总线及B64843芯片使用/" itemprop="url">
+                  1553B总线及B64843芯片使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-03T13:55:55+08:00" content="2016-11-03">
+              2016-11-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/03/1553B总线及B64843芯片使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/03/1553B总线及B64843芯片使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/03/信号隔离器/" itemprop="url">
+                  信号隔离器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-03T13:55:27+08:00" content="2016-11-03">
+              2016-11-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/03/信号隔离器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/03/信号隔离器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/24/初次使用sway/" itemprop="url">
                   初次使用sway
                 </a>
@@ -1154,384 +1479,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/17/术语：何为对象/" itemprop="url">
-                  术语：何为对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-17T17:24:44+08:00" content="2016-08-17">
-              2016-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/read-C-Primer-5th/" itemprop="url" rel="index">
-                    <span itemprop="name">read C++ Primer 5th</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/17/术语：何为对象/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/17/术语：何为对象/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近腾出点时间复习C++，准备把C++ Primer好好看一遍。  </p>
-<p>在<code>P39</code>上看到一个有趣的地方，什么是<strong>术语</strong>？书上给的解释是:  </p>
-<blockquote>
-<p>通常情况下，对象是指一块能存储数据并具有某种类型的内存空间。</p>
-</blockquote>
-<p>以前接触对象这个概念，总是基于面向对象之类的东西来说，一直感觉比较抽象。而这个从偏硬件的角度的解释，让我有一种豁然开朗的感觉，特别是在现在用FPGA用得多了之后。  </p>
-<p>就像对FPGA代码最终要映射到FF、LUT等单元，对软件而言高级语言最终是要对应CPU对内存上的一段数据进行操作，这样刚才<strong>对象</strong>的解释也就能明白了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/11/verilog中的加法/" itemprop="url">
-                  verilog中的加法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-11T18:00:01+08:00" content="2016-08-11">
-              2016-08-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习小记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习小记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/11/verilog中的加法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/verilog中的加法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊</p>
-<h3 id="符号数的加法"><a href="#符号数的加法" class="headerlink" title="符号数的加法"></a>符号数的加法</h3><p>用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_1;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_2;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] add_ans;</div><div class="line"></div><div class="line">assign add_ans = sig_1 + sig_2;</div></pre></td></tr></table></figure></p>
-<h3 id="加法溢出的处理"><a href="#加法溢出的处理" class="headerlink" title="加法溢出的处理"></a>加法溢出的处理</h3><p>然而固定位数的加法会出现溢出的问题，要为结果考虑进位，因此为结果多添加一位。此时一定要注意！</p>
-<p><strong>符号数加法要进行符号位扩展！！</strong></p>
-<p>当时没有注意到这个，死活不知道为什么结果的进位消失了…示例代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_1;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_2;</div><div class="line">wire [<span class="number">32</span>:<span class="number">0</span>] add_ans;</div><div class="line"></div><div class="line">assign add_ans = &#123;sig_1[<span class="number">31</span>], sig_1&#125; + &#123;sig_2[<span class="number">31</span>], sig_2&#125;;</div></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/11/verilog中的加法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/09/写markdown时用到的特殊用法/" itemprop="url">
-                  写markdown时用到的特殊用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-09T18:00:17+08:00" content="2016-08-09">
-              2016-08-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具使用/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/09/写markdown时用到的特殊用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/09/写markdown时用到的特殊用法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我在用Markdown写东西的时候，有时候用到了一些奇奇怪怪的用法，这里记录下来以便之后查阅。</p>
-<h3 id="makedown通用语法相关"><a href="#makedown通用语法相关" class="headerlink" title="makedown通用语法相关"></a>makedown通用语法相关</h3><h4 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a><span id="sup/sub">上下标</span></h4><p>将需要修改为上下标的文字用html标签包裹即可。如下：<br>上标：<code>&lt;sup&gt; sup_text &lt;/sup&gt;</code><br>下标：<code>&lt;sub&gt; sup_text &lt;/sub&gt;</code></p>
-<h4 id="文章内跳转"><a href="#文章内跳转" class="headerlink" title="文章内跳转"></a>文章内跳转</h4><p>将需要跳转至的地方加上html的id属性，形如：<code>&lt;span id=&quot;where_jump_to&quot;&gt; text &lt;/span&gt;</code><br>再在需要设置跳转的地方使用Markdown的链接语法，形如：<code>[text](#where_jump_to)</code></p>
-<p>这里测试一下跳转至<a href="#sup/sub">上下标</a>。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/09/写markdown时用到的特殊用法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1577,7 +1524,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1594,7 +1541,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1645,7 +1592,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

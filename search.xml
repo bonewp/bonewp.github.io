@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[入vivado坑之联合modelsim仿真]]></title>
+      <url>http://bonewp.github.io.git/2017/02/22/%E5%85%A5vivado%E5%9D%91%E4%B9%8B%E8%81%94%E5%90%88modelsim%E4%BB%BF%E7%9C%9F/</url>
+      <content type="html"><![CDATA[<p>最近跟着调PCIE接口，要用Xilinx高端大气上档次的vivado开发环境，然而新入就是坑啊，泪目。</p>
+<p>首先背景是，已有在其他电脑上可编译可仿真的工程，在我电脑2016.2版本vivado上可综合通过，但是联合modelsim仿真卡在compiling一步， 于是放弃2016.2版本，装了其他电脑一样的2014.4版本，结果就是漫无止境的填坑过程…</p>
+<p>问题是，联合modelsim进行仿真时，始终会出现错误<code>(vlog-2155) Global declarations are illegal in Verilog 2001 syntax.</code>，根据理解和网上搜索结果，是因为对应的<code>function.vh</code>文件里有<code>function</code>函数，但<code>function</code>和<code>task</code>不能定义在<code>module</code>之外，而调用文件中<code>`include &quot;function.vh&quot;</code>在<code>module</code>之外，导致出错。若改为vivado自带的仿真器，则会有错误<code>Root Scope Declartion Not Allowed In Verilog 95/2k</code>，应该也是同样的错误。  </p>
+<p>神奇的地方在于，按照语法标准来说这确实会出错，但在之前的调试人员电脑上居然能够正常通过，于是找寻各种方法想在不修改源文件的情况下能编译通过。其中搜到的有价值的信息中，有提到过单独定义<code>function</code>和<code>task</code>的<code>.vh</code>后缀文件不加入modelsim仿真编译，但如何才能让其不编译这个文件就是个迷了。</p>
+<p>经过两天的苦苦尝试，换了modelsim版本，重装了vivado2016.4，最后还是采用的修改源文件的解决方法，把调用的<code>function</code>全都集中在<code>function.vh</code>文件中，再把<code>`include &quot;function.vh&quot;</code>命令放在<code>module</code>定义里面，而包括了<code>\</code>define<code>命令的</code>.vh<code>文件则保持放在</code>module`定义之外。</p>
+<p>最终结论，单独定义<code>function</code>和<code>task</code>的头文件要放在<code>module</code>中调用，而至于为什么之前的电脑上没这么做却通过了，未知…</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[1553B总线及B64843芯片使用]]></title>
+      <url>http://bonewp.github.io.git/2016/11/03/1553B%E6%80%BB%E7%BA%BF%E5%8F%8AB64843%E8%8A%AF%E7%89%87%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[信号隔离器]]></title>
+      <url>http://bonewp.github.io.git/2016/11/03/%E4%BF%A1%E5%8F%B7%E9%9A%94%E7%A6%BB%E5%99%A8/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[初次使用sway]]></title>
       <url>http://bonewp.github.io.git/2016/10/24/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8sway/</url>
       <content type="html"><![CDATA[<p>前一周准备开题，时间紧脑袋一热没有用ppt，转去用了sway，本来想的目的是不用去调效果、动画，结果不熟悉sway的组织结构，为了达到理想的效果试了很多次，最后演示的时候还因为图片大小问题没演示好。<br>这里把使用经验总结一下，以后再使用好复习。  </p>
@@ -158,6 +182,10 @@
 <h4 id="文章内跳转"><a href="#文章内跳转" class="headerlink" title="文章内跳转"></a>文章内跳转</h4><p>将需要跳转至的地方加上html的id属性，形如：<code>&lt;span id=&quot;where_jump_to&quot;&gt; text &lt;/span&gt;</code><br>再在需要设置跳转的地方使用Markdown的链接语法，形如：<code>[text](#where_jump_to)</code></p>
 <p>这里测试一下跳转至<a href="#sup/sub">上下标</a>。</p>
 <a id="more"></a>
+<h4 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h4><p>在断首加入<code>&amp;ensp;</code>输入一个空格；加入<code>&amp;emsp;</code>输入两个空格。</p>
+<blockquote>
+<p>&emsp;效果演示<br>效果演示  </p>
+</blockquote>
 <h3 id="框架使用相关"><a href="#框架使用相关" class="headerlink" title="框架使用相关"></a>框架使用相关</h3><h4 id="hexo相关"><a href="#hexo相关" class="headerlink" title="hexo相关"></a>hexo相关</h4><h5 id="资源文件夹"><a href="#资源文件夹" class="headerlink" title="资源文件夹"></a>资源文件夹</h5><p>我没有把图片存储到云盘上的习惯。。（好像暴露了什么），查阅到使用的hexo框架支持资源文件夹可以便捷的管理。</p>
 <p>通过在站点配置文件<code>config.yml</code>中的<code>post_asset_folder</code>选项设为<code>true</code>后，可以将图片放在与文章同名的文件夹内，然后使用相对路径应用的标签插件来引用图片等资源，相较于常规的markdown语法<code>![](/image.jpg)</code>，可使图片在主页和存档页显示正常。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% asset_path slug %&#125;</div><div class="line">&#123;% asset_img slug [title] %&#125;</div><div class="line">&#123;% asset_link slug [title] %&#125;</div></pre></td></tr></table></figure>
