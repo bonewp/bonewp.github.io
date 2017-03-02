@@ -1,0 +1,943 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="HuJ6zHOcZtM8sI4fbZGbDVfo-BIeM2i5XFwO49dcHdA" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Cadence PCB 制板," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/htt.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cadence使用及画板技巧相关">
+<meta property="og:url" content="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/index.html">
+<meta property="og:site_name" content="bonewp blog">
+<meta property="og:description" content="在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/制板总体设计思路.png">
+<meta property="og:updated_time" content="2017-03-02T10:02:21.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cadence使用及画板技巧相关">
+<meta name="twitter:description" content="在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率">
+<meta name="twitter:image" content="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/制板总体设计思路.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/"/>
+
+  <title> Cadence使用及画板技巧相关 | bonewp blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-80710555-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">bonewp blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Cadence使用及画板技巧相关
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-02T16:40:46+08:00" content="2017-03-02">
+              2017-03-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具使用/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/02/Cadence使用及画板技巧相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/02/Cadence使用及画板技巧相关/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率了(珍爱生命远离画板…)。<br>虽然这么说但是过程中需要注意的地方也挺多的，这里把自己以前学习的小记和操作过程的思考记录下来，以后操作前先复习一下以免多次无意义的工作(没错 就是经常删了重布 删了重布)。  </p>
+<a id="more"></a>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Cadence提供了两个集成的、从前端到后端的设计结局方案：Concept-HDL到Allegro；Capture到Allegro。<br>Capture CIS区别于Capture的地方在于CIS——Component Information System，该模块可对元器件和库实施高效管理，还可通过Internet Component Assistant查阅添加元器件。（不过我基本上没用过，都是自己保存的元件库，这个还需注意吧）<br>设计总体思路：</p>
+<ol>
+<li>原理图：根据框图，确定元器件，若库里无相应器件，需自己画器件模型；再连接元器件之间的端口。首先确定各个模块（每一个文件夹就对应一个模块Schematic Design—Schematic Folder—Schematic Page），在模块内各page连线，再在TOP层将各个模块连接起来。</li>
+<li>PCB：根据原理图确定下来的连接关系，对元器件进行具体的布局布线。首先确定板卡的尺寸、固定孔，然后布局（根据具体需求和指导原则），接着布线，最后检查其合理性，对不足的地方修改<del>或者推翻重来</del>。   </li>
+</ol>
+<img src="/2017/03/02/Cadence使用及画板技巧相关/制板总体设计思路.png" alt="制板总体设计思路.png" title="">  
+<h3 id="原理图设计"><a href="#原理图设计" class="headerlink" title="原理图设计"></a>原理图设计</h3><h4 id="元件库制作"><a href="#元件库制作" class="headerlink" title="元件库制作　"></a>元件库制作　</h4><h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><ol>
+<li>如果在参考项目中有需要修改的package，点击该元器件—Edit Part—View Package—save as选择自己的元件库保存。  </li>
+</ol>
+<ul>
+<li>如果已有的库里没有元件对应的package，可上官网找CAD文件用官方软件转换为.olb，复制到自己的库中。如果没有，按照管脚定义列表excel自己画。Excel也找不到就自己画吧。</li>
+<li>元件会有多种封装，不同封装管脚排列不同，如AD9236有RU-28和CP-32-2两种，分别对应尾缀：BRU和BCP。一般在芯片手册的Order Information或Ordering guide中会包含完整的尾缀和封装对应关系。</li>
+<li>元件库名称必须带有表示元件封装的尾缀信息</li>
+<li>为实现后续功能，元件库管脚类型(type)必须与实际元件一致<br>常用的管脚类型有：Input, Output,3state,Bidirectional,Open Collector,Open Emitter,Passive,Power等</li>
+<li>同一功能有多个管脚，在管脚功能后用不同数字区分(如VCC1,VCC2,GND1,GND2)；数字命名在管脚数较小时按照递增编号；管脚数较多时，可用管脚号（如VCCINT56表示该电源管脚在第56号管脚上）</li>
+<li>一般应将管脚按照功能分组摆放</li>
+<li>元件管脚必须置于编辑界面的网格(grid)上，否则画原理图时会出现连接错误。</li>
+</ul>
+<h5 id="制作元件"><a href="#制作元件" class="headerlink" title="制作元件"></a>制作元件</h5><ol>
+<li>新建元器件：New library-new part。  </li>
+<li>放置引脚：<br>单个引脚Place Pin：其中Number管脚号是非常重要的属性，在PCB设计中，使用Number属性与封装的PinNumber对应，从而建立原理图与PCB的联系。管脚号不光可以是数字，也可以是字母，或字母数字的组合（如某些BGA封装）的管脚号就是字母数字组合。但必须和封装上的管脚号一一对应。<br>多个引脚Place Pin Array—&gt;edit Properties。调整顺序，沿虚线框画矩形外框。<br>在制作FPGA等引脚非常多的元件时，官网会有相关文件方便制作。  </li>
+<li>绘制外形：Place-Line or Rectangle。<br>绘制完成后保存至相应的.olb中。<br>另一种方法：new part from spreadsheet，按照datasheet填写表格，其中No. of Section用于表示元件中的第几个part（在multipule-part package情况下）。</li>
+</ol>
+<h5 id="概念对比"><a href="#概念对比" class="headerlink" title="概念对比"></a>概念对比</h5><p>Package包装：即库中一个完整的元件，一个Package一般对应PCB中一个元件的封装(Footprint)。<br>Part部件：组成一个完整元件的一个或多个部分。某些元件内部可以按照功能划分为多个部分，每一部分占用元件的一部分管脚。<br>Single Part：元件由唯一的Part组成，大多数简单器件。<br>Multipule Part Package：</p>
+<ul>
+<li>Homogeneous：内部各Part功能和符号完全相同的元件。每个Part的图形和管脚数和功能都是相同的，但管脚号可以不同。并且可以有部分重复的管脚(如74LS14每个Part上均有VCC和GND两个管脚，不过这些重复的管脚应该都是对应的实际上同一个管脚）。不能使用[New Part From Spreadsheet]制作。</li>
+<li>Heterogeneous：元件由多个不同的Part组成。不允许同一个管脚在不同Part中出现（软件不会报错）。  </li>
+</ul>
+<h4 id="原理图层次"><a href="#原理图层次" class="headerlink" title="原理图层次"></a>原理图层次</h4><p>一个原理图design包含多个模块Block（有一个root schematic即顶层模块），而模块由多个Page组成。<br>Block上的端口(Port)来自于图中各Page上放置的Port符号。如果把Block也看成一个芯片，则Port是这些芯片的管脚。<br>Off Page Connector的作用是连接同一个图中不同页(page)的电路。而Net alias用于连接同一个Page内的电路。<br>电源端口是全局的。  </p>
+<h4 id="原理图制作"><a href="#原理图制作" class="headerlink" title="原理图制作"></a>原理图制作</h4><h5 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h5><p>New-Project。在circuit文件夹下创建sch和pcb分别存放原理图和pcb设计。  </p>
+<h5 id="修改模板"><a href="#修改模板" class="headerlink" title="修改模板"></a>修改模板</h5><p>包括Title Block和Page Size： [Option]-[Design Template]- Title Block-Symbol。<br>New symbol可创建特殊元件，如TitleBlock、电源、地、port、off-page connecter；改变图纸大小Schematic Page Properties-Page Size一般选B及以下。  </p>
+<h5 id="创建顶层页面"><a href="#创建顶层页面" class="headerlink" title="创建顶层页面"></a>创建顶层页面</h5><p>Root Design中分别建立Page1: Title、Page2: Topology和Page3: Top三个页，在Topology页中绘制或粘贴电路框图。  </p>
+<h5 id="添加库"><a href="#添加库" class="headerlink" title="添加库"></a>添加库</h5><p>[Place]–[Part]中添加自己的元件库以。注意“Design Cache”并不是一个真正的库文件，而是当前工程的设计缓冲。  </p>
+<h5 id="分模块画子图"><a href="#分模块画子图" class="headerlink" title="分模块画子图"></a>分模块画子图</h5><p>[New Schmatic]-[New Page]创建子图。然后放置元件，重点检查元件标号(Part Reference)和封装(PCB Footprint)，修改value。快捷键H，V，R可分别左右、上下调换元件和旋转元件。<br>放置电源、GND符号，端口符号等，然后wire连接逻辑关系。</p>
+<h5 id="指定net-alias"><a href="#指定net-alias" class="headerlink" title="指定net alias"></a>指定net alias</h5><p>一般与端口相连的网络名称应与端口名称相同。网络标号只在Page内起作用，因此不同Page中的网络标号是可以相同的。</p>
+<h5 id="在顶层图中放置子模块"><a href="#在顶层图中放置子模块" class="headerlink" title="在顶层图中放置子模块"></a>在顶层图中放置子模块</h5><p>[Place]-[Hierarchical Block]。缺省情况下，所有的输入都在左边，所有的输出都在右边，可以根据绘图需要进行调整。<br>若修改了Page中的设计，如使用Place H pin增加、减少了Port，可以在Block处使用[Synchronize Up]命令，更新Block。如果在Block上增加了Port或减少了Port，则可以使用[Synchronize Down]。  </p>
+<h5 id="原理图复用"><a href="#原理图复用" class="headerlink" title="原理图复用"></a>原理图复用</h5><p>一个Schematic作为一个Block在顶层中可以复用。<br>原始的属性所代表的元件，称为Instance，对应属性页中的白色一列；而由于复用新增的两列所代表的多个同类元件，称为Occurrences，对应属性页中的黄色列。在存在复用的设计中，Occurrences中的属性(可不同)，才是真正使用的属性(在导出PCB网表时使用)。  </p>
+<h5 id="电路模块级的重用"><a href="#电路模块级的重用" class="headerlink" title="电路模块级的重用"></a>电路模块级的重用</h5><p>可将一整个已有的电路设计复用，原理图对应相应的.dsn，PCB布局对应相应的.mdd（需要在PCB中添加至Module Path中）。其中可重用DSN原理图中的元件经过特殊处理，具有Reused ID属性。若被外部引用的DSN名为DsnName；而DSN中被引用的schematic名称为SchName，则对应的MDD文件名称应为DsnName_SchName.MDD。在PCB设计时，.dsn和.mdd通过文件名来匹配。<br>[Place]-[Hierarchical Block]-[Browse…]找到复制过来的xx.dsn（设置文件名才能与PCB中的.mdd匹配）。<br>在[Browse]选择文件后，Path and filename中为DSN文件的完整路径，为保证整个Sch目录复制到别的机器或目录还能改正确打开原理图，必须将其改为相对路径。  </p>
+<h5 id="分配元件标号"><a href="#分配元件标号" class="headerlink" title="分配元件标号"></a>分配元件标号</h5><p>选中.dsn—annotate。注意Action中Unconditional reference update一般不使用，另Reset reference numbers to begin at 1 in each page也绝对不能选中，会导致标号重复。<br>第一步：将页面中的标号都置为“？”。Scope选Update entire design，Action选Reset intersheet References，Mode选Preferred，选中Include non-primitive parts（即将Block也标号），确定即可。<br>第二步：若没有使用外部重用模块（.dsn .mdd），则Action选中Incremental reference update确定即可。若使用了外部重用模块，则在Allegro Reuse中标号。  </p>
+<h5 id="DRC电气规则检查"><a href="#DRC电气规则检查" class="headerlink" title="DRC电气规则检查"></a>DRC电气规则检查</h5><p>DRC检查管脚连接冲突、总线宽度匹配，短路（同一个元件管脚上有多个网络名）等原理图设计中潜在的错误。检查范围有限，可能误报，需谨慎仔细查看。<br>Edit—browse—DRC Markers可查看检查出的错误。  </p>
+<h5 id="网表导出netlisting"><a href="#网表导出netlisting" class="headerlink" title="网表导出netlisting"></a>网表导出netlisting</h5><p>在导出网表之前必须将所有元件的PCB Footprint属性填好（如果某些元件的封装还没有画，也要先填一个名字）。<br>Tools—create netlist，在PCB editor页面选中Create or Update Allegro PCB Editor Board，若是修改了原理图更新PCB，则要选择input board。Place changed需要注意下。  </p>
+<p><strong>一定要注意在打开的PCB中另存至pcb文件夹中！！！这是血泪的教训啊！！！不然再次导出是要被覆盖的啊！！！</strong>  </p>
+<p><strong>注意</strong>：导出时若遇到ERROR(ORCAP-36004)，是对多part元件编辑时，软件会自动给编辑的part添加尾缀造成多part不一致，在Edit part页面选择Options-Package properties删掉尾缀。若是有多次编辑，则会提示错误封装名重复。这时进Design Cache将相应的封装用自己的库替换掉。注意以后要避免直接修改Part封装导致这种错误，而要在库中修改再替换。  </p>
+<p><strong>注意</strong>：可以使用edit—browse—选择相应的器件进行修改。比如修改part的footprint，就可以进入part，选择需要修改的元件，ctrl+E修改属性里的footprint。修改port、net的名称也可以这样做。<br>也可以Ctrl+F查找器件，如查找所有电阻，则在查找选项里选中parts，然后搜索R*，即可选中所有的电阻进而修改footprint。<br>也可以直接选中一页或.dsn，右键选择edit object properties。</p>
+<h3 id="PCB设计"><a href="#PCB设计" class="headerlink" title="PCB设计"></a>PCB设计</h3><p>备注：1 mil=1 inch/1000=25.4mm/1000<br>1 mm=39.37…mil≈40mil  </p>
+<h4 id="制作焊盘"><a href="#制作焊盘" class="headerlink" title="制作焊盘"></a>制作焊盘</h4><p>Pad Designer-Parameter中，type焊盘类型有：Through通孔、Blind盲孔、single单层，其他参数自己看看吧。<br>Layer中，需要定义每层的参数。一般需要定义的信号层有Begin Layer、Default Internal、End layer（对于过孔来说就这三个层就足够了，中间层都会用Default internal的参数自动匹配），另外非信号层一般还需要定义：Soldermask_top、Soldermask_bottom(阻焊）。在设计PCB时，阻焊层（Soldermask_top和Soldermask_bottom）是反向显示的，即不涂阻焊材料的地方是一个填充的图形，覆盖阻焊的地方没有图形。PCB上一般只有焊盘上不会覆盖阻焊材料，其它的连线、铺铜都被阻焊材料覆盖。一般直径要多设10mil。  </p>
+<p>Regular Pad是通常意义下的焊盘，大小根据datasheet设定，一般焊盘宽度应该大于至少等于管脚宽度，焊盘长度两倍于管脚长度使之对准中心（焊盘间距5mil以上没问题）；Thermal Relief是焊盘要与周围敷铜连接时的状态，若焊盘和周围铺铜的网络相同，会自动用4或8条将焊盘与周围铺铜连接，周围铺铜与焊盘边缘隔开的距离是Regular的半径和Thermal Relief半径之差，建议直径多设12mil；Anti Pad是焊盘与周围的铺铜网络不同（因该绝缘开）时隔离的形式。  </p>
+<p>总结下来涉及到的数据有：<br>Drill diameter    按需<br>Regular Pad    按datasheet，焊盘宽度大于等于管脚宽度最大值，焊盘长度两倍于管脚长度中间值<br>Thermarl Relief    大12~16mil (0.3~0.4mm)<br>Anti pad    大12~16mil (0.3~0.4mm)<br>Soldermask    直径大regular pad 8~10mil，长宽都大8~10mil (0.2~0.25mm)  </p>
+<h4 id="制作封装package-symbol"><a href="#制作封装package-symbol" class="headerlink" title="制作封装package symbol"></a>制作封装package symbol</h4><p>用封装来表示元件管脚、物理尺寸以及管脚位置等信息。不同的元件如电阻、电容可能会用相同的封装，如0402、0603。<br>PCB封装只代表器件的尺寸大小等物理特性，封装上的管脚本身没有任何电气属性；而原理图符号是一个器件电气上的抽象表示，代表着器件管脚的输入、输出等电气属性，但符号本身不包含尺寸、管脚位置等物理特性。</p>
+<p>原理图中符号通过PCB Footprint属性与PCB封装库中的同名封装对应；原理图符号上的管脚与封装的对应焊盘对应（管脚号与焊盘号对应）.<br>一个package symbol与两个文件对应：.dra文件可编辑；.psm不可编辑，由.dra生成，需添加至psmpath。  </p>
+<p>Allegro中有很多对象都叫symbol，如Mechanical Symbol（机械符号）、Format symbol（图纸格式符号），Shape symbol（形状符号，画异型焊盘时能用到），以及Flash symbol（在焊盘设计中用来确定特殊形状的Thermal和anti Pad）。这些符号设计阶段都是*.dra文件，然后生成对应的symbol文件，但扩展名是xxm(xx是其它字母）。在PCB设计时，如果要使用这些symbol，都须要把xxm所在目录加入design_path中。  </p>
+<p>注意几个概念：<br>Ref Des–reference designation元件标号在Silk Screen层，如U<em>,R</em>,C*等；<br>封装占用面积，用Place_Bound_Top画一个封闭区域(Shape)来表示；<br>Package Geometry封装轮廓在Silk Screen层，生产时与Ref Des的Silk Screen合并成一个光绘文件，用于在PCB表面印字。  </p>
+<p>具体步骤  </p>
+<ol>
+<li>模板向导<br>[File]-[New]- Package symbol(wizard)——选择类型、模板——<br>确定管脚数(N)，管脚间距(e)必须精确，焊盘中心距离（e1）取偏大（就最大宽度），封装外形丝印的宽度（E）取最小、高度(D)取最大——选择焊盘padstack——选择参考坐标symbol origin，并选中Do not create a compiled symbol在后续创建。  </li>
+</ol>
+<ul>
+<li>修改封装<br>调整grid以便编辑——添加1管脚标注：选择圆形Shape–Option页选择Active Class and Subclass为“Package Geometry和silk_screen_Top—选择圆心在管脚1右边—命令行ix 0.5（单位mm）确定半径。</li>
+<li>生成符号文件.psm<br>[File]-[Create Symbol]生成PCB设计使用的Symbol文件。一般将所有封装的Symbol文件都放在一个目录下以备使用。  </li>
+</ul>
+<p><strong>注意</strong><br>封装符合要求的条件：合适的焊盘大小；精确的焊盘间距；Component—Ref Des—Silkscreen 层元件标号前缀；Package Geometry— Silkscreen层元件外形轮廓； Package Geometry—Silkscreen层绘制极性方向、1管脚方位；[Setup]-[Aereas]-[Package Boundary]定义元件实际PCB面积。（用向导绘制基本上已经概括完了）<br>Package Geometry的Silkscree_Top以及Component—Ref Des元件标号中的Silkscreen_Top在后续处理中会作为PCB顶层丝印的一部分；<br>Commond命令：<br>x 10 20 : 将鼠标定位在绝对坐标 (10,20)处<br>x 20 : 不改变上一次鼠标点击的y坐标，将x坐标定位在x坐标为20处<br>y 30: 不改变上次点击的x坐标，将y坐标定位在30<br>ix 10 20：相对于上次点击的位置，x向右移动10，y向上移动20<br>ix -10：相对于上次点击的位置，x向左移动10<br>iy 10：相对于上次点击的位置，y向上移动10  </p>
+<h4 id="制作机械符号（画外框）"><a href="#制作机械符号（画外框）" class="headerlink" title="制作机械符号（画外框）"></a>制作机械符号（画外框）</h4><p>PCB机械符号包括：</p>
+<ul>
+<li>PCB的外形、尺寸要求；</li>
+<li>PCB的安装固定要求；</li>
+<li>系统中其它部件在PCB上安装固定的要求，抗冲击的PCB上的金属加强结构</li>
+<li>PCB上禁止布线、和放置元件的区域（或允许布线、放置元件的区域）</li>
+<li>PCB上接插件放置的位置</li>
+<li>PCB在制造过程中切割、倒角等要求等  </li>
+</ul>
+<p>需要制作Mechanical Symbol的场景：完全自由设计，比如设计一个实验板，可以自由定义板子的外形、尺寸等。这种情况不用设计专门的Mechanical Symbol，只需在PCB设计环境用Board Geometry用line画一个框即可定义电路板的外形。<br>不需要制作Mechanical Symbol的场景：多种PCB使用同样的机械定义，如同一种形式的板子会设计很多种；由业界标准定义的PCB，如PCI板卡、VME、CPCI板卡等；设计好后可以反复利用。<br>下述的处理不管在需要制作Mechanical Symbol的场景，或是直接在工程中画外框的场景都会用到：  </p>
+<ul>
+<li>设置图纸大小：[Setup]-[Design Parameter]-[Design]，设置单位和Extents，确定原点和宽高。</li>
+<li>画PCB外框：选择[Add]-[Line]菜单，再选择右侧属性页中的子类为Board Geometry–Outline；根据尺寸输入命令确定外框。注意画外框时要一条边一条边地画，否则后面倒角不能选择segment。</li>
+<li>倒角：[Manufacture]-[Drafting]-[Chamfer]命令，在右侧的Option窗口输入Trim Segments和Chamfer angle为：First2；Second0；Chamfer angle45；若是倒圆角则选择Fillet。</li>
+<li>安装孔：Add Circle、Add Line。画好一个孔后，使用复制功能，并iy/ix至相应位置。</li>
+<li>添加尺寸标注：[Manufacture]-[Dimension Environment]，右键选择Parameter设置单位，右键选择需要的标注项进行尺寸标注。  </li>
+</ul>
+<h4 id="画图前的设置"><a href="#画图前的设置" class="headerlink" title="画图前的设置"></a>画图前的设置</h4><h5 id="层叠结构Cross-Section"><a href="#层叠结构Cross-Section" class="headerlink" title="层叠结构Cross Section"></a>层叠结构Cross Section</h5><p>[Setup]-[Cross-section]：添加层的属性，Layer Type中Conductor为通常用于走信号线的层、Plane为平面用于电源或地（平面即整一层铺铜均属同一个网络，有时一个平面可分割成多个区域用于不同的电源或地，注意需保证其较大面积和低阻抗连接路径）。  </p>
+<p>常用的层叠结构有：双面板TOP BOTTOM；四层板TOP GND1 PWR1 BOTTOM；六层板TOP GND1 SIG1 SIG2 PWR1 BOTTOM；八层板TOP GND1 SIG1 PWR1 GND2 SIG2 PWR2 BOTTOM。</p>
+<h5 id="设置工作路径Design-Path"><a href="#设置工作路径Design-Path" class="headerlink" title="设置工作路径Design Path"></a>设置工作路径Design Path</h5><p>[Setup]-[User Preferences]-[Design Path]：module path为复用MDD文件路径；PAD Path为焊盘路径；Psm Path要设置用到的所有symbol的路径，包括package s symbol(psm–pcbsymb)，mechanical symbol(bsm–pcbMechSymb)，以及pcbFlashSymb，PadShapes；</p>
+<p>添加过孔：Constraints-Physical-All layers选择Vias添加需要用的过孔。</p>
+<h5 id="设置图纸大小、单位、边框、颜色"><a href="#设置图纸大小、单位、边框、颜色" class="headerlink" title="设置图纸大小、单位、边框、颜色"></a>设置图纸大小、单位、边框、颜色</h5><p>参考上小节制作机械符号。<br>颜色可使用已有的script。另一种方法：在已有板子的基础上且层叠结构的名字一致，可export-parameter选中color相关参数，再在需导入brd中import-parameter。</p>
+<h5 id="设置快捷键"><a href="#设置快捷键" class="headerlink" title="设置快捷键"></a>设置快捷键</h5><p>Command中键入echo $localenv找到env文件的路径。打开env（没有就自己创建）,在一堆#前输入快捷键命令。如alias ~E move(注意这里要大写)，funckey w add connect。注意alias命名的可在Command输入但不能设置单键，而funckey则可以设置单键。<br>可在Tools-Utilities中查看支持的键盘命令以及已有的快捷键。</p>
+<h4 id="敷铜"><a href="#敷铜" class="headerlink" title="敷铜"></a>敷铜</h4><p>Shape–Polygon敷铜(可Edit—Z-copy复制平面到另一层)。<br>方法一：敷铜前可以先选择相应的电源/地net高亮，然后再在Shape中选择net画形状，注意拐角取45度。<br>方法二：先画好一整块敷铜，再Anti Etch分割平面。  </p>
+<p>Shape—Edit Boundary可任意更改敷铜的边界。注意敷铜与过孔的连接可在Shape—Global Dynamic Params中修改，热风焊盘Thermal relief connects中连接方式一般Full connect或Orthogonal正交。<br>需要在敷铜中间挖空时，选择Shape—Manual Void。<br>不同电源信号的敷铜间隔最小可至0.2~0.3mm。</p>
+<h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><p>PCB中灰绿色的连线叫做(Rats)，表示需要连接而还未连接的网络；<br>[Place]-[Quick Place]：可将剩余的所有元件都暂时放到PCB中，再慢慢摆位置；<br>可通过与原理图互动来选择元器件。这样可以根据信号的流向来逐个放置元件，有利于边放置边检查电路原理图，同时也利于根据元件的功能来考虑放置位置。  </p>
+<h4 id="布线"><a href="#布线" class="headerlink" title="布线"></a>布线</h4><p>可在[Display]-[Show Rats]-[Components]选择显示相应器件的飞线。<br>走线宽度一般不小于6mil(0.1524mm)，线间距以3W原则即：走线中心之间距离至少为线宽的三倍，这样可使走线在另一走线的70%磁通量边界范围外，若要到98%，线间距需大10倍线宽。<br>差分线的线宽和线距理论上是用工具计算的（SI9000），但是没用过…目前用过的线距/线宽有8/4.5、6/4 mil。<br>注意绕线的时候，一般选择3x space。</p>
+<h5 id="差分线"><a href="#差分线" class="headerlink" title="差分线"></a>差分线</h5><p>在Setup-Constrains-Constrains Manager中的Electrical-ECS设置布线规则，重点在等长（Static Phase），视具体情况可设为5mil(0.127mm)；然后在Net中为差分对绑定相应的规则。</p>
+<p>总线做等长约束在Relative Propagation Delay中Create Match Group再定义约束参数。注意参数中的Delta:Tolerance，Delta指需要设置的值与Target的差值，设为0即可；Tolerance指可容忍的延迟差值，按需要设为0.2~0.3mm或者更大。<br>在Physical中设定宽度（Line Width）等参数；<br>在Spacing中为差分对设定对与对之间的间隔（Line to All）,似乎在Ecs和Pcs中设定的Gap优先级更高，这里设定Line to line应该只对差分对之间起作用。注意！在ECS中要设置Min Line Spacing的值，否则会提示间距错误的DRC。<br>设定差分对时进入Auto Setup设置后缀后可自动设置。<br>注意在Setup-Constrains-Mode中将需要检查的DRC打开，否则不会显示。</p>
+<h5 id="扇出"><a href="#扇出" class="headerlink" title="扇出"></a>扇出</h5><p>Fanout，在焊盘引脚附近打孔再连接线。可在Route-PCB router-fanout by pick选择symbol自动扇出，右键Setup可进行相关设置。若对连线有要求可先在Constrains manager中修改默认走线宽度。</p>
+<h5 id="Xnet"><a href="#Xnet" class="headerlink" title="Xnet"></a>Xnet</h5><p>约束走线等长时，会遇到一个电阻/电容连接的两根线看做同一条net来约束长度的情况，此时需要将这个电阻两端的net组合为Xnet。<br>方法：Analyze—Model Assigment—选择需要设置的电阻/电容—进入设置页面选择对应管脚—Ok。然后再在约束管理器中选择Xnet约束等长。</p>
+<h4 id="制板"><a href="#制板" class="headerlink" title="制板"></a>制板</h4><p>光绘文件和钻孔文件；<br>说明所制作PCB的厚度，各层的重叠顺序（如对PCB上走线的阻抗等有特殊要求，一般应指出层叠结构、介质类型）；<br>明确最小线宽、最小线距、最小钻孔等加工工艺；</p>
+<h4 id="复用模块"><a href="#复用模块" class="headerlink" title="复用模块"></a>复用模块</h4><ol>
+<li>在原理图中，选择根项目 Annotate-PCB Editor Reuse，选择Generate Reuse module并确定后，选择原理图中所有器件右键Edit Properties，能看到每个器件有唯一的Reuse ID属性，说明复用模块生成成功。</li>
+</ol>
+<ul>
+<li>从原理图生成PCB布局布线完成后，选择Tools-Create Module，框住所有器件并选择原点，另存为mdd复用模块，注意名字必须是原理图项目名_根page名的级联。</li>
+<li>在需要用复用模块的原理图中，新建Hierarchical Block，Implementation Type选择Schematic View，Path选择复用模块.dsn，Implementation name选择复用模块Page名称。摆放完成后，在Tools-Annotate中选择PCB Editor Reuse，Function中选择Renumber design for reuse module，并在对下方选择好复用模块，这样就完成了复用模块在工程中的标号。生成PCB后在Place-Manually中选择Module Instance摆放至相应位置即可。  </li>
+</ul>
+<h3 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h3><h4 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h4><p>在电源之间转换时，会用电感用于两种不同电源之间的滤波。  </p>
+<p>电源芯片根据所连接芯片的功率（电流）进行选择，同时考虑效率、纹波、封装等因素。</p>
+<p>使用LDO(Low Drop Out)电源芯片时，注意Dropout voltage的值，输入一般不能等于输出电压，需更高。</p>
+<p>电源芯片对滤波要求较高，datasheet中一般会有layout建议，如滤波电容放在芯片同一面等，按照建议来布局布线。</p>
+<p>去耦电容的布置尽量靠近电源管脚，且容值越小的越靠近。过孔最好打在电容的同一侧靠近。</p>
+<p>在设计AD/DA/CLK等带模拟信号的电路时，用电源芯片将供电电源隔离，以减少干扰。其他芯片对电源有要求时同理。  </p>
+<h4 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h4><p>FPGA会要求大电容（Bulk Capacitor）滤掉低频、陶瓷电容滤中频，个数和数值在User Guide中有推荐，如7系列在UG483-PCB中。位置要求等也会有推荐。  </p>
+<p>Xilinx在GU1099中有BGA封装的推荐走线方式。包括宽度、距离、过孔大小等。差分线对走FPGA内部，可以选择neck mode使两线走两via之间，参数参考GU1099，注意适当选择gridless方便内部走线。  </p>
+<p>注意单端clk信号连接至FPGA的全局时钟管脚时，要连接至p端，不能连接至n端。</p>
+<p>XILINX的FPGA的BANK分为HP/HR两种，所支持的电压、IOSTANDARD（如LVDS/LVDS_25）不同，需要注意。  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Cadence-PCB-制板/" rel="tag">#Cadence PCB 制板</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/入vivado坑之联合modelsim仿真/" rel="next" title="入vivado坑之联合modelsim仿真">
+                <i class="fa fa-chevron-left"></i> 入vivado坑之联合modelsim仿真
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/02/Cadence使用及画板技巧相关/"
+           data-title="Cadence使用及画板技巧相关" data-url="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/k_on_1.png"
+               alt="Peng Wei" />
+          <p class="site-author-name" itemprop="name">Peng Wei</p>
+          <p class="site-description motion-element" itemprop="description">search great things and do it</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/bonewp" title="Github" target="_blank">Github</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理图设计"><span class="nav-number">2.</span> <span class="nav-text">原理图设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#元件库制作"><span class="nav-number">2.1.</span> <span class="nav-text">元件库制作　</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项"><span class="nav-number">2.1.1.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#制作元件"><span class="nav-number">2.1.2.</span> <span class="nav-text">制作元件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#概念对比"><span class="nav-number">2.1.3.</span> <span class="nav-text">概念对比</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理图层次"><span class="nav-number">2.2.</span> <span class="nav-text">原理图层次</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理图制作"><span class="nav-number">2.3.</span> <span class="nav-text">原理图制作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#新建项目"><span class="nav-number">2.3.1.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改模板"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建顶层页面"><span class="nav-number">2.3.3.</span> <span class="nav-text">创建顶层页面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加库"><span class="nav-number">2.3.4.</span> <span class="nav-text">添加库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分模块画子图"><span class="nav-number">2.3.5.</span> <span class="nav-text">分模块画子图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指定net-alias"><span class="nav-number">2.3.6.</span> <span class="nav-text">指定net alias</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在顶层图中放置子模块"><span class="nav-number">2.3.7.</span> <span class="nav-text">在顶层图中放置子模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#原理图复用"><span class="nav-number">2.3.8.</span> <span class="nav-text">原理图复用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#电路模块级的重用"><span class="nav-number">2.3.9.</span> <span class="nav-text">电路模块级的重用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分配元件标号"><span class="nav-number">2.3.10.</span> <span class="nav-text">分配元件标号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DRC电气规则检查"><span class="nav-number">2.3.11.</span> <span class="nav-text">DRC电气规则检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#网表导出netlisting"><span class="nav-number">2.3.12.</span> <span class="nav-text">网表导出netlisting</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCB设计"><span class="nav-number">3.</span> <span class="nav-text">PCB设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#制作焊盘"><span class="nav-number">3.1.</span> <span class="nav-text">制作焊盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作封装package-symbol"><span class="nav-number">3.2.</span> <span class="nav-text">制作封装package symbol</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作机械符号（画外框）"><span class="nav-number">3.3.</span> <span class="nav-text">制作机械符号（画外框）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#画图前的设置"><span class="nav-number">3.4.</span> <span class="nav-text">画图前的设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#层叠结构Cross-Section"><span class="nav-number">3.4.1.</span> <span class="nav-text">层叠结构Cross Section</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置工作路径Design-Path"><span class="nav-number">3.4.2.</span> <span class="nav-text">设置工作路径Design Path</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置图纸大小、单位、边框、颜色"><span class="nav-number">3.4.3.</span> <span class="nav-text">设置图纸大小、单位、边框、颜色</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置快捷键"><span class="nav-number">3.4.4.</span> <span class="nav-text">设置快捷键</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#敷铜"><span class="nav-number">3.5.</span> <span class="nav-text">敷铜</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#布局"><span class="nav-number">3.6.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#布线"><span class="nav-number">3.7.</span> <span class="nav-text">布线</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#差分线"><span class="nav-number">3.7.1.</span> <span class="nav-text">差分线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扇出"><span class="nav-number">3.7.2.</span> <span class="nav-text">扇出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Xnet"><span class="nav-number">3.7.3.</span> <span class="nav-text">Xnet</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制板"><span class="nav-number">3.8.</span> <span class="nav-text">制板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复用模块"><span class="nav-number">3.9.</span> <span class="nav-text">复用模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#经验"><span class="nav-number">4.</span> <span class="nav-text">经验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#电源"><span class="nav-number">4.1.</span> <span class="nav-text">电源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FPGA"><span class="nav-number">4.2.</span> <span class="nav-text">FPGA</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Peng Wei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"bonewp"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>
