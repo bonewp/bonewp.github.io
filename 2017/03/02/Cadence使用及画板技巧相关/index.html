@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="bonewp blog">
 <meta property="og:description" content="在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/03/02/Cadence使用及画板技巧相关/制板总体设计思路.png">
-<meta property="og:updated_time" content="2017-03-02T10:02:21.577Z">
+<meta property="og:updated_time" content="2017-03-02T10:12:18.083Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cadence使用及画板技巧相关">
 <meta name="twitter:description" content="在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率">
@@ -366,10 +366,8 @@
 <li>PCB：根据原理图确定下来的连接关系，对元器件进行具体的布局布线。首先确定板卡的尺寸、固定孔，然后布局（根据具体需求和指导原则），接着布线，最后检查其合理性，对不足的地方修改<del>或者推翻重来</del>。   </li>
 </ol>
 <img src="/2017/03/02/Cadence使用及画板技巧相关/制板总体设计思路.png" alt="制板总体设计思路.png" title="">  
-<h3 id="原理图设计"><a href="#原理图设计" class="headerlink" title="原理图设计"></a>原理图设计</h3><h4 id="元件库制作"><a href="#元件库制作" class="headerlink" title="元件库制作　"></a>元件库制作　</h4><h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><ol>
+<h3 id="原理图设计"><a href="#原理图设计" class="headerlink" title="原理图设计"></a>原理图设计</h3><h4 id="元件库制作"><a href="#元件库制作" class="headerlink" title="元件库制作　"></a>元件库制作　</h4><h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
 <li>如果在参考项目中有需要修改的package，点击该元器件—Edit Part—View Package—save as选择自己的元件库保存。  </li>
-</ol>
-<ul>
 <li>如果已有的库里没有元件对应的package，可上官网找CAD文件用官方软件转换为.olb，复制到自己的库中。如果没有，按照管脚定义列表excel自己画。Excel也找不到就自己画吧。</li>
 <li>元件会有多种封装，不同封装管脚排列不同，如AD9236有RU-28和CP-32-2两种，分别对应尾缀：BRU和BCP。一般在芯片手册的Order Information或Ordering guide中会包含完整的尾缀和封装对应关系。</li>
 <li>元件库名称必须带有表示元件封装的尾缀信息</li>
@@ -415,11 +413,9 @@
 <p>具体步骤  </p>
 <ol>
 <li>模板向导<br>[File]-[New]- Package symbol(wizard)——选择类型、模板——<br>确定管脚数(N)，管脚间距(e)必须精确，焊盘中心距离（e1）取偏大（就最大宽度），封装外形丝印的宽度（E）取最小、高度(D)取最大——选择焊盘padstack——选择参考坐标symbol origin，并选中Do not create a compiled symbol在后续创建。  </li>
-</ol>
-<ul>
 <li>修改封装<br>调整grid以便编辑——添加1管脚标注：选择圆形Shape–Option页选择Active Class and Subclass为“Package Geometry和silk_screen_Top—选择圆心在管脚1右边—命令行ix 0.5（单位mm）确定半径。</li>
 <li>生成符号文件.psm<br>[File]-[Create Symbol]生成PCB设计使用的Symbol文件。一般将所有封装的Symbol文件都放在一个目录下以备使用。  </li>
-</ul>
+</ol>
 <p><strong>注意</strong><br>封装符合要求的条件：合适的焊盘大小；精确的焊盘间距；Component—Ref Des—Silkscreen 层元件标号前缀；Package Geometry— Silkscreen层元件外形轮廓； Package Geometry—Silkscreen层绘制极性方向、1管脚方位；[Setup]-[Aereas]-[Package Boundary]定义元件实际PCB面积。（用向导绘制基本上已经概括完了）<br>Package Geometry的Silkscree_Top以及Component—Ref Des元件标号中的Silkscreen_Top在后续处理中会作为PCB顶层丝印的一部分；<br>Commond命令：<br>x 10 20 : 将鼠标定位在绝对坐标 (10,20)处<br>x 20 : 不改变上一次鼠标点击的y坐标，将x坐标定位在x坐标为20处<br>y 30: 不改变上次点击的x坐标，将y坐标定位在30<br>ix 10 20：相对于上次点击的位置，x向右移动10，y向上移动20<br>ix -10：相对于上次点击的位置，x向左移动10<br>iy 10：相对于上次点击的位置，y向上移动10  </p>
 <h4 id="制作机械符号（画外框）"><a href="#制作机械符号（画外框）" class="headerlink" title="制作机械符号（画外框）"></a>制作机械符号（画外框）</h4><p>PCB机械符号包括：</p>
 <ul>
@@ -440,7 +436,7 @@
 </ul>
 <h4 id="画图前的设置"><a href="#画图前的设置" class="headerlink" title="画图前的设置"></a>画图前的设置</h4><h5 id="层叠结构Cross-Section"><a href="#层叠结构Cross-Section" class="headerlink" title="层叠结构Cross Section"></a>层叠结构Cross Section</h5><p>[Setup]-[Cross-section]：添加层的属性，Layer Type中Conductor为通常用于走信号线的层、Plane为平面用于电源或地（平面即整一层铺铜均属同一个网络，有时一个平面可分割成多个区域用于不同的电源或地，注意需保证其较大面积和低阻抗连接路径）。  </p>
 <p>常用的层叠结构有：双面板TOP BOTTOM；四层板TOP GND1 PWR1 BOTTOM；六层板TOP GND1 SIG1 SIG2 PWR1 BOTTOM；八层板TOP GND1 SIG1 PWR1 GND2 SIG2 PWR2 BOTTOM。</p>
-<h5 id="设置工作路径Design-Path"><a href="#设置工作路径Design-Path" class="headerlink" title="设置工作路径Design Path"></a>设置工作路径Design Path</h5><p>[Setup]-[User Preferences]-[Design Path]：module path为复用MDD文件路径；PAD Path为焊盘路径；Psm Path要设置用到的所有symbol的路径，包括package s symbol(psm–pcbsymb)，mechanical symbol(bsm–pcbMechSymb)，以及pcbFlashSymb，PadShapes；</p>
+<h5 id="设置工作路径Design-Path"><a href="#设置工作路径Design-Path" class="headerlink" title="设置工作路径Design Path"></a>设置工作路径Design Path</h5><p>[Setup]-[User Preferences]-[Design Path]：module path为复用MDD文件路径；PAD Path为焊盘路径；Psm Path要设置用到的所有symbol的路径，包括packages symbol(psm–pcbsymb)，mechanical symbol(bsm–pcbMechSymb)，以及pcbFlashSymb，PadShapes；</p>
 <p>添加过孔：Constraints-Physical-All layers选择Vias添加需要用的过孔。</p>
 <h5 id="设置图纸大小、单位、边框、颜色"><a href="#设置图纸大小、单位、边框、颜色" class="headerlink" title="设置图纸大小、单位、边框、颜色"></a>设置图纸大小、单位、边框、颜色</h5><p>参考上小节制作机械符号。<br>颜色可使用已有的script。另一种方法：在已有板子的基础上且层叠结构的名字一致，可export-parameter选中color相关参数，再在需导入brd中import-parameter。</p>
 <h5 id="设置快捷键"><a href="#设置快捷键" class="headerlink" title="设置快捷键"></a>设置快捷键</h5><p>Command中键入echo $localenv找到env文件的路径。打开env（没有就自己创建）,在一堆#前输入快捷键命令。如alias ~E move(注意这里要大写)，funckey w add connect。注意alias命名的可在Command输入但不能设置单键，而funckey则可以设置单键。<br>可在Tools-Utilities中查看支持的键盘命令以及已有的快捷键。</p>
@@ -455,11 +451,9 @@
 <h4 id="制板"><a href="#制板" class="headerlink" title="制板"></a>制板</h4><p>光绘文件和钻孔文件；<br>说明所制作PCB的厚度，各层的重叠顺序（如对PCB上走线的阻抗等有特殊要求，一般应指出层叠结构、介质类型）；<br>明确最小线宽、最小线距、最小钻孔等加工工艺；</p>
 <h4 id="复用模块"><a href="#复用模块" class="headerlink" title="复用模块"></a>复用模块</h4><ol>
 <li>在原理图中，选择根项目 Annotate-PCB Editor Reuse，选择Generate Reuse module并确定后，选择原理图中所有器件右键Edit Properties，能看到每个器件有唯一的Reuse ID属性，说明复用模块生成成功。</li>
-</ol>
-<ul>
 <li>从原理图生成PCB布局布线完成后，选择Tools-Create Module，框住所有器件并选择原点，另存为mdd复用模块，注意名字必须是原理图项目名_根page名的级联。</li>
 <li>在需要用复用模块的原理图中，新建Hierarchical Block，Implementation Type选择Schematic View，Path选择复用模块.dsn，Implementation name选择复用模块Page名称。摆放完成后，在Tools-Annotate中选择PCB Editor Reuse，Function中选择Renumber design for reuse module，并在对下方选择好复用模块，这样就完成了复用模块在工程中的标号。生成PCB后在Place-Manually中选择Module Instance摆放至相应位置即可。  </li>
-</ul>
+</ol>
 <h3 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h3><h4 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h4><p>在电源之间转换时，会用电感用于两种不同电源之间的滤波。  </p>
 <p>电源芯片根据所连接芯片的功率（电流）进行选择，同时考虑效率、纹波、封装等因素。</p>
 <p>使用LDO(Low Drop Out)电源芯片时，注意Dropout voltage的值，输入一般不能等于输出电压，需更高。</p>
