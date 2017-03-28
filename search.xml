@@ -4,6 +4,12 @@
   
     
     <entry>
+      <title><![CDATA[卷积的物理意义]]></title>
+      <url>http://bonewp.github.io.git/2017/03/28/%E5%8D%B7%E7%A7%AF%E7%9A%84%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[数字信号的基带传输和载波传输中的几个点]]></title>
       <url>http://bonewp.github.io.git/2017/03/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E5%92%8C%E8%BD%BD%E6%B3%A2%E4%BC%A0%E8%BE%93%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AA%E7%82%B9/</url>
       <content type="html"><![CDATA[<h3 id="成型滤波"><a href="#成型滤波" class="headerlink" title="成型滤波"></a>成型滤波</h3><p>升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  </p>
