@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="bonewp blog">
 <meta property="og:description" content="成型滤波升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  
 升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$，$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。">
-<meta property="og:updated_time" content="2017-03-28T07:04:03.716Z">
+<meta property="og:updated_time" content="2017-03-28T07:08:55.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数字信号的基带传输和载波传输中的几个点">
 <meta name="twitter:description" content="成型滤波升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  
@@ -360,13 +360,14 @@
 
       
         <h3 id="成型滤波"><a href="#成型滤波" class="headerlink" title="成型滤波"></a>成型滤波</h3><p>升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  </p>
-<p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$<code>，</code>$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
-<h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^(-j2\pi fT)$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
+<p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$，$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
+<a id="more"></a>
+<h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^{(-j2\pi fT)}$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
 <p>$h(t)=KS(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
 <p>匹配滤波器的输出信号波形与输入信号的自相关函数成比例。  </p>
 <h3 id="MPSK"><a href="#MPSK" class="headerlink" title="MPSK"></a>MPSK</h3><p>多进制相移键控，载波相位有M种取值。  </p>
 <p>已调信号时域表达式可简写为，$S_{MPSK}(t) = I(t)\cos(\omega_c t) - Q(t)\sin(\omega_c t)$，所以可用正交调制的方法产生。这里<br>同相分量 $I(t) = \Sigma a_n rect(t-nT_s)$<br>正交分量 $Q(t) = \Sigma b_n rect(t-nT_s)$<br>其中rect矩形函数，即为矩形包络，可使用成型滤波的升余弦滚降信号作为包络吧？<br>而$a_n=Acos\phi(n)$, $b_n=Asin\phi(n)$。  </p>
-<p>8PSK相干调制时，每3bit产生一3位码组$b_1 b_2 b_3$，在其控制下同相路和正交路分别产生两个四电平基带信号I(t)和Q(t)，$b_1$决定同相路信号极性而$b_2$决定正交路信号极性，$b_3$则确定两路信号的幅度，分别为$cos\pi \3$和$sin\pi \3$，即两路基带信号幅度互相关联，不可独立选取(使合成矢量端点落在圆上)。<br>还有相位选择法调制(适用于高载频)和脉冲插入法调制。其中选相法，我觉得在DDS中通过符号对应相位偏移就可以简单实现。  </p>
+<p>8PSK相干调制时，每3bit产生一3位码组$b_1 b_2 b_3$，在其控制下同相路和正交路分别产生两个四电平基带信号I(t)和Q(t)，$b_1$决定同相路信号极性而$b_2$决定正交路信号极性，$b_3$则确定两路信号的幅度，分别为$cos\pi /3$和$sin\pi /3$，即两路基带信号幅度互相关联，不可独立选取(使合成矢量端点落在圆上)。<br>还有相位选择法调制(适用于高载频)和脉冲插入法调制。其中选相法，我觉得在DDS中通过符号对应相位偏移就可以简单实现。  </p>
 <p>可用两正交载波信号实现相干解调，区别在于多进制调制时为多电平判决，如QPSK为二电平判决而8PSK为四电平判决。</p>
 <h3 id="MQAM"><a href="#MQAM" class="headerlink" title="MQAM"></a>MQAM</h3><p>正交幅度调制(Quadruate Amplitude Modelation)，为幅度与相位相结合的调制方式，在星座图上区别于MPSK的圆上均匀分布，MQAM在圆内按矩形或十字形等距离分布，矢量端点距离更大，抗干扰能力更强。  </p>
 <p>在两正交载波上进行幅度调制实现，区别于MPSK，MQAM的同相和正交两路基带信号的电平相互独立。</p>
