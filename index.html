@@ -312,6 +312,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/通信/" itemprop="url" rel="index">
+                    <span itemprop="name">通信</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -343,7 +362,20 @@
       
         
           
-            
+            <p>今天仿matlab的时候用到卷积函数<code>conv(u, v)</code>，然后看到参考文档中的描述是  </p>
+<blockquote>
+<p>Convolution and polynomial multiplication</p>
+</blockquote>
+<p>突然就觉得很奇怪，为什么会等价于多项式乘法呢。<br>然后看了下example吓了一跳，从数学表达式上来看完全就是一样的东西嘛。  </p>
+<blockquote>
+<p>Create vectors u and v containing the coefficients of the polynomials $x^2+1$ and $2x+7$.<br><code>u = [1 0 1];</code><br><code>v = [2 7];</code><br>Use convolution to multiply the polynomials.<br><code>w = conv(u,v)</code><br>w =   2     7     2     7<br>w contains the polynomial coefficients for $2x&amp;3+7x^2+2x+7$.</p>
+</blockquote>
+<p>然后就去google卷积，发现了知乎上一个回答挺有趣的，<a href="https://www.zhihu.com/question/22298352/answer/34267457" target="_blank" rel="external">怎样通俗易懂地解释卷积？</a><br>这个回答中的图示没有用教科书中讲的反褶+时移相乘，而是$x[n]$乘以$y[k]$的时移和叠加。回答者的描述是  </p>
+<blockquote>
+<p>可以看到卷积的重要的物理意义是：一个函数（如：单位响应）在另一个函数（如：输入信号）上的加权叠加。<br>通俗的说：<br>在输入信号的每个位置，叠加一个单位响应，就得到了输出信号。</p>
+</blockquote>
+<p>回想一下信号与系统的知识，可以说这个回答非常符合认知，也能和上面的多项式相乘对应起来。<br>接触了很久的卷积现在才发现有着这么层意思在里面，只能说当年学得太渣…残念…</p>
+
           
         
       
@@ -1039,8 +1071,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随记/" itemprop="url" rel="index">
-                    <span itemprop="name">随记</span>
+                  <a href="/categories/uncategorized/" itemprop="url" rel="index">
+                    <span itemprop="name">uncategorized</span>
                   </a>
                 </span>
 
@@ -1554,7 +1586,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1563,7 +1595,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
