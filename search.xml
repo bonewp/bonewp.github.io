@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[数字信号的基带传输和载波传输中的几个点]]></title>
+      <url>http://bonewp.github.io.git/2017/03/28/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E5%92%8C%E8%BD%BD%E6%B3%A2%E4%BC%A0%E8%BE%93%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AA%E7%82%B9/</url>
+      <content type="html"><![CDATA[<h3 id="成型滤波"><a href="#成型滤波" class="headerlink" title="成型滤波"></a>成型滤波</h3><p>升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  </p>
+<p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$<code>，</code>$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
+<h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^(-j2\pi fT)$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
+<p>$h(t)=KS(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
+<p>匹配滤波器的输出信号波形与输入信号的自相关函数成比例。  </p>
+<h3 id="MPSK"><a href="#MPSK" class="headerlink" title="MPSK"></a>MPSK</h3><p>多进制相移键控，载波相位有M种取值。  </p>
+<p>已调信号时域表达式可简写为，$S_{MPSK}(t) = I(t)\cos(\omega_c t) - Q(t)\sin(\omega_c t)$，所以可用正交调制的方法产生。这里<br>同相分量 $I(t) = \Sigma a_n rect(t-nT_s)$<br>正交分量 $Q(t) = \Sigma b_n rect(t-nT_s)$<br>其中rect矩形函数，即为矩形包络，可使用成型滤波的升余弦滚降信号作为包络吧？<br>而$a_n=Acos\phi(n)$, $b_n=Asin\phi(n)$。  </p>
+<p>8PSK相干调制时，每3bit产生一3位码组$b_1 b_2 b_3$，在其控制下同相路和正交路分别产生两个四电平基带信号I(t)和Q(t)，$b_1$决定同相路信号极性而$b_2$决定正交路信号极性，$b_3$则确定两路信号的幅度，分别为$cos\pi \3$和$sin\pi \3$，即两路基带信号幅度互相关联，不可独立选取(使合成矢量端点落在圆上)。<br>还有相位选择法调制(适用于高载频)和脉冲插入法调制。其中选相法，我觉得在DDS中通过符号对应相位偏移就可以简单实现。  </p>
+<p>可用两正交载波信号实现相干解调，区别在于多进制调制时为多电平判决，如QPSK为二电平判决而8PSK为四电平判决。</p>
+<h3 id="MQAM"><a href="#MQAM" class="headerlink" title="MQAM"></a>MQAM</h3><p>正交幅度调制(Quadruate Amplitude Modelation)，为幅度与相位相结合的调制方式，在星座图上区别于MPSK的圆上均匀分布，MQAM在圆内按矩形或十字形等距离分布，矢量端点距离更大，抗干扰能力更强。  </p>
+<p>在两正交载波上进行幅度调制实现，区别于MPSK，MQAM的同相和正交两路基带信号的电平相互独立。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[雷达波形与信号]]></title>
+      <url>http://bonewp.github.io.git/2017/03/28/%E9%9B%B7%E8%BE%BE%E6%B3%A2%E5%BD%A2%E4%B8%8E%E4%BF%A1%E5%8F%B7/</url>
+      <content type="html"><![CDATA[<h3 id="雷达的分辨率"><a href="#雷达的分辨率" class="headerlink" title="雷达的分辨率"></a>雷达的分辨率</h3><p>雷达波形$u(t)$的自相关函数主瓣宽度越窄，其距离分辨能力越强。即若要时间（距离）分辨率好，应选择这样的信号，即它通过匹配滤波器后应该输出很窄的主瓣波峰。这样的信号或是具有很短持续时间的脉冲，或是具有很宽频谱的宽带波形。  </p>
+<p>瑞利时间分辨率：$\delta_t = 1/B$，或等效地，瑞利距离分辨率：$\delta_r = c/{2B}$。  </p>
+<p>多普勒频率分辨率:$\delta_{fd} = 1/T$，或对目标径向速度分辨率:$\delt_v = \lambda / {2T}$。  </p>
+<p>总结：</p>
+<ol>
+<li><strong>雷达的距离/时间分辨率由雷达发射信号的带宽决定。</strong> 该带宽可以是瞬时的(如极窄的脉冲)，也可以是合成的(通过时间换取，如脉冲持续时间长的线性调频波)。在实际应用中，该宽带信号可是窄脉冲波形、线性调频波形、频率步进波形、随机或伪随机噪声波形及其他任何宽带调制信号。  </li>
+<li><strong>雷达的速度/多普勒分辨率由信号的持续时间决定。</strong> 持续时间越长，分辨率越高。可通过发射持续时间长的脉冲或通过多个脉冲的相参积累等实现。  </li>
+</ol>
+<h3 id="线性调频脉冲LFM"><a href="#线性调频脉冲LFM" class="headerlink" title="线性调频脉冲LFM"></a>线性调频脉冲LFM</h3><p>Linear Frequency Modulation, LFM。对雷达波形进行调频得到宽带信号，分为上变频和下变频。  </p>
+<p>设线性调频信号为$s(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j(\omega_c t+\pi \gamma t^2)}$<br>其中$\omega_c$为中心频率，$t_p$为脉冲宽度，$\gamma$为线性调频斜率，$B=\gamma t_p$<br>包络调制函数为$u(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j\pi \gamma t^2)}$<br>随时间变化的频率函数为$f(t)=1/{2\pi}d/{dt} (\omega_c t + \pi \gamma t^2) = \omega_c/{2\pi}+\gamma t$  </p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Cadence使用及画板技巧相关]]></title>
       <url>http://bonewp.github.io.git/2017/03/02/Cadence%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%94%BB%E6%9D%BF%E6%8A%80%E5%B7%A7%E7%9B%B8%E5%85%B3/</url>
       <content type="html"><![CDATA[<p>在课题组这儿画了好几块PCB了，感觉使用Candence画板这活完全就是经验性的工作。学习曲线陡峭，简直就是个阶跃函数，掌握了基础之后就是不断在实际操作中熟练技巧(为什么你这么熟练啊…)。画原理图的时候如果没有以前的参考还会相对复杂一点，要对照datasheet按照要求来连接逻辑关系，布PCB简直就是堆工作量了，经常陷入长时间布线停不下来，总想多做一些早点搞完，但是实际上已经累得头晕脑胀的毫无效率了(珍爱生命远离画板…)。<br>虽然这么说但是过程中需要注意的地方也挺多的，这里把自己以前学习的小记和操作过程的思考记录下来，以后操作前先复习一下以免多次无意义的工作(没错 就是经常删了重布 删了重布)。  </p>

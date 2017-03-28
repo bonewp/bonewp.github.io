@@ -292,6 +292,265 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/28/数字信号的基带传输和载波传输中的几个点/" itemprop="url">
+                  数字信号的基带传输和载波传输中的几个点
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-28T15:03:21+08:00" content="2017-03-28">
+              2017-03-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/通信/" itemprop="url" rel="index">
+                    <span itemprop="name">通信</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/28/数字信号的基带传输和载波传输中的几个点/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/28/数字信号的基带传输和载波传输中的几个点/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="成型滤波"><a href="#成型滤波" class="headerlink" title="成型滤波"></a>成型滤波</h3><p>升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  </p>
+<p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$<code>，</code>$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
+<h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^(-j2\pi fT)$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
+<p>$h(t)=KS(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
+<p>匹配滤波器的输出信号波形与输入信号的自相关函数成比例。  </p>
+<h3 id="MPSK"><a href="#MPSK" class="headerlink" title="MPSK"></a>MPSK</h3><p>多进制相移键控，载波相位有M种取值。  </p>
+<p>已调信号时域表达式可简写为，$S_{MPSK}(t) = I(t)\cos(\omega_c t) - Q(t)\sin(\omega_c t)$，所以可用正交调制的方法产生。这里<br>同相分量 $I(t) = \Sigma a_n rect(t-nT_s)$<br>正交分量 $Q(t) = \Sigma b_n rect(t-nT_s)$<br>其中rect矩形函数，即为矩形包络，可使用成型滤波的升余弦滚降信号作为包络吧？<br>而$a_n=Acos\phi(n)$, $b_n=Asin\phi(n)$。  </p>
+<p>8PSK相干调制时，每3bit产生一3位码组$b_1 b_2 b_3$，在其控制下同相路和正交路分别产生两个四电平基带信号I(t)和Q(t)，$b_1$决定同相路信号极性而$b_2$决定正交路信号极性，$b_3$则确定两路信号的幅度，分别为$cos\pi \3$和$sin\pi \3$，即两路基带信号幅度互相关联，不可独立选取(使合成矢量端点落在圆上)。<br>还有相位选择法调制(适用于高载频)和脉冲插入法调制。其中选相法，我觉得在DDS中通过符号对应相位偏移就可以简单实现。  </p>
+<p>可用两正交载波信号实现相干解调，区别在于多进制调制时为多电平判决，如QPSK为二电平判决而8PSK为四电平判决。</p>
+<h3 id="MQAM"><a href="#MQAM" class="headerlink" title="MQAM"></a>MQAM</h3><p>正交幅度调制(Quadruate Amplitude Modelation)，为幅度与相位相结合的调制方式，在星座图上区别于MPSK的圆上均匀分布，MQAM在圆内按矩形或十字形等距离分布，矢量端点距离更大，抗干扰能力更强。  </p>
+<p>在两正交载波上进行幅度调制实现，区别于MPSK，MQAM的同相和正交两路基带信号的电平相互独立。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/28/雷达波形与信号/" itemprop="url">
+                  雷达波形与信号
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-28T14:24:19+08:00" content="2017-03-28">
+              2017-03-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/雷达/" itemprop="url" rel="index">
+                    <span itemprop="name">雷达</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/28/雷达波形与信号/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/28/雷达波形与信号/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="雷达的分辨率"><a href="#雷达的分辨率" class="headerlink" title="雷达的分辨率"></a>雷达的分辨率</h3><p>雷达波形$u(t)$的自相关函数主瓣宽度越窄，其距离分辨能力越强。即若要时间（距离）分辨率好，应选择这样的信号，即它通过匹配滤波器后应该输出很窄的主瓣波峰。这样的信号或是具有很短持续时间的脉冲，或是具有很宽频谱的宽带波形。  </p>
+<p>瑞利时间分辨率：$\delta_t = 1/B$，或等效地，瑞利距离分辨率：$\delta_r = c/{2B}$。  </p>
+<p>多普勒频率分辨率:$\delta_{fd} = 1/T$，或对目标径向速度分辨率:$\delt_v = \lambda / {2T}$。  </p>
+<p>总结：</p>
+<ol>
+<li><strong>雷达的距离/时间分辨率由雷达发射信号的带宽决定。</strong> 该带宽可以是瞬时的(如极窄的脉冲)，也可以是合成的(通过时间换取，如脉冲持续时间长的线性调频波)。在实际应用中，该宽带信号可是窄脉冲波形、线性调频波形、频率步进波形、随机或伪随机噪声波形及其他任何宽带调制信号。  </li>
+<li><strong>雷达的速度/多普勒分辨率由信号的持续时间决定。</strong> 持续时间越长，分辨率越高。可通过发射持续时间长的脉冲或通过多个脉冲的相参积累等实现。  </li>
+</ol>
+<h3 id="线性调频脉冲LFM"><a href="#线性调频脉冲LFM" class="headerlink" title="线性调频脉冲LFM"></a>线性调频脉冲LFM</h3><p>Linear Frequency Modulation, LFM。对雷达波形进行调频得到宽带信号，分为上变频和下变频。  </p>
+<p>设线性调频信号为$s(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j(\omega_c t+\pi \gamma t^2)}$<br>其中$\omega_c$为中心频率，$t_p$为脉冲宽度，$\gamma$为线性调频斜率，$B=\gamma t_p$<br>包络调制函数为$u(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j\pi \gamma t^2)}$<br>随时间变化的频率函数为$f(t)=1/{2\pi}d/{dt} (\omega_c t + \pi \gamma t^2) = \omega_c/{2\pi}+\gamma t$  </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/02/Cadence使用及画板技巧相关/" itemprop="url">
                   Cadence使用及画板技巧相关
                 </a>
@@ -1271,260 +1530,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/18/const限定符相关/" itemprop="url">
-                  const限定符相关
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T18:48:24+08:00" content="2016-08-18">
-              2016-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/read-C-Primer-5th/" itemprop="url" rel="index">
-                    <span itemprop="name">read C++ Primer 5th</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/18/const限定符相关/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/const限定符相关/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。</p>
-<p>在需要定义变量的值不能被改变的时候，使用const加以限定，如<code>const int buffSize = 512;</code>这里是指变量本身是常量。</p>
-<p>而在定义引用和指针的时候，注意是指<strong>引用或指针是指向常量的引用或指针</strong>，如<code>const int *p;</code>，这里指针p是<strong>指向常量的指针(pointer to const)</strong>， p指向的值必须是一个const类型，而p本身的值（即所存储的地址）则可以改变。这里一定要明确的概念就是<strong>指向常量的引用/指针不能用于改变其绑定/所指对象的值</strong>。</p>
-<p>由于引用在初始化后不能再更改绑定对象，不用多说。而要让指针本身是常量的话，需要使用<code>*const</code>来定义<strong>常量指针(const pointer)</strong>。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *<span class="keyword">const</span> p = &amp;i;  <span class="comment">//p本身的值不能再改变，始终指向i</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> pip = &amp;pi; <span class="comment">//pip是一个指向常量的常量指针</span></div></pre></td></tr></table></figure></p>
-<p>由此可见，指针本身是常量和指向的对象是常量为两个独立问题。</p>
-<blockquote>
-<p>用名词<strong>顶层const(top-level const)</strong>表示指针本身为 常量，而用名词<strong>底层const(low-level const)</strong>表示指针所指的对象为一个常量。  </p>
-</blockquote>
-<p>顶层const可用于基本类型在内的任意对像，而底层const则与指针和引用等复合类型的基本类型部分有关。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/17/术语：何为对象/" itemprop="url">
-                  术语：何为对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-17T17:24:44+08:00" content="2016-08-17">
-              2016-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/read-C-Primer-5th/" itemprop="url" rel="index">
-                    <span itemprop="name">read C++ Primer 5th</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/17/术语：何为对象/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/17/术语：何为对象/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近腾出点时间复习C++，准备把C++ Primer好好看一遍。  </p>
-<p>在<code>P39</code>上看到一个有趣的地方，什么是<strong>术语</strong>？书上给的解释是:  </p>
-<blockquote>
-<p>通常情况下，对象是指一块能存储数据并具有某种类型的内存空间。</p>
-</blockquote>
-<p>以前接触对象这个概念，总是基于面向对象之类的东西来说，一直感觉比较抽象。而这个从偏硬件的角度的解释，让我有一种豁然开朗的感觉，特别是在现在用FPGA用得多了之后。  </p>
-<p>就像对FPGA代码最终要映射到FF、LUT等单元，对软件而言高级语言最终是要对应CPU对内存上的一段数据进行操作，这样刚才<strong>对象</strong>的解释也就能明白了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1570,7 +1575,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1578,7 +1583,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1587,7 +1592,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
