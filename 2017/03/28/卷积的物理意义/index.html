@@ -104,7 +104,7 @@ Convolution and polynomial multiplication
 突然就觉得很奇怪，为什么会等价于多项式乘法呢。然后看了下example吓了一跳，从数学表达式上来看完全就是一样的东西嘛。  
 
 Create vectors u and v containing the coefficie">
-<meta property="og:updated_time" content="2017-03-28T15:34:09.925Z">
+<meta property="og:updated_time" content="2017-03-28T15:35:55.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积的物理意义">
 <meta name="twitter:description" content="今天仿matlab的时候用到卷积函数conv(u, v)，然后看到参考文档中的描述是  
@@ -380,7 +380,7 @@ Create vectors u and v containing the coefficie">
 </blockquote>
 <p>突然就觉得很奇怪，为什么会等价于多项式乘法呢。<br>然后看了下example吓了一跳，从数学表达式上来看完全就是一样的东西嘛。  </p>
 <blockquote>
-<p>Create vectors u and v containing the coefficients of the polynomials $x^2+1$ and $2x+7$.<br><code>u = [1 0 1];</code><br><code>v = [2 7];</code><br>Use convolution to multiply the polynomials.<br><code>w = conv(u,v)</code><br>w =   2     7     2     7<br>w contains the polynomial coefficients for $2x&amp;3+7x^2+2x+7$.</p>
+<p>Create vectors u and v containing the coefficients of the polynomials $x^2+1$ and $2x+7$.<br><code>u = [1 0 1];</code><br><code>v = [2 7];</code><br>Use convolution to multiply the polynomials.<br><code>w = conv(u,v)</code><br>w =   2     7     2     7<br>w contains the polynomial coefficients for $2x^3+7x^2+2x+7$.</p>
 </blockquote>
 <p>然后就去google卷积，发现了知乎上一个回答挺有趣的，<a href="https://www.zhihu.com/question/22298352/answer/34267457" target="_blank" rel="external">怎样通俗易懂地解释卷积？</a><br>这个回答中的图示没有用教科书中讲的反褶+时移相乘，而是$x[n]$乘以$y[k]$的时移和叠加。回答者的描述是  </p>
 <blockquote>
@@ -425,6 +425,10 @@ Create vectors u and v containing the coefficie">
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/29/雷达扩展目标回波信号/" rel="prev" title="雷达扩展目标回波信号">
+                雷达扩展目标回波信号 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -496,7 +500,7 @@ Create vectors u and v containing the coefficie">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -513,7 +517,7 @@ Create vectors u and v containing the coefficie">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

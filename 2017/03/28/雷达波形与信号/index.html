@@ -98,7 +98,7 @@
 多普勒频率分辨率:$\delta_{f">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/03/28/雷达波形与信号/LFM信号示意图.jpg">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/03/28/雷达波形与信号/lfm信号仿真结果.png">
-<meta property="og:updated_time" content="2017-03-28T11:11:11.506Z">
+<meta property="og:updated_time" content="2017-03-29T09:59:03.991Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="雷达波形与信号">
 <meta name="twitter:description" content="雷达的分辨率雷达波形$u(t)$的自相关函数主瓣宽度越窄，其距离分辨能力越强。即若要时间（距离）分辨率好，应选择这样的信号，即它通过匹配滤波器后应该输出很窄的主瓣波峰。这样的信号或是具有很短持续时间的脉冲，或是具有很宽频谱的宽带波形。  
@@ -377,12 +377,13 @@
 <h3 id="线性调频脉冲LFM"><a href="#线性调频脉冲LFM" class="headerlink" title="线性调频脉冲LFM"></a>线性调频脉冲LFM</h3><p>Linear Frequency Modulation，LFM。对雷达波形进行调频得到宽带信号，分为上变频和下变频。  </p>
 <p>该体制采用宽脉冲发射以提高发射的平均功率，保证足够大的作用距离；而接收时采用相应的脉冲压缩算法获得窄脉冲，以提高距离分辨率，较好的解决雷达作用距离与距离分辨率之间的矛盾。</p>
 <img src="/2017/03/28/雷达波形与信号/LFM信号示意图.jpg" alt="LFM信号示意图.jpg" title="">  
-<p>设线性调频信号为$s(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j(\omega_c t+\pi \gamma t^2)}$<br>其中$\omega_c$为中心频率，$t_p$为脉冲宽度，$\gamma$为线性调频斜率，$B=\gamma t_p$<br>包络调制函数为$u(t) = 1/\sqrt{t_p} rect(t/t_p)e^{(j\pi \gamma t^2)}$<br>随时间变化的频率函数为$f(t)=1/{2\pi}d/{dt} (\omega_c t + \pi \gamma t^2) = \omega_c/{2\pi}+\gamma t$  </p>
+<p>设线性调频信号为$s(t) = 1/\sqrt{t_p} rect(t/t_p)e^{j(\omega_c t+\pi \gamma t^2)}$<br>其中$\omega_c$为发射中心频率，$t_p$为脉冲宽度，$\gamma$为线性调频斜率，$B=\gamma t_p$。<br>包络调制函数为$u(t) = 1/\sqrt{t_p} rect(t/t_p)e^{(j\pi \gamma t^2)}$<br>随时间变化的频率函数为$f(t)=1/{2\pi}d/{dt} (\omega_c t + \pi \gamma t^2) = \omega_c/{2\pi}+\gamma t$  </p>
 <p>Matlab仿真代码示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">%%demo of chirp signal</div><div class="line">T=20e-6;                          %pulse duration us</div><div class="line">B=50e6;                           %chirp frequency modulation bandwidth MHz</div><div class="line">K=B/T;                            %chirp slope</div><div class="line">Fs=4*B;Ts=1/Fs;                   %sampling frequency and sample spacing</div><div class="line">N=T/Ts;</div><div class="line">fc=0;</div><div class="line">t=linspace(-T/2,T/2,N);</div><div class="line">St=exp(1i*pi*K*t.^2);                 %generate chirp signal</div><div class="line">St=St.*exp(1i*2*pi*fc*t);</div><div class="line">subplot(211)</div><div class="line">plot(t*1e6,real(St));</div><div class="line">xlabel(&apos;Time in u sec&apos;);</div><div class="line">title(&apos;Real part of chirp signal&apos;);</div><div class="line">grid on;</div><div class="line">subplot(212)</div><div class="line">freq=linspace(-Fs/2,Fs/2,N);</div><div class="line">plot(freq*1e-6,fftshift(abs(fft(St))));</div><div class="line">xlabel(&apos;Frequency in MHz&apos;);</div><div class="line">title(&apos;Magnitude spectrum of chirp signal&apos;);</div><div class="line">grid on;</div></pre></td></tr></table></figure></p>
 <p>结果如下<br><img src="/2017/03/28/雷达波形与信号/lfm信号仿真结果.png" alt="lfm信号仿真结果.png" title="">  </p>
 <h3 id="脉冲压缩"><a href="#脉冲压缩" class="headerlink" title="脉冲压缩"></a>脉冲压缩</h3><p>线性调频斜率为$\gamma$、脉宽为$t_p$的脉冲，通过匹配滤波器后，时间分辨率为$1/\gamma t_p$。对于雷达接收机而言，相当于输入脉冲的宽度为$t_p$，输出脉冲宽的为$1/\gamma t_p = 1/B$，即输出与输入脉冲宽度之比为$1/\gamma t_p^2$。<br>在LFM雷达中，$\gamma t_p^2$通常称为时宽带宽积，且有$\gamma t_p^2 \gg 1$。<br>可见，接收机（匹配滤波器）的输出脉冲宽度在时间上被“压缩”，称之为脉冲压缩(Pulse compression)。<br>也就是说，为了获得线性调频信号的大带宽所对应的高级了分辨能力，必须对接收到的LFM宽脉冲回波进行压缩滤波处理（匹配滤波），使其变为窄脉冲。   </p>
 <p>实现上，数字方法有非递归滤波器（时域卷积），正-反DFT（频域分析），后者占用内存少、运算量小、速度快，更长用。  </p>
 <p>为了抑制旁瓣，减少虚警，常用加权处理。即将匹配滤波器的频率响应乘上某些适当的“窗函数”，在时域中相当于一系列加权函数组成的滤波器和匹配滤波器级联。  </p>
+<p>Reference: 《雷达系统及信息处理》</p>
 
       
     </div>
@@ -496,7 +497,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -513,7 +514,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

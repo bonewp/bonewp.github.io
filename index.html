@@ -292,6 +292,150 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/29/雷达扩展目标回波信号/" itemprop="url">
+                  雷达扩展目标回波信号
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-29T17:27:58+08:00" content="2017-03-29">
+              2017-03-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/雷达/" itemprop="url" rel="index">
+                    <span itemprop="name">雷达</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/29/雷达扩展目标回波信号/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/29/雷达扩展目标回波信号/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>通过雷达分辨单元与雷达目标尺寸比较，将雷达目标区分为：<br>若目标尺寸远小于雷达分辨单元，视为点目标处理；若目标尺寸远大于雷达分辨单元，视为扩展目标处理。  </p>
+<p>例如使用LFM波形，设基带带宽为100MHz，则距离分辨率为$\delta_r = c/{2B} = 1.5m$，远大于该尺寸的目标应视为扩展目标。  </p>
+<p>对于点目标来说，其数学模型由雷达散射截面(RCS)描述；而对于扩展目标而言，需要结合散射中心的理论进行建模。参考论文中的描述是：  </p>
+<blockquote>
+<p>扩展目标的电磁散射场可认为是各个散射中心的散射场叠加形成的，其电磁散射特性可以认为由其若干个散射中心共同作用的结果。<br>此时只需要将扩展目标的各个散射点在自身散射特性的基础上进行矢量叠加便可得到整个扩展目标的散射特性描述。  </p>
+</blockquote>
+<p>基于上述结论，可以先建立单个散射点的回波模型，再做矢量叠加得到扩展目标的回波模型。  </p>
+<p>另一方面，将目标视作一个线性时不变系统(LTI)，由冲击响应来表征目标，则目标回波是雷达发射信号经过一个LTI系统后的信号输出。<br>即目标回波信号表示为$s_r(t)=s(t) * h(t)$。  </p>
+<p>所以可以先计算单散射点回波模型的冲击响应函数，进而得到扩展目标的冲击响应。  </p>
+<h3 id="单点目标回波模型"><a href="#单点目标回波模型" class="headerlink" title="单点目标回波模型"></a>单点目标回波模型</h3><p>设采用线性调频信号<br>$s(t) = rect(t/t_p)e^{j(\omega_c t+\pi \gamma t^2)}$<br>其中$\omega_c$为发射信号中心频率，$t_p$为脉冲宽度，$\gamma$为线性调频斜率，且$B=\gamma t_p$。  </p>
+<p>假设目标初始径向距离为$R_0$，匀速径向速度为$\nu$，目标靠近雷达运动，则回波延时为<br>$\tau = \frac{2(R_0-\nu t)}{c}$  </p>
+<p>用PRT上升沿击中目标时目标的回波延时代替整个脉冲内的回波延时，则第$n$个PRT击中目标时的快时间$\tilde{t}$（以第$n$个PRT为参考的时间）满足：<br>$R_0 - \nu((n-1)\cdot t_PRT+\tilde{t}) = c\cdot \tilde{t}$  </p>
+<p>那么$\tilde{t} = \frac{R_0 - \nu \cdot (n-1)\cdot t_PRT}{c-\nu}$  </p>
+<p>此时目标的回波延时为<br>$\tau_1 = 2\tilde{t} \approx \frac{2(R_0 - \nu \cdot (n-1)\cdot t_PRT)}{c}$  </p>
+<p>目标回波信号表示为发射信号的延时<br>$s_r(t) = As(t-\tau) = A rect(\frac{t-\tau}{t_p}) exp({j(\omega_c (t-\tau)+\pi \gamma (t-\tau)^2)})$<br>其中$A$为回波信号幅度，将$\tau$替换为$\tau_1$近似为第n个PRT的信号回波。</p>
+<p>为了模拟该回波，需要将雷达发射信号搬移至中频/基带做卷积， 因此先得到回波信号的中频形式，设中频频率为$\omega<em>l$，且$\omega</em>{\Delta} = \omega_c - \omega_l$。（当$\omega<em>l = 0时为基带形式$）则中频回波信号为<br>$s</em>{rl}(t) = s<em>r(t) * exp(-j\omega</em>{\Delta})$<br>$ = A rect(\frac{t-\tau_1}{t<em>p}) exp(-j\omega</em>{\Delta}\tau_1) exp({j(\omega_l (t-\tau_1)+\pi \gamma (t-\tau_1)^2)})$<br>$ = s<em>l(t) * [A exp((-j\omega</em>{\Delta}\tau_1)) \delta(t-\tau_1)]$<br>其中$s_l(t)$为雷达中频发射信号。  </p>
+<p>由此得到中频形式的冲激响应函数为<br>$h<em>l(t) = A exp((-j\omega</em>{\Delta}\tau_1)) \delta(t-\tau_1) $  </p>
+<p>该冲激函数包含了点目标回波的延迟、幅度和相位信息。<br><strong>疑问：这个相位信息的物理意义是？</strong>  </p>
+<h3 id="扩展点回波"><a href="#扩展点回波" class="headerlink" title="扩展点回波"></a>扩展点回波</h3><p>已知扩展点目标为目标上的所有散射点回波的矢量和，则N扩展点的总目标回波为<br>$s<em>{r1\sum}(t) = \sum</em>{i=1}^N s_l(t) <em> [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>$ = s_l(t) </em> \sum_{i=1}^N[A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>其中$A<em>i$是第i个散射点的回波信号幅度，$\tau</em>{i1}$是第i个散射点的回波时延。  </p>
+<p>所以扩展目标的冲击响应函数为<br>$h<em>l(t) = \sum</em>{i=1}^N [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})] $  </p>
+<p>参考文献的结论：  </p>
+<blockquote>
+<p>目标的散射特性反映在每个分辨单元的回波信号幅度和相位上。因此扩展目标的回波模拟实现，首先对雷达发射信号进行脉内调制，然后将散射特性数据与该发射信号进行卷积运算，最后即可得到扩展目标雷达的回波信号。  </p>
+</blockquote>
+<p><strong>疑问：对该推导保留意见，其中$\tau_{i1}表达式中的n怎么选取？$</strong></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/28/卷积的物理意义/" itemprop="url">
                   卷积的物理意义
                 </a>
@@ -368,7 +512,7 @@
 </blockquote>
 <p>突然就觉得很奇怪，为什么会等价于多项式乘法呢。<br>然后看了下example吓了一跳，从数学表达式上来看完全就是一样的东西嘛。  </p>
 <blockquote>
-<p>Create vectors u and v containing the coefficients of the polynomials $x^2+1$ and $2x+7$.<br><code>u = [1 0 1];</code><br><code>v = [2 7];</code><br>Use convolution to multiply the polynomials.<br><code>w = conv(u,v)</code><br>w =   2     7     2     7<br>w contains the polynomial coefficients for $2x&amp;3+7x^2+2x+7$.</p>
+<p>Create vectors u and v containing the coefficients of the polynomials $x^2+1$ and $2x+7$.<br><code>u = [1 0 1];</code><br><code>v = [2 7];</code><br>Use convolution to multiply the polynomials.<br><code>w = conv(u,v)</code><br>w =   2     7     2     7<br>w contains the polynomial coefficients for $2x^3+7x^2+2x+7$.</p>
 </blockquote>
 <p>然后就去google卷积，发现了知乎上一个回答挺有趣的，<a href="https://www.zhihu.com/question/22298352/answer/34267457" target="_blank" rel="external">怎样通俗易懂地解释卷积？</a><br>这个回答中的图示没有用教科书中讲的反褶+时移相乘，而是$x[n]$乘以$y[k]$的时移和叠加。回答者的描述是  </p>
 <blockquote>
@@ -1399,140 +1543,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/25/usb体制及测控技术相关/" itemprop="url">
-                  usb体制及测控技术相关
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-25T21:04:53+08:00" content="2016-08-25">
-              2016-08-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/通信/" itemprop="url" rel="index">
-                    <span itemprop="name">通信</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/25/usb体制及测控技术相关/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/25/usb体制及测控技术相关/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近做的项目是基于USB体制下的相关算法，于是找了些资料把这个体制给了解了一下，在此做一下总结。</p>
-<h3 id="USB体制来源"><a href="#USB体制来源" class="headerlink" title="USB体制来源"></a>USB体制来源</h3><p>USB(Unified S Band)全称统一S波段测控体制，最早是由美方提出并在1966年用于“阿波罗”登月计划，为解决原测控网中多种频段设备的复杂、电磁兼容性差、作用距离不够等问题缺陷，将跟踪测轨、遥控、遥测综合为一体，为测控技术发展史上的一个里程碑<sup><a href="#1">[1]</a></sup>。</p>
-<blockquote>
-<p>到1979年，世界无线电管理会议决定以S波段作为空间业务频段以后,更促进了USB的进一步发展。到了80年代，USB又被纳入国际空间数据系统咨询委员会(CCSDS)标准，并已为世界上多数国家共同接受，为有利于开展国际合作，世界上许多国家都按此建造统一S波段系统，使USB得到了进一步的推广和发展。世界上各航天国家如：中、美、前苏联、法、日、德、巴、印以及国际航天组织（如欧空局、阿拉伯卫星通信组织，亚州卫星通信组织）都相继建立了自己的USB和UCB(统一C波段)测控系统，使统一载波测控系统如雨后春笋般地出现在地球上。</p>
-</blockquote>
-<p>在找到的一篇<a href="http://public.ccsds.org/">ccsds</a>介绍中提到了我国最早应用USB体制的卫星<sup><a href="#2">[2]</a></sup>：</p>
-<blockquote>
-<p>从九十年代开始我国的航天测控系统开始采用统一S波段测控体制（USB），在射频与调制的物理层采用了CCSDS标准，与此同时我国也在链路层以上的高层协议上研究采用CCSDS标准。1999年5月10日发射的实践五号卫星，在我国是第一个采用 USB测控体制的航天器，也是第一个采用CCSDS-AOS高级在轨系统标准的航天器。此后我国与欧空局合作的空间科学探测项目“双星计划”的两颗卫星“探测一号”和“探测二号”卫星的数传数据不但完全采用CCSDS-AOS高级在轨系统标准，而且向CCSDS组织正式申请了飞行器识别符。</p>
-</blockquote>
-<h3 id="USB基本原理"><a href="#USB基本原理" class="headerlink" title="USB基本原理"></a>USB基本原理</h3><p>测控通信系统是卫星系统的五大系统之一、载人航天系统的七大系统之一，完成对飞船的测轨、遥控、遥测、话音通信和电视传输等重要作用<sup><a href="#3">[3]</a></sup>。<br>对于遥测、遥控、测速等概念可参考文献<a href="#4">[4]</a>。</p>
-<blockquote>
-<p>国际上对于航天测控定义为：“Tracking, Telemetry&amp;Command”(缩写TT&amp;C)，中文通常称“跟踪，遥测及遥控”。  </p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/25/usb体制及测控技术相关/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1578,7 +1588,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1595,7 +1605,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
