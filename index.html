@@ -292,6 +292,259 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/10/分段卷积/" itemprop="url">
+                  分段卷积
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-10T13:26:57+08:00" content="2017-04-10">
+              2017-04-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/通信/" itemprop="url" rel="index">
+                    <span itemprop="name">通信</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/10/分段卷积/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/分段卷积/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>在长序列与短序列进行卷积时(特别是输入序列变长或无限长)， 常采用分段卷积的方法处理。即将长序列分段为多个子段，对每个子段分别计算线性卷积后，再将每段计算输出按照一定的关系组合在一起，即可得到与原序列计算卷积相同的结果。  </p>
+<p>这样可降低运算量并提高实时性，特别是对子段的计算采用FFT方法，进一步提高速度。<br>开始提到分段卷积应用于两序列的长度相差较大时，而对于何时用分段卷积何时用FFT计算，<a href="https://zh.wikipedia.org/wiki/卷积" target="_blank" rel="external">维基</a>上有详细比较的示例。  </p>
+<p>而分段卷积根据方式不同，有重叠相加法和重叠保留法两种，我在一篇文章中看到过介绍说，两种方法的计算效率相同，所以要实际应用时分情况选择。  </p>
+<h3 id="重叠相加法"><a href="#重叠相加法" class="headerlink" title="重叠相加法"></a>重叠相加法</h3><p>假设x[n]长度为N，h[n]长度为M，则x[n]*h[n]长度为N+M-1。<br>将x[n]分为k个子段，每个子段长度为L，即$x_k[n]=x[n]$，其中$kL \leq n \leq (k+1)L-1$，即每个子段相互之间无重叠。  </p>
+<p>计算$y_k[n] = x_k[n] * h[n]$$后，对各$y_k[n]$重叠相加后即可得到y[n]。而重叠相加的关系如下：$y_k[n]$长度为L+M-1，其中$y<em>k[n]$的后M-1个点与紧邻下一子段$y</em>{k+1}[n]$的前M+1个点相互重叠，因此每次计算出一个$y<em>k[n]$后，与$y</em>{k-1}[n]$按刚才的关系叠加后，可得到前L个点为最终实际输出，而后M-1个点还需用于下一次计算。<br>可知每次子段计算有效输入输出L点。    </p>
+<p>刚才的关系按照冲击响应法去画图很容易理解，并且注意，每个子段卷积计算结果为L+M-1点，即可用L+M-1点FFT对应的循环卷积得到线性卷积结果。  </p>
+<h3 id="重叠保留法"><a href="#重叠保留法" class="headerlink" title="重叠保留法"></a>重叠保留法</h3><p>假设x[n]长度为N，h[n]长度为M，则x[n]*h[n]长度为N+M-1。<br>将x[n]按重叠分段分成k个子段，每个子段的前M-1点与上一子段的后M-1点相同，即$x_k[n] = x[n+k(L-M+1)]$，其中$0 \leq n \leq L-1$。  </p>
+<p>需要注意必须满足子段的长度$M \leq L$，并且$x_k[n]$与h[n]采用的是L点循环卷积。这样循环卷积的结果$y_k[n]$为L点，而原线性卷积的长度为L+M-1，分析可知$y_k[n]$前M-1点是混叠的应该舍去，而后L-M+1点无混叠为实际输出。  </p>
+<p>因此每次做L点循环卷积后，取后L-M+1点作为实际输出，即每次子段计算有效输入输出L+M-1点。  </p>
+<p>实际运算时常采用50%重叠，即取L=2M做L点循环卷积(用FFT实现)。并且对序列开头补0以得到线性卷积输出。    </p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>上述方法目的都是为了减少计算量，而我在实际运用时遇到的场景是，输入序列不定长，需要分段，而h[n]不定长的同时长度很常，一次性长序列的FFT计算带来的延迟过大，因此我也想对h[n]分段。<br>这个时候就需要将输入x[n]分割为长度小于h[n]的子段，再在$x_k[n]$子段计算时将h[n]分子段计算。  </p>
+<p>重叠保留法要求子段长度满足$M \leq L$，因此对x[n]分段时不可取，我验证了下重叠相加法，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">x = randi(10,1,1024);</div><div class="line">h = randi(10,1,2048);</div><div class="line"></div><div class="line">L=length(x);</div><div class="line">M=length(h);</div><div class="line">k = 4;          %分段数量</div><div class="line">Nseg= L/k;      %每段长度</div><div class="line"></div><div class="line">x = [x, zeros(1,k*Nseg-L)];</div><div class="line">y = zeros(1, L+M-1);</div><div class="line"></div><div class="line">for i=0:1:k-1</div><div class="line">    ix = i*Nseg;</div><div class="line">    xseg = x(ix+1 : ix+Nseg);</div><div class="line">    yseg = cconv(xseg, h, Nseg+M-1);    %DFT对应的循环卷积实现线性卷积</div><div class="line">%     yseg = conv(xseg, h);</div><div class="line">    y(ix+1:ix+Nseg+M-1)=y(ix+1:ix+Nseg+M-1)+yseg(1:Nseg+M-1);</div><div class="line">end</div><div class="line"></div><div class="line">yori = conv(x,h);   %原线性卷积序列</div></pre></td></tr></table></figure>
+<p>比较y和yori结果相同，也就是说重叠相加法对子段长度L和卷积序列长度M之间的关系大小要求。  </p>
+<p>因此可采取的方法举例，将输入序列按照重叠相加分段为512点子段，子段与4096点h[n]做线性卷积后的输出结果按照重叠关系相加后得到实际输出序列。<br>而h[n]按照重叠保留法（也可重叠相加法）分为1024点子段，做1024点循环卷积，取后512点为线性卷积结果。<br>这样FFT计算单位定为了1024点，当然这样是以资源换取速度的策略。而且各子段结果之间的衔接也是很重要的一点。  </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/30/雷达扩展目标回波信号的仿真/" itemprop="url">
+                  雷达扩展目标回波信号的仿真
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-30T22:40:51+08:00" content="2017-03-30">
+              2017-03-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/雷达/" itemprop="url" rel="index">
+                    <span itemprop="name">雷达</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/30/雷达扩展目标回波信号的仿真/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/30/雷达扩展目标回波信号的仿真/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="单点目标"><a href="#单点目标" class="headerlink" title="单点目标"></a>单点目标</h3><h3 id="单点目标的时移"><a href="#单点目标的时移" class="headerlink" title="单点目标的时移"></a>单点目标的时移</h3><h3 id="两点目标"><a href="#两点目标" class="headerlink" title="两点目标"></a>两点目标</h3><h3 id="多点目标"><a href="#多点目标" class="headerlink" title="多点目标"></a>多点目标</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/29/雷达扩展目标回波信号/" itemprop="url">
                   雷达扩展目标回波信号
                 </a>
@@ -1275,257 +1528,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/24/FM调制与解调/" itemprop="url">
-                  FM调制与解调
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-24T21:31:33+08:00" content="2016-09-24">
-              2016-09-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/通信/" itemprop="url" rel="index">
-                    <span itemprop="name">通信</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/24/FM调制与解调/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/24/FM调制与解调/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>之前做的项目中有FM调制解调的算法，然后重新拾起通信原理来复习，惊奇地发现我脑子里记得FM信号表达式一直是错的…简直是再一次对不起学通信这个名号啊（我为什么要说又..）  </p>
-<p>首先我知道FM的频率表达式是$f=f_0+f(t)$，然后我理所当然地、头脑短路地认为FM信号表达式为$f(t)=A\cos[2\pi(f_0+f(t))+\theta]$。简直啪啪地打脸…完完全去去地错误，我还天真地以为这是正确的表达式好长一段时间。  </p>
-<p><strong>正确的思路</strong> 应该是由频率表达式得出全相位表达式，进而得到余弦信号表达式。<br>首先知道瞬时角频率为$\omega_F(t)=\omega_c+K_F\upsilon(t)$<br>由于调频波在不同时刻的旋转角频率不同，则从$t=0$到$t$时刻所旋转的全相角为瞬时角频率在此时间间隔内的积分，即$\psi_F(t)=\int_0^t\omega_F(t)\,dt=\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0$<br>那么FM信号的表达式即$\upsilon_F(t)=V_{cm}\cos[\psi_F(t)]=V_{cm}\cos{\omega_ct+K_F\int_0^\lambda\upsilon(\lambda)\,d\lambda+\theta_0}$  </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/24/FM调制与解调/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/24/超外差的概念/" itemprop="url">
-                  超外差的概念
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-24T20:50:23+08:00" content="2016-09-24">
-              2016-09-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/通信/" itemprop="url" rel="index">
-                    <span itemprop="name">通信</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/24/超外差的概念/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/24/超外差的概念/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本科时学习通信原理就接触了超外差式(superheterodyne)接收机，也知道超外差式接收机的原理和框图，现在做了一些相关项目对此类功能也是熟悉了很多，但就是从来没去关注过为什么叫做超外差这么个奇怪的名字。<br>这两天赶硕士论文开题，补《雷达系统及其信息处理》，在雷达接收机章节中又看到这个词，才重新细细思考起这个词儿，然后突然觉得自己简直对不起学通信这个名号…连超外差这个词过了几年才明白。  </p>
-<p>首先从这个词的起源说起，超外差来源于外差(heterodyne)，引用百度百科上的说法  </p>
-<blockquote>
-<p> heterodyne（外差原理）来自于希腊语的词根hetero（不同的）和dyn（功率）。<br>外差法的英文原意应该是 “不同频率信号作为驱动力的方法”, 用汉语可凝练成 “异频驱使法”, 再进一步, 就变成 “外差法” 了. 这个从外差法专利文档中也可以得到印证, 其在最后的保护范围声明中, 斐德森一口气开列了 9种情况, 核心内容都是”用两个以及两个以上频率的信号相作用产生新的频率的方法”。  </p>
-</blockquote>
-<p>也就是说本质是利用两个频率混频之后的结果得到所用信号的频率。一个词总结就是<strong>频谱搬移</strong>。<br>尼玛原来频移的技术是这么引入进来的，我现在做的硬件很多都在搞上/下变频、升/降采样，都跟着玩意儿有关，搞了这么久才知道精髓原来就是外差…  </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/24/超外差的概念/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1571,7 +1573,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1588,7 +1590,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

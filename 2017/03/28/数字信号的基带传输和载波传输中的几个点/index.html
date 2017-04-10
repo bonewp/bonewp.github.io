@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="bonewp blog">
 <meta property="og:description" content="成型滤波升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  
 升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$，$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。">
-<meta property="og:updated_time" content="2017-03-28T07:08:55.383Z">
+<meta property="og:updated_time" content="2017-03-31T02:52:36.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数字信号的基带传输和载波传输中的几个点">
 <meta name="twitter:description" content="成型滤波升余弦滚降信号：以 $\pi /t$ 为中心，具有奇对称升余弦个月形状过渡带的一类的无串扰波形。其中滚降系数 $\alpha$ 介于0~1之间，$\alpha$=0 时为具有最窄频带的无串扰波形（奈奎斯特带宽），频带利用率最高但实际不可能达到。  
@@ -363,7 +363,7 @@
 <p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$，$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
 <a id="more"></a>
 <h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^{(-j2\pi fT)}$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
-<p>$h(t)=KS(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
+<p>$h(t)=KS^*(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
 <p>匹配滤波器的输出信号波形与输入信号的自相关函数成比例。  </p>
 <h3 id="MPSK"><a href="#MPSK" class="headerlink" title="MPSK"></a>MPSK</h3><p>多进制相移键控，载波相位有M种取值。  </p>
 <p>已调信号时域表达式可简写为，$S_{MPSK}(t) = I(t)\cos(\omega_c t) - Q(t)\sin(\omega_c t)$，所以可用正交调制的方法产生。这里<br>同相分量 $I(t) = \Sigma a_n rect(t-nT_s)$<br>正交分量 $Q(t) = \Sigma b_n rect(t-nT_s)$<br>其中rect矩形函数，即为矩形包络，可使用成型滤波的升余弦滚降信号作为包络吧？<br>而$a_n=Acos\phi(n)$, $b_n=Asin\phi(n)$。  </p>
@@ -484,7 +484,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -501,7 +501,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

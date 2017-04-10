@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title><![CDATA[分段卷积]]></title>
+      <url>http://bonewp.github.io.git/2017/04/10/%E5%88%86%E6%AE%B5%E5%8D%B7%E7%A7%AF/</url>
+      <content type="html"><![CDATA[<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>在长序列与短序列进行卷积时(特别是输入序列变长或无限长)， 常采用分段卷积的方法处理。即将长序列分段为多个子段，对每个子段分别计算线性卷积后，再将每段计算输出按照一定的关系组合在一起，即可得到与原序列计算卷积相同的结果。  </p>
+<p>这样可降低运算量并提高实时性，特别是对子段的计算采用FFT方法，进一步提高速度。<br>开始提到分段卷积应用于两序列的长度相差较大时，而对于何时用分段卷积何时用FFT计算，<a href="https://zh.wikipedia.org/wiki/卷积" target="_blank" rel="external">维基</a>上有详细比较的示例。  </p>
+<p>而分段卷积根据方式不同，有重叠相加法和重叠保留法两种，我在一篇文章中看到过介绍说，两种方法的计算效率相同，所以要实际应用时分情况选择。  </p>
+<h3 id="重叠相加法"><a href="#重叠相加法" class="headerlink" title="重叠相加法"></a>重叠相加法</h3><p>假设x[n]长度为N，h[n]长度为M，则x[n]*h[n]长度为N+M-1。<br>将x[n]分为k个子段，每个子段长度为L，即$x_k[n]=x[n]$，其中$kL \leq n \leq (k+1)L-1$，即每个子段相互之间无重叠。  </p>
+<p>计算$y_k[n] = x_k[n] * h[n]$$后，对各$y_k[n]$重叠相加后即可得到y[n]。而重叠相加的关系如下：$y_k[n]$长度为L+M-1，其中$y<em>k[n]$的后M-1个点与紧邻下一子段$y</em>{k+1}[n]$的前M+1个点相互重叠，因此每次计算出一个$y<em>k[n]$后，与$y</em>{k-1}[n]$按刚才的关系叠加后，可得到前L个点为最终实际输出，而后M-1个点还需用于下一次计算。<br>可知每次子段计算有效输入输出L点。    </p>
+<p>刚才的关系按照冲击响应法去画图很容易理解，并且注意，每个子段卷积计算结果为L+M-1点，即可用L+M-1点FFT对应的循环卷积得到线性卷积结果。  </p>
+<h3 id="重叠保留法"><a href="#重叠保留法" class="headerlink" title="重叠保留法"></a>重叠保留法</h3><p>假设x[n]长度为N，h[n]长度为M，则x[n]*h[n]长度为N+M-1。<br>将x[n]按重叠分段分成k个子段，每个子段的前M-1点与上一子段的后M-1点相同，即$x_k[n] = x[n+k(L-M+1)]$，其中$0 \leq n \leq L-1$。  </p>
+<p>需要注意必须满足子段的长度$M \leq L$，并且$x_k[n]$与h[n]采用的是L点循环卷积。这样循环卷积的结果$y_k[n]$为L点，而原线性卷积的长度为L+M-1，分析可知$y_k[n]$前M-1点是混叠的应该舍去，而后L-M+1点无混叠为实际输出。  </p>
+<p>因此每次做L点循环卷积后，取后L-M+1点作为实际输出，即每次子段计算有效输入输出L+M-1点。  </p>
+<p>实际运算时常采用50%重叠，即取L=2M做L点循环卷积(用FFT实现)。并且对序列开头补0以得到线性卷积输出。    </p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>上述方法目的都是为了减少计算量，而我在实际运用时遇到的场景是，输入序列不定长，需要分段，而h[n]不定长的同时长度很常，一次性长序列的FFT计算带来的延迟过大，因此我也想对h[n]分段。<br>这个时候就需要将输入x[n]分割为长度小于h[n]的子段，再在$x_k[n]$子段计算时将h[n]分子段计算。  </p>
+<p>重叠保留法要求子段长度满足$M \leq L$，因此对x[n]分段时不可取，我验证了下重叠相加法，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">x = randi(10,1,1024);</div><div class="line">h = randi(10,1,2048);</div><div class="line"></div><div class="line">L=length(x);</div><div class="line">M=length(h);</div><div class="line">k = 4;          %分段数量</div><div class="line">Nseg= L/k;      %每段长度</div><div class="line"></div><div class="line">x = [x, zeros(1,k*Nseg-L)];</div><div class="line">y = zeros(1, L+M-1);</div><div class="line"></div><div class="line">for i=0:1:k-1</div><div class="line">    ix = i*Nseg;</div><div class="line">    xseg = x(ix+1 : ix+Nseg);</div><div class="line">    yseg = cconv(xseg, h, Nseg+M-1);    %DFT对应的循环卷积实现线性卷积</div><div class="line">%     yseg = conv(xseg, h);</div><div class="line">    y(ix+1:ix+Nseg+M-1)=y(ix+1:ix+Nseg+M-1)+yseg(1:Nseg+M-1);</div><div class="line">end</div><div class="line"></div><div class="line">yori = conv(x,h);   %原线性卷积序列</div></pre></td></tr></table></figure>
+<p>比较y和yori结果相同，也就是说重叠相加法对子段长度L和卷积序列长度M之间的关系大小要求。  </p>
+<p>因此可采取的方法举例，将输入序列按照重叠相加分段为512点子段，子段与4096点h[n]做线性卷积后的输出结果按照重叠关系相加后得到实际输出序列。<br>而h[n]按照重叠保留法（也可重叠相加法）分为1024点子段，做1024点循环卷积，取后512点为线性卷积结果。<br>这样FFT计算单位定为了1024点，当然这样是以资源换取速度的策略。而且各子段结果之间的衔接也是很重要的一点。  </p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[雷达扩展目标回波信号的仿真]]></title>
+      <url>http://bonewp.github.io.git/2017/03/30/%E9%9B%B7%E8%BE%BE%E6%89%A9%E5%B1%95%E7%9B%AE%E6%A0%87%E5%9B%9E%E6%B3%A2%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%BB%BF%E7%9C%9F/</url>
+      <content type="html"><![CDATA[<h3 id="单点目标"><a href="#单点目标" class="headerlink" title="单点目标"></a>单点目标</h3><h3 id="单点目标的时移"><a href="#单点目标的时移" class="headerlink" title="单点目标的时移"></a>单点目标的时移</h3><h3 id="两点目标"><a href="#两点目标" class="headerlink" title="两点目标"></a>两点目标</h3><h3 id="多点目标"><a href="#多点目标" class="headerlink" title="多点目标"></a>多点目标</h3>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[雷达扩展目标回波信号]]></title>
       <url>http://bonewp.github.io.git/2017/03/29/%E9%9B%B7%E8%BE%BE%E6%89%A9%E5%B1%95%E7%9B%AE%E6%A0%87%E5%9B%9E%E6%B3%A2%E4%BF%A1%E5%8F%B7/</url>
       <content type="html"><![CDATA[<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>通过雷达分辨单元与雷达目标尺寸比较，将雷达目标区分为：<br>若目标尺寸远小于雷达分辨单元，视为点目标处理；若目标尺寸远大于雷达分辨单元，视为扩展目标处理。  </p>
@@ -26,14 +53,15 @@
 <p>由此得到中频形式的冲激响应函数为<br>$h<em>l(t) = A exp((-j\omega</em>{\Delta}\tau_1)) \delta(t-\tau_1)$  </p>
 <p>该冲激函数包含了点目标回波的延迟、幅度和相位信息。<br><strong>疑问：这个相位信息的物理意义是？</strong>  </p>
 <h3 id="扩展点回波"><a href="#扩展点回波" class="headerlink" title="扩展点回波"></a>扩展点回波</h3><p>已知扩展点目标为目标上的所有散射点回波的矢量和，则N扩展点的总目标回波为<br>$s<em>{r1\sum}(t) = \sum</em>{i=1}^N s_l(t) <em> [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>$= s_l(t) </em> \sum_{i=1}^N[A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>其中$A<em>i$是第i个散射点的回波信号幅度，$\tau</em>{i1}$是第i个散射点的回波时延。  </p>
-<p>所以扩展目标的冲击响应函数为<br>$h<em>l(t) = \sum</em>{i=1}^N [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$  </p>
+<p>所以扩展目标的冲击响应函数为<br>$h<em>l(t) = \sum</em>{i=1}^N [A<em>i exp(-j \omega</em>{\Delta} \tau<em>{i1}) \delta(t-\tau</em>{i1})]$  </p>
 <p>参考文献的结论：  </p>
 <blockquote>
 <p>目标的散射特性反映在每个分辨单元的回波信号幅度和相位上。因此扩展目标的回波模拟实现，首先对雷达发射信号进行脉内调制，然后将散射特性数据与该发射信号进行卷积运算，最后即可得到扩展目标雷达的回波信号。  </p>
 </blockquote>
 <p><strong>疑问：对该推导保留意见，其中$\tau_{i1}$表达式中的n怎么选取？</strong></p>
 <p><strong>疑问：卷积序列的长度选取？或者频域处理长度选取？</strong></p>
-<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>简单来看冲激响应函数为delta函数的时移和叠加(简化忽略幅度信息)，那么问题就是如何量化该h(t)，使得输入信号与该h(n)相卷积？</p>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>简单来看冲激响应函数为delta函数的时移和叠加(简化忽略幅度信息)，那么问题就是如何量化该h(t)，使得输入信号与该h(n)相卷积？  </p>
+<p>这与雷达波形的延时范围有关，也就是冲激函数的长度。  </p>
 <p>Reference: <a href="http://cdmd.cnki.com.cn/Article/CDMD-10007-1015029826.htm" target="_blank" rel="external">雷达扩展目标回波模拟技术研究与实现</a></p>
 ]]></content>
     </entry>
@@ -64,7 +92,7 @@
 <p>升余弦滚降信号占用带宽 $B=(1+\alpha )f_s/2$，$\alpha$ 越大，传输频带越大，而波形振荡起伏越小，抽样时刻误差越小。通常取 $\alpha \geq 0.2$。    </p>
 <a id="more"></a>
 <h3 id="匹配滤波器"><a href="#匹配滤波器" class="headerlink" title="匹配滤波器"></a>匹配滤波器</h3><p>$H(f)=KS^*(f)e^{(-j2\pi fT)}$<br>输出信噪比最大的滤波器，其传递函数与信号频谱的复共轭成正比，称为匹配滤波器。  </p>
-<p>$h(t)=KS(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
+<p>$h(t)=KS^*(T-t)$<br>匹配滤波器的冲击响应是输入信号$S(t)$的镜像及平移。  </p>
 <p>匹配滤波器的输出信号波形与输入信号的自相关函数成比例。  </p>
 <h3 id="MPSK"><a href="#MPSK" class="headerlink" title="MPSK"></a>MPSK</h3><p>多进制相移键控，载波相位有M种取值。  </p>
 <p>已调信号时域表达式可简写为，$S_{MPSK}(t) = I(t)\cos(\omega_c t) - Q(t)\sin(\omega_c t)$，所以可用正交调制的方法产生。这里<br>同相分量 $I(t) = \Sigma a_n rect(t-nT_s)$<br>正交分量 $Q(t) = \Sigma b_n rect(t-nT_s)$<br>其中rect矩形函数，即为矩形包络，可使用成型滤波的升余弦滚降信号作为包络吧？<br>而$a_n=Acos\phi(n)$, $b_n=Asin\phi(n)$。  </p>

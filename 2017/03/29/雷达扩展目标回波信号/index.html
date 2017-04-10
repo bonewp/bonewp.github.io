@@ -96,7 +96,7 @@
 <meta property="og:description" content="基本概念通过雷达分辨单元与雷达目标尺寸比较，将雷达目标区分为：若目标尺寸远小于雷达分辨单元，视为点目标处理；若目标尺寸远大于雷达分辨单元，视为扩展目标处理。  
 例如使用LFM波形，设基带带宽为100MHz，则距离分辨率为$\delta_r = c/2B = 1.5m$，远大于该尺寸的目标应视为扩展目标。  
 对于点目标来说，其数学模型由雷达散射截面(RCS)描述；而对于扩展目标而言，需要结合散射">
-<meta property="og:updated_time" content="2017-03-30T08:31:37.654Z">
+<meta property="og:updated_time" content="2017-03-31T02:51:47.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="雷达扩展目标回波信号">
 <meta name="twitter:description" content="基本概念通过雷达分辨单元与雷达目标尺寸比较，将雷达目标区分为：若目标尺寸远小于雷达分辨单元，视为点目标处理；若目标尺寸远大于雷达分辨单元，视为扩展目标处理。  
@@ -382,14 +382,15 @@
 <p>由此得到中频形式的冲激响应函数为<br>$h<em>l(t) = A exp((-j\omega</em>{\Delta}\tau_1)) \delta(t-\tau_1)$  </p>
 <p>该冲激函数包含了点目标回波的延迟、幅度和相位信息。<br><strong>疑问：这个相位信息的物理意义是？</strong>  </p>
 <h3 id="扩展点回波"><a href="#扩展点回波" class="headerlink" title="扩展点回波"></a>扩展点回波</h3><p>已知扩展点目标为目标上的所有散射点回波的矢量和，则N扩展点的总目标回波为<br>$s<em>{r1\sum}(t) = \sum</em>{i=1}^N s_l(t) <em> [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>$= s_l(t) </em> \sum_{i=1}^N[A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$<br>其中$A<em>i$是第i个散射点的回波信号幅度，$\tau</em>{i1}$是第i个散射点的回波时延。  </p>
-<p>所以扩展目标的冲击响应函数为<br>$h<em>l(t) = \sum</em>{i=1}^N [A<em>i exp((-j\omega</em>{\Delta}\tau<em>{i1})) \delta(t-\tau</em>{i1})]$  </p>
+<p>所以扩展目标的冲击响应函数为<br>$h<em>l(t) = \sum</em>{i=1}^N [A<em>i exp(-j \omega</em>{\Delta} \tau<em>{i1}) \delta(t-\tau</em>{i1})]$  </p>
 <p>参考文献的结论：  </p>
 <blockquote>
 <p>目标的散射特性反映在每个分辨单元的回波信号幅度和相位上。因此扩展目标的回波模拟实现，首先对雷达发射信号进行脉内调制，然后将散射特性数据与该发射信号进行卷积运算，最后即可得到扩展目标雷达的回波信号。  </p>
 </blockquote>
 <p><strong>疑问：对该推导保留意见，其中$\tau_{i1}$表达式中的n怎么选取？</strong></p>
 <p><strong>疑问：卷积序列的长度选取？或者频域处理长度选取？</strong></p>
-<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>简单来看冲激响应函数为delta函数的时移和叠加(简化忽略幅度信息)，那么问题就是如何量化该h(t)，使得输入信号与该h(n)相卷积？</p>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>简单来看冲激响应函数为delta函数的时移和叠加(简化忽略幅度信息)，那么问题就是如何量化该h(t)，使得输入信号与该h(n)相卷积？  </p>
+<p>这与雷达波形的延时范围有关，也就是冲激函数的长度。  </p>
 <p>Reference: <a href="http://cdmd.cnki.com.cn/Article/CDMD-10007-1015029826.htm" target="_blank" rel="external">雷达扩展目标回波模拟技术研究与实现</a></p>
 
       
@@ -429,6 +430,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/30/雷达扩展目标回波信号的仿真/" rel="prev" title="雷达扩展目标回波信号的仿真">
+                雷达扩展目标回波信号的仿真 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -500,7 +505,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -517,7 +522,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
