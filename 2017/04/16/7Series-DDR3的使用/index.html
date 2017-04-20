@@ -99,7 +99,10 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/写入路径时序.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/突发写路径时序.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/读路径时序.png">
-<meta property="og:updated_time" content="2017-04-17T02:38:37.270Z">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真写时序.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_1.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_2.png">
+<meta property="og:updated_time" content="2017-04-20T06:51:50.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7Series DDR3的使用">
 <meta name="twitter:description" content="背景了解在知乎上看见的专栏写得挺清楚的内存系列一：快速读懂内存条标签内存系列二：深入理解硬件原理  
@@ -377,8 +380,15 @@
 <p>非背靠背写入数据时序如下图：<br><img src="/2017/04/16/7Series-DDR3的使用/写入路径时序.png" alt="写入路径时序.png" title="">  </p>
 <p>datasheet还给出了突发模式写入的示意图，下图是突发长度8(BL8，即连续写8个地址的数据)的传输，2:1的PHY to Memory Controller clk比例，8bit存储器数据宽度。<br><img src="/2017/04/16/7Series-DDR3的使用/突发写路径时序.png" alt="突发写路径时序.png" title="">  </p>
 <p>首先计算一下，UI数据宽度=8<em>2</em>2=32bit，即突发长度为4，要实现BL8则需要两个时钟的数据。<br>从图中可以看到，app_wdf_end(used to indicate the end of a memory write burst)在第二个app_wdf_data有效，即每次突发写对应两个数据长度，与刚才的计算结果一致。<br>app_en和app_rdy有效长度四个时钟，且app_cmd=0，即有这样相同的4条写指令。app_addr递增的值8与突发写长度8一致。<br>注意最后一个写指令(app_addr=0000418)与数据app_wdf_data刚好相差两个时钟，满足时序要求。  </p>
+<p><strong>注意</strong> datasheet中明确说明了Burst Lenth仅支持LB8，即在4:1模式下，一个写入指令对应一次BL8写，那么app_wdf_end信号与app_wdf_en信号应该是同时有效的。<br>开始仿真的时候没有注意到这个点，以为一次写入指令可以写不限长度的数据进去，费了我好多时间啊…   </p>
 <h4 id="Read-Path"><a href="#Read-Path" class="headerlink" title="Read Path"></a>Read Path</h4><p>读路径的时序如下图，只需在app_rdy有效和app_en置位时，将app_addr连续的呈出即可。<br><img src="/2017/04/16/7Series-DDR3的使用/读路径时序.png" alt="读路径时序.png" title="">  </p>
 <p>UI接口中还有app_rd_data_end，在用户逻辑中不需要使用。  </p>
+<h3 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h3><p>首先写了一个粗糙的仿真验证控制时序，没有采用fifo传递数据给DDR_UI，而是直接传递了一些自定义参数在内部生成的数据，当然实际上不应该这样做，这里只是仿一下时序。  </p>
+<p>为了减少控制的麻烦，写路径将app_wdf_wren与app_cmd直接绑定在了一起，也就是写数据始终与写命令同步。<br>从仿真图中可以看到，app_rdy会出现长段的无效状态，它对连续读写时的控制很重要。<br>我采取的方法是将app_rdy和app_wdf_rdy一起作为cmd_valid信号控制写操作，当cmd_valid无效时保持当前值直至其有效。<br>下图是写时序的仿真结果。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真写时序.png" alt="仿真写时序.png" title="">    </p>
+<p>读路径的控制时序则分为两部分，首先是写入命令，然后是接收数据，这之间有一段延时。<br>下图是读时序仿真结果。与之前写入的值是一致的，说明仿真正确。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真读_1.png" alt="仿真读_1.png" title="">    </p>
+<img src="/2017/04/16/7Series-DDR3的使用/仿真读_2.png" alt="仿真读_2.png" title="">    
+<p>（读仿真写入命令时，app_addr在app_en无效后还递增了一个值，反正不影响，我就没改了… ）</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://www.xilinx.com/products/intellectual-property/mig.html#documentation" target="_blank" rel="external">UG-586-Zynq-7000 All Programmable SoC and 7 Series Devices Memory Interface Solutions v4.2 User Guide</a>  接口相关的在Ch1-Interfacing to the Core-User Interface  </p>
 
       
     </div>
@@ -548,7 +558,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景了解"><span class="nav-number">1.</span> <span class="nav-text">背景了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器接口"><span class="nav-number">2.</span> <span class="nav-text">存储器接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户接口"><span class="nav-number">3.</span> <span class="nav-text">用户接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Command-Path"><span class="nav-number">3.1.</span> <span class="nav-text">Command Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Path"><span class="nav-number">3.2.</span> <span class="nav-text">Write Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Path"><span class="nav-number">3.3.</span> <span class="nav-text">Read Path</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景了解"><span class="nav-number">1.</span> <span class="nav-text">背景了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器接口"><span class="nav-number">2.</span> <span class="nav-text">存储器接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户接口"><span class="nav-number">3.</span> <span class="nav-text">用户接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Command-Path"><span class="nav-number">3.1.</span> <span class="nav-text">Command Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Path"><span class="nav-number">3.2.</span> <span class="nav-text">Write Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Path"><span class="nav-number">3.3.</span> <span class="nav-text">Read Path</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仿真"><span class="nav-number">4.</span> <span class="nav-text">仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
           </div>
         </section>
