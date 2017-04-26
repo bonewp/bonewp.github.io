@@ -292,6 +292,131 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/13/Vivado-IO-Constrain/" itemprop="url">
+                  Vivado IO Constraint
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-13T17:10:18+08:00" content="2016-07-13">
+              2016-07-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/13/Vivado-IO-Constrain/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/13/Vivado-IO-Constrain/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="IO-delay"><a href="#IO-delay" class="headerlink" title="IO delay"></a>IO delay</h2><h3 id="Input-delay"><a href="#Input-delay" class="headerlink" title="Input delay"></a>Input delay</h3><hr>
+<p>数据相对于上升沿往后的延迟。<br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_1.png" alt="inputDelay_1" title="inputDelay_1"><br><img src="/2016/07/13/Vivado-IO-Constrain/inputDelay_2.png" alt="inputDelay_2" title="inputDelay_2"><br>Example code:</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create_clock -name sysClk -period <span class="number">10</span> [get_ports CLK0]</div><div class="line">set_input_delay -<span class="keyword">clock</span> sysClk -max <span class="number">4</span> [get_ports DIN]</div><div class="line">set_input_delay -<span class="keyword">clock</span> sysClk -min <span class="number">1</span> [get_ports DIN]</div></pre></td></tr></table></figure>
+<p>若不考虑板级延迟，那就可根据前级芯片的建立/保持时间来推算此MAX/MIN的值。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/13/Vivado-IO-Constrain/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/13/hello-world/" itemprop="url">
                   Hello World
                 </a>
@@ -425,7 +550,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -433,7 +558,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -442,7 +567,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

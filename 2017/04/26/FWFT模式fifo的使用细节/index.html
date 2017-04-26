@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="fifo," />
 
 
 
@@ -86,15 +86,32 @@
 
 
 
-<meta name="description" content="かわいいでしょう">
-<meta property="og:type" content="website">
-<meta property="og:title" content="bonewp blog">
-<meta property="og:url" content="http://bonewp.github.io.git/tags/FM/index.html">
+<meta name="description" content="这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  
+首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  
+  
+  
+而特别的地方就在于如何实现提前将数据放">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FWFT模式fifo的使用细节">
+<meta property="og:url" content="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="かわいいでしょう">
+<meta property="og:description" content="这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  
+首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  
+  
+  
+而特别的地方就在于如何实现提前将数据放">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/standard_fifo_read.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_read.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_empty.png">
+<meta property="og:updated_time" content="2017-04-26T06:45:26.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bonewp blog">
-<meta name="twitter:description" content="かわいいでしょう">
+<meta name="twitter:title" content="FWFT模式fifo的使用细节">
+<meta name="twitter:description" content="这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  
+首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  
+  
+  
+而特别的地方就在于如何实现提前将数据放">
+<meta name="twitter:image" content="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/standard_fifo_read.png">
 
 
 
@@ -115,9 +132,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/tags/FM/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/"/>
 
-  <title> 标签: FM | bonewp blog </title>
+  <title> FWFT模式fifo的使用细节 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -147,7 +164,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,46 +285,166 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        FM
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                FWFT模式fifo的使用细节
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-26T14:12:24+08:00" content="2017-04-26">
+              2017-04-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/26/FWFT模式fifo的使用细节/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/26/FWFT模式fifo的使用细节/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  </p>
+<p>首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  </p>
+<img src="/2017/04/26/FWFT模式fifo的使用细节/standard_fifo_read.png" alt="standard_fifo_read.png" title="">  
+<img src="/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_read.png" alt="FWFT_fifo_read.png" title="">  
+<p>而特别的地方就在于如何实现提前将数据放在rd_dout上，查看datasheet发现是这么说的  </p>
+<blockquote>
+<p>By providing the capability to read the next data word before requesting it, first-word fall-through (FWFT) implementations increase the depth of the FIFO by 2 read words.  </p>
+</blockquote>
+<a id="more"></a>
+<p>也就是多存了两个数据在里面，从Data Count也能看出来这一点。<br>那么当写入多少个数据时，读出接口的empty才会deasserted？  </p>
+<p>我仿了下IP核，用的非对称数据宽度和不同写入读出时钟，发现结果如下：  </p>
+<img src="/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_empty.png" alt="FWFT_fifo_empty.png" title="">  
+<p>也就是说要写入两个数据时，empty信号才会deasserted，而且在这时立即读出的话，rd_dout不会更新，那么第二个写入的数据不会呈现出来。<br>这在连续读写时当然不会有问题，但在突发读写且会读空fifo的情况下，写入逻辑就需要稍微注意下，要多塞几个数进去才能将有效数据全部给拿出来，而具体多塞几个就看具体情况去控制了。  </p>
+<p>另外wr/rd_count也是个有趣的东西，在不同模式和不同读写宽度比例时其初始值不同。对其介绍Product Guide是这么说的  </p>
+<blockquote>
+<p>For FWFT implementations using More Accurate Data Counts (Use Extra Logic), data_count is guaranteed to be accurate when words are present in the FIFO, with the exception of when its near empty or almost empty or when initial writes occur on an empty FIFO. In these scenarios, data_count may be incorrect on up to two words.  </p>
+</blockquote>
+<p>在接近empty的时候rd_count是错的… 那要你来何用… 看了下前面的介绍，多是拿来判断fifo半空，四分之一空等，不过我暂没这么用过就是了。<br>反正用这个rd_count的时候也是要注意才行。  </p>
+<p>参考<br><a href="https://www.xilinx.com/products/intellectual-property/fifo_generator.html" target="_blank" rel="external">PG057</a></p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/09/24/FM调制与解调/" itemprop="url">
-              
-                <span itemprop="name">FM调制与解调</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-09-24T21:31:33+08:00"
-              content="2016-09-24" >
-          09-24
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fifo/" rel="tag">#fifo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/16/7Series-DDR3的使用/" rel="next" title="7Series DDR3的使用">
+                <i class="fa fa-chevron-left"></i> 7Series DDR3的使用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -315,6 +452,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/26/FWFT模式fifo的使用细节/"
+           data-title="FWFT模式fifo的使用细节" data-url="http://bonewp.github.io.git/2017/04/26/FWFT模式fifo的使用细节/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -334,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/k_on_1.png"
@@ -399,6 +553,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -495,6 +660,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 

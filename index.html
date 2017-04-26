@@ -292,6 +292,135 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/26/FWFT模式fifo的使用细节/" itemprop="url">
+                  FWFT模式fifo的使用细节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-26T14:12:24+08:00" content="2017-04-26">
+              2017-04-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/26/FWFT模式fifo的使用细节/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/26/FWFT模式fifo的使用细节/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  </p>
+<p>首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  </p>
+<img src="/2017/04/26/FWFT模式fifo的使用细节/standard_fifo_read.png" alt="standard_fifo_read.png" title="">  
+<img src="/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_read.png" alt="FWFT_fifo_read.png" title="">  
+<p>而特别的地方就在于如何实现提前将数据放在rd_dout上，查看datasheet发现是这么说的  </p>
+<blockquote>
+<p>By providing the capability to read the next data word before requesting it, first-word fall-through (FWFT) implementations increase the depth of the FIFO by 2 read words.  </p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/04/26/FWFT模式fifo的使用细节/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/16/7Series-DDR3的使用/" itemprop="url">
                   7Series DDR3的使用
                 </a>
@@ -1395,128 +1524,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/24/初次使用sway/" itemprop="url">
-                  初次使用sway
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-24T21:49:22+08:00" content="2016-10-24">
-              2016-10-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具使用/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/24/初次使用sway/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/初次使用sway/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前一周准备开题，时间紧脑袋一热没有用ppt，转去用了sway，本来想的目的是不用去调效果、动画，结果不熟悉sway的组织结构，为了达到理想的效果试了很多次，最后演示的时候还因为图片大小问题没演示好。<br>这里把使用经验总结一下，以后再使用好复习。  </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/24/初次使用sway/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1562,7 +1569,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1570,7 +1577,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1579,7 +1586,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

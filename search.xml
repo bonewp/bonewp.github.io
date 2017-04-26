@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title><![CDATA[FWFT模式fifo的使用细节]]></title>
+      <url>http://bonewp.github.io.git/2017/04/26/FWFT%E6%A8%A1%E5%BC%8Ffifo%E7%9A%84%E4%BD%BF%E7%94%A8%E7%BB%86%E8%8A%82/</url>
+      <content type="html"><![CDATA[<p>这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  </p>
+<p>首先知道FWFT模式相对于Standard模式不同的是，不需要读命令，fifo自动将最新的数据放在dout上，这样对fifo读出的使能和数据能做到同步，控制更简单一些。从时序图上能很容易地明白。  </p>
+<img src="/2017/04/26/FWFT模式fifo的使用细节/standard_fifo_read.png" alt="standard_fifo_read.png" title="">  
+<img src="/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_read.png" alt="FWFT_fifo_read.png" title="">  
+<p>而特别的地方就在于如何实现提前将数据放在rd_dout上，查看datasheet发现是这么说的  </p>
+<blockquote>
+<p>By providing the capability to read the next data word before requesting it, first-word fall-through (FWFT) implementations increase the depth of the FIFO by 2 read words.  </p>
+</blockquote>
+<a id="more"></a>
+<p>也就是多存了两个数据在里面，从Data Count也能看出来这一点。<br>那么当写入多少个数据时，读出接口的empty才会deasserted？  </p>
+<p>我仿了下IP核，用的非对称数据宽度和不同写入读出时钟，发现结果如下：  </p>
+<img src="/2017/04/26/FWFT模式fifo的使用细节/FWFT_fifo_empty.png" alt="FWFT_fifo_empty.png" title="">  
+<p>也就是说要写入两个数据时，empty信号才会deasserted，而且在这时立即读出的话，rd_dout不会更新，那么第二个写入的数据不会呈现出来。<br>这在连续读写时当然不会有问题，但在突发读写且会读空fifo的情况下，写入逻辑就需要稍微注意下，要多塞几个数进去才能将有效数据全部给拿出来，而具体多塞几个就看具体情况去控制了。  </p>
+<p>另外wr/rd_count也是个有趣的东西，在不同模式和不同读写宽度比例时其初始值不同。对其介绍Product Guide是这么说的  </p>
+<blockquote>
+<p>For FWFT implementations using More Accurate Data Counts (Use Extra Logic), data_count is guaranteed to be accurate when words are present in the FIFO, with the exception of when its near empty or almost empty or when initial writes occur on an empty FIFO. In these scenarios, data_count may be incorrect on up to two words.  </p>
+</blockquote>
+<p>在接近empty的时候rd_count是错的… 那要你来何用… 看了下前面的介绍，多是拿来判断fifo半空，四分之一空等，不过我暂没这么用过就是了。<br>反正用这个rd_count的时候也是要注意才行。  </p>
+<p>参考<br><a href="https://www.xilinx.com/products/intellectual-property/fifo_generator.html" target="_blank" rel="external">PG057</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[7Series DDR3的使用]]></title>
       <url>http://bonewp.github.io.git/2017/04/16/7Series-DDR3%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
       <content type="html"><![CDATA[<h3 id="背景了解"><a href="#背景了解" class="headerlink" title="背景了解"></a>背景了解</h3><p>在知乎上看见的专栏写得挺清楚的<br><a href="https://zhuanlan.zhihu.com/p/26255460" target="_blank" rel="external">内存系列一：快速读懂内存条标签</a><br><a href="https://zhuanlan.zhihu.com/p/26327347" target="_blank" rel="external">内存系列二：深入理解硬件原理</a>  </p>
@@ -32,7 +57,7 @@
 <h3 id="上板测试"><a href="#上板测试" class="headerlink" title="上板测试"></a>上板测试</h3><p>使用Xilinx的KC705开发板测试，板卡上的SODIMM大小为1GB，对应用户地址app_addr宽度27bit（每一个地址对应64bit数据），即地址范围0x000_0000~0x7ff_ffff。<br>工作参数：用户时钟ui_clk 200MHz；DDR工作时钟800MHz；数据位宽64bit。  </p>
 <p>分别测试写入和读出消耗的时钟周期，测试结果如下图：<br><img src="/2017/04/16/7Series-DDR3的使用/板卡测试写结果.png" alt="板卡测试写结果.png" title="">    </p>
 <img src="/2017/04/16/7Series-DDR3的使用/板卡测试读结果.png" alt="板卡测试读结果.png" title="">    
-<p>由此可以计算实际大致的写入速度 = 800M<em>2</em>64bit/1.17 = 1600M<em>8Byte/1.17 = 10940MB/s，大约10GB/s的速度，感觉好厉害的样子…<br>同样的读出速度 = 1600M</em>8Byte/1.1 = 11636MB/s， 大约11GB/s，比写入速度快一些。  </p>
+<p>由此可以计算实际大致的写入速度 = 800M <em> 2 </em> 64bit / 1.17 = 1600M <em> 8Byte / 1.17 = 10940MB/s，大约10GB/s的速度，感觉好厉害的样子…<br>同样的读出速度 = 1600M </em> 8Byte / 1.1 = 11636MB/s， 大约11GB/s，比写入速度快一些。  </p>
 <p>不过我想这个读写速度与存储颗粒/条本身的质量关系很大，这个测试数据也就做个参考，之后在项目中用反正是妥妥地速度够用了。  </p>
 <h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><p>在使用vivado生成DDR IP核的时候，遇到了兼容性问题，生成IP核程序会不定期地卡死，每次打开都是小心翼翼地修改，感觉就是拼运气。而且在导入管脚定义一步时只要一点导入IP核就会跪掉，也是无语…<br>在网上搜寻一番，有人认为是win10兼容性问题，win7下不会有该问题，但是我没去虚拟机下测试了，直接用example design中生成好的IP拿来用。   </p>
 <p>但是在官方示例工程基础上写好了测试模块后，上板测试时发现初始化校验不能通过，init_calib_complete信号始终没有拉高。检查了IP核设置和约束等，没有发现任何可能的问题，最终移植了一个老师以前调试好的工程中IP核就可以正常通过了，但还是没发现设置或约束上不同的地方，只能当做遗留问题处理了，以后再开发的时候也就直接移植过来用…  </p>
