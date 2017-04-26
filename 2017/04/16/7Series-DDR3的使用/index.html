@@ -100,9 +100,13 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/突发写路径时序.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/读路径时序.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真写时序.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真写_1024次.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_1.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_2.png">
-<meta property="og:updated_time" content="2017-04-20T06:51:50.987Z">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_1024次.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/板卡测试写结果.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/板卡测试读结果.png">
+<meta property="og:updated_time" content="2017-04-26T06:04:24.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7Series DDR3的使用">
 <meta name="twitter:description" content="背景了解在知乎上看见的专栏写得挺清楚的内存系列一：快速读懂内存条标签内存系列二：深入理解硬件原理  
@@ -374,8 +378,8 @@
 <p>详细的接口定义在UG586_P92。  </p>
 <a id="more"></a>
 <h3 id="用户接口"><a href="#用户接口" class="headerlink" title="用户接口"></a>用户接口</h3><p>用户接口包括了命令路径、写路径和读路径等，每条路径的信号定义套路好像差不多。  </p>
-<h4 id="Command-Path"><a href="#Command-Path" class="headerlink" title="Command Path"></a>Command Path</h4><p>命令路径的时序如下。<br>注意若app_rdy没有置位，app_en &amp; addr &amp; cmd需要保持直到app_rdy有效。<br><img src="/2017/04/16/7Series-DDR3的使用/命令路径时序_app_rdy.png" alt="命令路径时序_app_rdy.png" title="">  </p>
-<p>在每个app_en和app_rdy有效的时钟上升沿，就产生了一次app_cmd对应的有效命令。app_cmd=0为写入命令，1为读出命令。  </p>
+<h4 id="Command-Path"><a href="#Command-Path" class="headerlink" title="Command Path"></a>Command Path</h4><p>命令路径包括app_en，app_addr和app_cmd。<br>在每个app_en和app_rdy有效的时钟上升沿，产生一次app_cmd对应的有效命令。<br>app_cmd=0为写入命令，1为读出命令。<br>app_addr为用户地址，按照设定的映射关系对应至RANK、BANK、ROW和COL，每一个地址对应的数据大小等于ddr_dq位宽，即DDRSRAM的数据位宽。因此在BL8读写时，每次读写时地址值应该加8。    </p>
+<p>其时序如下图。注意若app_rdy没有置位，app_en &amp; addr &amp; cmd需要保持直到app_rdy有效。<br><img src="/2017/04/16/7Series-DDR3的使用/命令路径时序_app_rdy.png" alt="命令路径时序_app_rdy.png" title="">  </p>
 <h4 id="Write-Path"><a href="#Write-Path" class="headerlink" title="Write Path"></a>Write Path</h4><p>写入路径是一个写入fifo接口，且该接口时序不需要和命令路径完全对齐，写入数据可以超前于命令，也可以滞后于命令。唯一条件是对于每个app_cmd写命令，要有相关的app_wdf_data数据呈现。<br>需要注意数据滞后于命令时最大延迟为2个时钟。另外app_wdf_en和app_wdf_rdy的处理方式和命令路径套路一样。    </p>
 <p>非背靠背写入数据时序如下图：<br><img src="/2017/04/16/7Series-DDR3的使用/写入路径时序.png" alt="写入路径时序.png" title="">  </p>
 <p>datasheet还给出了突发模式写入的示意图，下图是突发长度8(BL8，即连续写8个地址的数据)的传输，2:1的PHY to Memory Controller clk比例，8bit存储器数据宽度。<br><img src="/2017/04/16/7Series-DDR3的使用/突发写路径时序.png" alt="突发写路径时序.png" title="">  </p>
@@ -383,11 +387,21 @@
 <p><strong>注意</strong> datasheet中明确说明了Burst Lenth仅支持LB8，即在4:1模式下，一个写入指令对应一次BL8写，那么app_wdf_end信号与app_wdf_en信号应该是同时有效的。<br>开始仿真的时候没有注意到这个点，以为一次写入指令可以写不限长度的数据进去，费了我好多时间啊…   </p>
 <h4 id="Read-Path"><a href="#Read-Path" class="headerlink" title="Read Path"></a>Read Path</h4><p>读路径的时序如下图，只需在app_rdy有效和app_en置位时，将app_addr连续的呈出即可。<br><img src="/2017/04/16/7Series-DDR3的使用/读路径时序.png" alt="读路径时序.png" title="">  </p>
 <p>UI接口中还有app_rd_data_end，在用户逻辑中不需要使用。  </p>
-<h3 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h3><p>首先写了一个粗糙的仿真验证控制时序，没有采用fifo传递数据给DDR_UI，而是直接传递了一些自定义参数在内部生成的数据，当然实际上不应该这样做，这里只是仿一下时序。  </p>
+<p>仿真的时候发现一个细节，除了app_rd_data_valid上升沿的位置，app_rd_data的变化沿相对时钟上升沿有延迟，大约为0.1ns，我因为在比较读出数据时使用了组合逻辑发现了这个细节，所以对读出数据操作时要使用时序逻辑。  </p>
+<h3 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h3><p>首先写了一个粗糙的仿真验证控制时序，没有采用fifo传递数据给DDR_UI，而是直接传递了一些自定义参数在内部生成的数据，当然实际上不应该这样做，这里只是仿一下时序。正常使用时应该用fifo传递并转换数据宽度。    </p>
 <p>为了减少控制的麻烦，写路径将app_wdf_wren与app_cmd直接绑定在了一起，也就是写数据始终与写命令同步。<br>从仿真图中可以看到，app_rdy会出现长段的无效状态，它对连续读写时的控制很重要。<br>我采取的方法是将app_rdy和app_wdf_rdy一起作为cmd_valid信号控制写操作，当cmd_valid无效时保持当前值直至其有效。<br>下图是写时序的仿真结果。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真写时序.png" alt="仿真写时序.png" title="">    </p>
+<p>下图是连续写的仿真结果。<br>从仿真结果可以看到app_rdy会呈周期性地出现无效状态，这应该是DDRSRAM进行刷新等操作带来的，由此影响了写入的效率继而影响连续写入速度。下一步上板实际测试写入速度。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真写_1024次.png" alt="仿真写_1024次.png" title="">    </p>
 <p>读路径的控制时序则分为两部分，首先是写入命令，然后是接收数据，这之间有一段延时。<br>下图是读时序仿真结果。与之前写入的值是一致的，说明仿真正确。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真读_1.png" alt="仿真读_1.png" title="">    </p>
 <img src="/2017/04/16/7Series-DDR3的使用/仿真读_2.png" alt="仿真读_2.png" title="">    
 <p>（读仿真写入命令时，app_addr在app_en无效后还递增了一个值，反正不影响，我就没改了… ）</p>
+<p>下图是连续读的仿真结果。<br>app_rdy无效状态的出现与写入时差不多，需要注意在未完全读结束之前app_rd_data_valid也会出现无效状态，因此用户需要在读出时自行计数读出的深度。<br><img src="/2017/04/16/7Series-DDR3的使用/仿真读_1024次.png" alt="仿真读_1024次.png" title="">    </p>
+<h3 id="上板测试"><a href="#上板测试" class="headerlink" title="上板测试"></a>上板测试</h3><p>使用Xilinx的KC705开发板测试，板卡上的SODIMM大小为1GB，对应用户地址app_addr宽度27bit（每一个地址对应64bit数据），即地址范围0x000_0000~0x7ff_ffff。<br>工作参数：用户时钟ui_clk 200MHz；DDR工作时钟800MHz；数据位宽64bit。  </p>
+<p>分别测试写入和读出消耗的时钟周期，测试结果如下图：<br><img src="/2017/04/16/7Series-DDR3的使用/板卡测试写结果.png" alt="板卡测试写结果.png" title="">    </p>
+<img src="/2017/04/16/7Series-DDR3的使用/板卡测试读结果.png" alt="板卡测试读结果.png" title="">    
+<p>由此可以计算实际大致的写入速度 = 800M<em>2</em>64bit/1.17 = 1600M<em>8Byte/1.17 = 10940MB/s，大约10GB/s的速度，感觉好厉害的样子…<br>同样的读出速度 = 1600M</em>8Byte/1.1 = 11636MB/s， 大约11GB/s，比写入速度快一些。  </p>
+<p>不过我想这个读写速度与存储颗粒/条本身的质量关系很大，这个测试数据也就做个参考，之后在项目中用反正是妥妥地速度够用了。  </p>
+<h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><p>在使用vivado生成DDR IP核的时候，遇到了兼容性问题，生成IP核程序会不定期地卡死，每次打开都是小心翼翼地修改，感觉就是拼运气。而且在导入管脚定义一步时只要一点导入IP核就会跪掉，也是无语…<br>在网上搜寻一番，有人认为是win10兼容性问题，win7下不会有该问题，但是我没去虚拟机下测试了，直接用example design中生成好的IP拿来用。   </p>
+<p>但是在官方示例工程基础上写好了测试模块后，上板测试时发现初始化校验不能通过，init_calib_complete信号始终没有拉高。检查了IP核设置和约束等，没有发现任何可能的问题，最终移植了一个老师以前调试好的工程中IP核就可以正常通过了，但还是没发现设置或约束上不同的地方，只能当做遗留问题处理了，以后再开发的时候也就直接移植过来用…  </p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://www.xilinx.com/products/intellectual-property/mig.html#documentation" target="_blank" rel="external">UG-586-Zynq-7000 All Programmable SoC and 7 Series Devices Memory Interface Solutions v4.2 User Guide</a>  接口相关的在Ch1-Interfacing to the Core-User Interface  </p>
 
       
@@ -558,7 +572,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景了解"><span class="nav-number">1.</span> <span class="nav-text">背景了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器接口"><span class="nav-number">2.</span> <span class="nav-text">存储器接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户接口"><span class="nav-number">3.</span> <span class="nav-text">用户接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Command-Path"><span class="nav-number">3.1.</span> <span class="nav-text">Command Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Path"><span class="nav-number">3.2.</span> <span class="nav-text">Write Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Path"><span class="nav-number">3.3.</span> <span class="nav-text">Read Path</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仿真"><span class="nav-number">4.</span> <span class="nav-text">仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景了解"><span class="nav-number">1.</span> <span class="nav-text">背景了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器接口"><span class="nav-number">2.</span> <span class="nav-text">存储器接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户接口"><span class="nav-number">3.</span> <span class="nav-text">用户接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Command-Path"><span class="nav-number">3.1.</span> <span class="nav-text">Command Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Path"><span class="nav-number">3.2.</span> <span class="nav-text">Write Path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Path"><span class="nav-number">3.3.</span> <span class="nav-text">Read Path</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仿真"><span class="nav-number">4.</span> <span class="nav-text">仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上板测试"><span class="nav-number">5.</span> <span class="nav-text">上板测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">6.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
           </div>
         </section>
