@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/仿真读_1024次.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/板卡测试写结果.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/16/7Series-DDR3的使用/板卡测试读结果.png">
-<meta property="og:updated_time" content="2017-04-26T06:10:23.343Z">
+<meta property="og:updated_time" content="2017-04-26T06:55:01.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7Series DDR3的使用">
 <meta name="twitter:description" content="背景了解在知乎上看见的专栏写得挺清楚的内存系列一：快速读懂内存条标签内存系列二：深入理解硬件原理  
@@ -398,7 +398,7 @@
 <h3 id="上板测试"><a href="#上板测试" class="headerlink" title="上板测试"></a>上板测试</h3><p>使用Xilinx的KC705开发板测试，板卡上的SODIMM大小为1GB，对应用户地址app_addr宽度27bit（每一个地址对应64bit数据），即地址范围0x000_0000~0x7ff_ffff。<br>工作参数：用户时钟ui_clk 200MHz；DDR工作时钟800MHz；数据位宽64bit。  </p>
 <p>分别测试写入和读出消耗的时钟周期，测试结果如下图：<br><img src="/2017/04/16/7Series-DDR3的使用/板卡测试写结果.png" alt="板卡测试写结果.png" title="">    </p>
 <img src="/2017/04/16/7Series-DDR3的使用/板卡测试读结果.png" alt="板卡测试读结果.png" title="">    
-<p>由此可以计算实际大致的写入速度 = 800M <em> 2 </em> 64bit / 1.17 = 1600M <em> 8Byte / 1.17 = 10940MB/s，大约10GB/s的速度，感觉好厉害的样子…<br>同样的读出速度 = 1600M </em> 8Byte / 1.1 = 11636MB/s， 大约11GB/s，比写入速度快一些。  </p>
+<p>由此可以计算实际大致的写入速度 = 800M /<em> 2 /</em> 64bit / 1.17 = 1600M /<em> 8Byte / 1.17 = 10940MB/s，大约10GB/s的速度，感觉好厉害的样子…<br>同样的读出速度 = 1600M /</em> 8Byte / 1.1 = 11636MB/s， 大约11GB/s，比写入速度快一些。  </p>
 <p>不过我想这个读写速度与存储颗粒/条本身的质量关系很大，这个测试数据也就做个参考，之后在项目中用反正是妥妥地速度够用了。  </p>
 <h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><p>在使用vivado生成DDR IP核的时候，遇到了兼容性问题，生成IP核程序会不定期地卡死，每次打开都是小心翼翼地修改，感觉就是拼运气。而且在导入管脚定义一步时只要一点导入IP核就会跪掉，也是无语…<br>在网上搜寻一番，有人认为是win10兼容性问题，win7下不会有该问题，但是我没去虚拟机下测试了，直接用example design中生成好的IP拿来用。   </p>
 <p>但是在官方示例工程基础上写好了测试模块后，上板测试时发现初始化校验不能通过，init_calib_complete信号始终没有拉高。检查了IP核设置和约束等，没有发现任何可能的问题，最终移植了一个老师以前调试好的工程中IP核就可以正常通过了，但还是没发现设置或约束上不同的地方，只能当做遗留问题处理了，以后再开发的时候也就直接移植过来用…  </p>
