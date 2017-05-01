@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/ILAS阶段多帧.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/jesd204控制字符.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/数据链路层序列.png">
-<meta property="og:updated_time" content="2017-05-01T14:02:48.000Z">
+<meta property="og:updated_time" content="2017-05-01T14:13:36.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JESD204b入坑">
 <meta name="twitter:description" content="正式入坑jesd204b。哦也…在此把一些阅读的基础内容做下记录  
@@ -376,7 +376,7 @@
 <a id="more"></a>
 <p>204b支持的每通道(Lane)串行链路速率最高为12.5Gbps，支持多通道(Multiple Lanes)、多通道同步、多器件同步和确定性延迟。比起传统的LVDS最高1Gbps通道速率来说，优点是非常明显(当然复杂太多了)。  </p>
 <p>简要明确一些概念，204b通过三个阶段来建立同步链路：代码组同步(code group synchronization, CGS)，初始化通道同步(initial lane synchronization, ILAS)，数据传输阶段(data transmission phase)。后续详细记录每个阶段在做什么。<br>链路中的关键信号：共享参考时钟(器件时钟，由一个时钟源提供至AD/DA/FPGA)， 差分CML物理连接(即通道lane)，其他同步信号(SYNC~和可能的SYSREF)。其中SYSREF是子类1中用于建立确定性延迟。  </p>
-<h4 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h4><p>对于链路的建立，某些变量需要注意：<br>M：转换器数量(number of converters)<br>L：物理通道数(number of physical lanes)<br>F：每帧的8位字数(number of octets per frame)<br>K：每个多帧的帧数(number of frames per multiframe)<br>N和$N^’$：分别表示转换器分辨率和每个样本使用的位数(4的倍数)。$N^’=N+$控制和伪数据位数(结束位或控制位)。<br>S：每个转换器每帧发送的样本数。通常设为1，使转换器帧时钟(FC)和采样时钟相等。   </p>
+<h4 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h4><p>对于链路的建立，某些变量需要注意：<br>M：转换器数量(number of converters)<br>L：物理通道数(number of physical lanes)<br>F：每帧的8位字数(number of octets per frame)<br>K：每个多帧的帧数(number of frames per multiframe)<br>N和$N^{‘}$：分别表示转换器分辨率和每个样本使用的位数(4的倍数)。$N^{‘}=N+$控制和伪数据位数(结束位或控制位)。<br>S：每个转换器每帧发送的样本数。通常设为1，使转换器帧时钟(FC)和采样时钟相等。   </p>
 <h4 id="确定性延迟"><a href="#确定性延迟" class="headerlink" title="确定性延迟"></a>确定性延迟</h4><p>MS-2503中提到确定性延迟的概念  </p>
 <blockquote>
 <p>JESD204B链路的确定延迟定义为数据从发送器(ADC或源端FPGA)的并行帧数据输入传播至接收器(DAC或接收端FPGA)并行去帧数据输出所需的时间。该时间通常以分辨率为帧时钟周期或以器件时钟进行测量。该定义不包括ADC的模拟前端内核或DAC的后端模拟内核。  </p>
