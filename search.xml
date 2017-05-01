@@ -4,6 +4,89 @@
   
     
     <entry>
+      <title><![CDATA[JESD204b入坑]]></title>
+      <url>http://bonewp.github.io.git/2017/04/27/JESD204b%E5%85%A5%E5%9D%91/</url>
+      <content type="html"><![CDATA[<p>正式入坑jesd204b。哦也…在此把一些阅读的基础内容做下记录  </p>
+<h3 id="基础了解"><a href="#基础了解" class="headerlink" title="基础了解"></a>基础了解</h3><p>相较于AD/DA和FPGA之间的并行LVDS接口，jesd204使用帧串行数据链路及嵌入式时钟和对齐字符，所需引脚数大量减少(那一天，我又想起了画板布线时被几十组并行LVDS信号支配的恐惧…)。<br>而jesd204b是该规范的第三个版本，特点是可知链路上串行数据的确定延迟，这对有相参性要求（固定延迟）的设计来说尤为重要。  </p>
+<p>204b定义了三种设备子类，包括子类0、1、2，其中子类1主要针对工作在500MSPS及以上的转换器，目前大多数AD/DA也是采用class 1。接下来也主要针对class 1做学习。    </p>
+<img src="/2017/04/27/JESD204b入坑/jsed204规范与LVDS规范比较.png" alt="jsed204规范与LVDS规范比较.png" title="">  
+<a id="more"></a>
+<p>204b支持的每通道(Lane)串行链路速率最高为12.5Gbps，支持多通道(Multiple Lanes)、多通道同步、多器件同步和确定性延迟。比起传统的LVDS最高1Gbps通道速率来说，优点是非常明显(当然复杂太多了)。  </p>
+<p>简要明确一些概念，204b通过三个阶段来建立同步链路：代码组同步(code group synchronization, CGS)，初始化通道同步(initial lane synchronization, ILAS)，数据传输阶段(data transmission phase)。后续详细记录每个阶段在做什么。<br>链路中的关键信号：共享参考时钟(器件时钟，由一个时钟源提供至AD/DA/FPGA)， 差分CML物理连接(即通道lane)，其他同步信号(SYNC~和可能的SYSREF)。其中SYSREF是子类1中用于建立确定性延迟。  </p>
+<h4 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h4><p>对于链路的建立，某些变量需要注意：<br>M：转换器数量(number of converters)<br>L：物理通道数(number of physical lanes)<br>F：每帧的8位字数(number of octets per frame)<br>K：每个多帧的帧数(number of frames per multiframe)<br>N和$N^’$：分别表示转换器分辨率和每个样本使用的位数(4的倍数)。$N^’=N+$控制和伪数据位数(结束位或控制位)。<br>S：每个转换器每帧发送的样本数。通常设为1，使转换器帧时钟(FC)和采样时钟相等。   </p>
+<h4 id="确定性延迟"><a href="#确定性延迟" class="headerlink" title="确定性延迟"></a>确定性延迟</h4><p>MS-2503中提到确定性延迟的概念  </p>
+<blockquote>
+<p>JESD204B链路的确定延迟定义为数据从发送器(ADC或源端FPGA)的并行帧数据输入传播至接收器(DAC或接收端FPGA)并行去帧数据输出所需的时间。该时间通常以分辨率为帧时钟周期或以器件时钟进行测量。该定义不包括ADC的模拟前端内核或DAC的后端模拟内核。  </p>
+</blockquote>
+<p>所以204B的确定延迟是区别于ADC/DAC的总延迟的，后者是从输入一个模拟样本至从器件输出数字信号的时间。   </p>
+<p>MS-2672中提到  </p>
+<blockquote>
+<p>JESD204B标准把确定性延迟(deterministic latency, DL)定义为基于帧的样本到达串行发射器与串行接收器输出基于帧的样本的时间差。延迟在帧时钟域中测量，必须能以至少相当于帧时钟周期的增量编程。在上电周期之间，以及任何再同步事件中，延迟必须可重复。<br>JESD204系统中的确定性延迟由固定延迟和可变延迟构成。可变延迟是由数字处理模块中时钟域之间在供电周期间存在任意性的相位关系所导致。 JESD204A和JESD204B子类0系统中，无法处理可变延迟。因此，整个链路的延迟存在供电周期变化。  </p>
+</blockquote>
+<img src="/2017/04/27/JESD204b入坑/确定性延迟图示.png" alt="确定性延迟图示.png" title="">  
+<p>所以子类1引入的外部参考信号SYSREF，为采样时序提供系统级参考，用于实现确定性延迟。其概念如下图，子类1系统中定义了一个“接收缓冲器(receive buffer)”，其释放时间以外部SYSREF信号为基准，由此解决供电周期变化导致的不确定性延迟。这个receive buffer我觉得就是个fifo，使能信号由SYSREF经过一些逻辑决定。   </p>
+<img src="/2017/04/27/JESD204b入坑/子类1系统使用SYSREF的数据释放图示.png" alt="子类1系统使用SYSREF的数据释放图示.png" title="">  
+<p>这里还提到了SYSREF和器件时钟应从相同器件生成，以确保两个信号相位对齐。SYSREF周期必须为LMFC(Local multiframe clock)的的整数倍，建议用提供整个系统器件时钟的统一器件来生产SYSREF信号。并且每一个器件的SYSREF和DCLK走线等长，使得SYSREF满足时序要求，保证能在SYSREF跳变后的第一个DCLK上升沿采到SYSREF有效值，以减小确定性延迟不确定性(deterministic latency uncertainty, DLU)。   </p>
+<p>上面的内容是从Survival-Guide中阅读的， 感觉一开始就看这种感觉有点稀里糊涂的。  </p>
+<h3 id="基本框架"><a href="#基本框架" class="headerlink" title="基本框架"></a>基本框架</h3><p>JESD204B接口协议标准是一种分层规范，如下图所示，可分为四层：应用层，传输层，数据链路层，物理层。<br><img src="/2017/04/27/JESD204b入坑/jesd204b层次结构.png" alt="jesd204b层次结构.png" title="">    </p>
+<p>应用层：用于支持204B链路的配置和数据映射。   </p>
+<p>传输层：实现转换样本与成帧未加扰八位字之间的映射。即组帧，这与特定的转换器配置及样本与帧之间的映射方式强相关，需要用户根据选定器件自行编写实现。  </p>
+<p>数据链路层：处理链路的同步、建立与保持，及8/10b编解码，另有可选的加解扰。该层产生或检测控制字符，用于监测和维护通道对齐。  </p>
+<p>物理层：串行器/解串器(SERDES)，以通道(Lane)比特速率发送/接收编码后的字符。包括有串行器、驱动器、接收器、时钟和数据恢复电路。  </p>
+<p>具体结合帧的产生图示如下，可以清楚地看到样本(sample)变为8/10b串行字的过程。<br><img src="/2017/04/27/JESD204b入坑/jesd204b链路图.png" alt="jesd204b链路图.png" title="">    </p>
+<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><blockquote>
+<p>通过应用层实现特殊用户配置，以及将采样数据映射道典型204B规范之外。<br>必须注意：发送器(ADC)和接收器(FPGA)均须采用此类特殊配置。  </p>
+</blockquote>
+<p>我理解就是添加用户自定义的204b中没有的一些配置进去，比如说将样本重新打包等等，这个不做深入，当有需要时自己添加逻辑就是了。  </p>
+<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>传输层的目的是将样本转换成8位字，并组成一帧。  </p>
+<img src="/2017/04/27/JESD204b入坑/jesd204b链路图.png" alt="jesd204b链路图.png" title="">    
+<p>结合上图， [MS-2714]中的介绍是：  </p>
+<blockquote>
+<p>传输层接受ADC样本并添加信息(填充)以产生半字节组(通常在4位边界上)。此信息以结束位或控制位的形式提供，是有关所传输数据的附加信息。传输层将这些半字节组安排为帧。</p>
+</blockquote>
+<p>这里半字节组的意义，我认为是样本数据的最小单位，对应了N’为4的倍数，以该最小单位组成8位字，比如N’=12时，一个样本(204B字)不能组成整数个8位字，需要多个样本才行。   </p>
+<p>换句话说，先对样本添加控制字组成了N’宽度的204B字，再对其分为半字节组，然后将多个半字节组组成8位字，最后形成帧。(图中加结束位我觉得有点问题)  </p>
+<p>有点绕，反正就是对样本添加控制/结束位以8位字为单位组为帧。半字节组先不管我觉得也可以。     </p>
+<p>需要注意的是：  </p>
+<blockquote>
+<p>传输层以并行数据将这些样本提供给数据链路。并行数据总线的宽度由成帧器结构决定，单字节为8位，双字节为16位，以此类推。  </p>
+</blockquote>
+<p>也就是说这些并行数据宽度与一帧数据的宽度是一致的。而每帧的8位字数量的计算公式是F=(M<em>S</em>N’)/(8<em>L)，这个公式很容易理解，不多说。<br>有一点，L是根据采样率和N’结合最大通道(lane)速率决定的，如500MSPS，N’=16，S=1，则单转换器的通道速率=500M</em>16*10/8=10Gbps&lt;12.5Gbps，那么可设L=1。     </p>
+<p>另外，传输层根据给定器件已定义的链路配置参数，决定如何包装来自ADC的数据。这些参数在ILAS期间从ADC传输到FPGA，而参数是通过SPI配置的，其设置ADC和FPGA上的寄存器来定义链路配置参数。但是  </p>
+<blockquote>
+<p>通过链路传输的这些参数不是用于配置接收器，而是仅用于验证链路参数匹配。  </p>
+</blockquote>
+<p>这也有点绕，总之就是先有了SPI配置链路参数，再有在链路传输这些参数用于验证，检测到错误则FPGA报告错误。   </p>
+<h4 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h4><blockquote>
+<p>数据链路层接收并行成帧数据(包含ADC样本、控制位和结束位)，并输出8/10b字，后者在物理层中进行串行化且可以加扰。  </p>
+</blockquote>
+<p>在这一层通过三个阶段建立同步链路。（加解扰我暂时没有关注）    </p>
+<p>1.代码组同步(CGS)阶段  </p>
+<blockquote>
+<p>各接收器(FPGA)必须利用时钟和数据恢复(CDR)技术，在ADC传来的输入数据流中找到K28.5字符。一旦在所有链路通道上检测到某一数量的连续K28.5字符，接收器模块就会解除置位至发送器模块的SYNC~信号。<br>在JESD204B中，发送模块捕捉SYNC~信号的变化，并在下一个本地多帧时钟(LMFC)边界上启动ILAS。  </p>
+</blockquote>
+<p>2.初始通道同步(ILAS)阶段  </p>
+<blockquote>
+<p>ILAS的主要作用是对齐链路的所有通道，验证链路参数，以及确定帧和多帧边界在接收器的输入数据流中的位置。   </p>
+</blockquote>
+<p>ILAS一般由4个多帧组成，如下图所示<br><img src="/2017/04/27/JESD204b入坑/ILAS阶段多帧.png" alt="ILAS阶段多帧.png" title="">    </p>
+<p>其中控制字符的含义如下所示，注意第二针/Q/字符之后的数据是链路配置参数，这个我觉得应该是去查具体使用的芯片手册。其他填充的数据为伪数据。<br><img src="/2017/04/27/JESD204b入坑/jesd204控制字符.png" alt="jesd204控制字符.png" title="">    </p>
+<p>3.用户数据阶段  </p>
+<blockquote>
+<p>在这一阶段，用户数据根据发送器(ADC)中定义并转发到接收器(FPGA)的链路参数，以流形式从发送器传输到接收器。<br>接收器模块处理并监视收到的数据有无错误，包括运行差异不正确(8B/10B错误)、不在表中(8B/10B错误)、意外控制字符、 ILAS不正确和通道间偏斜。  </p>
+</blockquote>
+<p>如果接收器检测到了错误，将会通过SYNC~报告错误。  </p>
+<p>另外在用户数据阶段，还可通过数据链路中的字符替换来监视并纠正帧和通道对齐。字符替换发生帧或者多帧边界，这个我觉得也去查具体使用芯片来使用。  </p>
+<p>将上述三个阶段总结下来如下图所示<br><img src="/2017/04/27/JESD204b入坑/数据链路层序列.png" alt="数据链路层序列.png" title="">    </p>
+<h4 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h4><blockquote>
+<p>在物理层中，数据进行串行化， 8B/10B编码数据以线路速率发送和接收。  </p>
+</blockquote>
+<p>在Xilinx FPGA中通过PHY IP核实现，除开电路板设计的因素，应该没什么需要注意的了。   </p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a href="http://www.analog.com/media/en/technical-documentation/technical-articles/JESD204B-Survival-Guide.pdf" target="_blank" rel="external">JESD204B-Survival-Guide</a><br><a href="http://www.analog.com/media/cn/technical-documentation/technical-articles/MS-2714_cn.pdf" target="_blank" rel="external">了解JESD204B规范的各层_从高速ADC的角度出发</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[FWFT模式fifo的使用细节]]></title>
       <url>http://bonewp.github.io.git/2017/04/26/FWFT%E6%A8%A1%E5%BC%8Ffifo%E7%9A%84%E4%BD%BF%E7%94%A8%E7%BB%86%E8%8A%82/</url>
       <content type="html"><![CDATA[<p>这两天使用fifo generator的时候，对First-Word Fall-Through(FWFT)模式详细看了下，发现了一点有趣的细节。  </p>
