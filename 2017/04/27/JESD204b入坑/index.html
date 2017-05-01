@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/ILAS阶段多帧.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/jesd204控制字符.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/数据链路层序列.png">
-<meta property="og:updated_time" content="2017-05-01T14:13:36.363Z">
+<meta property="og:updated_time" content="2017-05-01T14:15:58.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JESD204b入坑">
 <meta name="twitter:description" content="正式入坑jesd204b。哦也…在此把一些阅读的基础内容做下记录  
@@ -414,7 +414,7 @@
 <blockquote>
 <p>传输层以并行数据将这些样本提供给数据链路。并行数据总线的宽度由成帧器结构决定，单字节为8位，双字节为16位，以此类推。  </p>
 </blockquote>
-<p>也就是说这些并行数据宽度与一帧数据的宽度是一致的。而每帧的8位字数量的计算公式是F=(M<em>S</em>N’)/(8<em>L)，这个公式很容易理解，不多说。<br>有一点，L是根据采样率和N’结合最大通道(lane)速率决定的，如500MSPS，N’=16，S=1，则单转换器的通道速率=500M</em>16*10/8=10Gbps&lt;12.5Gbps，那么可设L=1。     </p>
+<p>也就是说这些并行数据宽度与一帧数据的宽度是一致的。而每帧的8位字数量的计算公式是F=(M*S*N’)/(8*L)，这个公式很容易理解，不多说。<br>有一点，L是根据采样率和N’结合最大通道(lane)速率决定的，如500MSPS，N’=16，S=1，则单转换器的通道速率=500M*16*10/8=10Gbps&lt;12.5Gbps，那么可设L=1。     </p>
 <p>另外，传输层根据给定器件已定义的链路配置参数，决定如何包装来自ADC的数据。这些参数在ILAS期间从ADC传输到FPGA，而参数是通过SPI配置的，其设置ADC和FPGA上的寄存器来定义链路配置参数。但是  </p>
 <blockquote>
 <p>通过链路传输的这些参数不是用于配置接收器，而是仅用于验证链路参数匹配。  </p>
