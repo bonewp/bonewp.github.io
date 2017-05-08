@@ -82,7 +82,7 @@
 <p>在物理层中，数据进行串行化， 8B/10B编码数据以线路速率发送和接收。  </p>
 </blockquote>
 <p>在Xilinx FPGA中通过PHY IP核实现，除开电路板设计的因素，应该没什么需要注意的了。   </p>
-<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a href="http://www.analog.com/media/en/technical-documentation/technical-articles/JESD204B-Survival-Guide.pdf" target="_blank" rel="external">JESD204B-Survival-Guide</a><br><a href="http://www.analog.com/media/cn/technical-documentation/technical-articles/MS-2714_cn.pdf" target="_blank" rel="external">了解JESD204B规范的各层_从高速ADC的角度出发</a></p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a href="http://www.analog.com/media/en/technical-documentation/technical-articles/JESD204B-Survival-Guide.pdf" target="_blank" rel="external">JESD204B-Survival-Guide</a><br><a href="http://www.analog.com/media/cn/technical-documentation/technical-articles/MS-2714_cn.pdf" target="_blank" rel="external">了解JESD204B规范的各层_从高速ADC的角度出发</a><br><a href="http://xilinx.eetrend.com/article/7467" target="_blank" rel="external">JESD204B中的链路同步和对齐：了解控制字符</a><br><a href="http://www.analog.com/cn/analog-dialogue/articles/quickly-implement-jesd204b.html" target="_blank" rel="external">在 Xilinx FPGA 上快速实现 JESD204B</a></p>
 ]]></content>
     </entry>
     
