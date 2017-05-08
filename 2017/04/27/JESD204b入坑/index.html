@@ -102,8 +102,10 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/jesd204b链路图.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/ILAS阶段多帧.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/jesd204控制字符.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/链路参数映射.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/链路配置参数.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/04/27/JESD204b入坑/数据链路层序列.png">
-<meta property="og:updated_time" content="2017-05-01T14:20:20.020Z">
+<meta property="og:updated_time" content="2017-05-08T06:36:47.047Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JESD204b入坑">
 <meta name="twitter:description" content="正式入坑jesd204b。哦也…在此把一些阅读的基础内容做下记录  
@@ -408,8 +410,8 @@
 <p>传输层接受ADC样本并添加信息(填充)以产生半字节组(通常在4位边界上)。此信息以结束位或控制位的形式提供，是有关所传输数据的附加信息。传输层将这些半字节组安排为帧。</p>
 </blockquote>
 <p>这里半字节组的意义，我认为是样本数据的最小单位，对应了N’为4的倍数，以该最小单位组成8位字，比如N’=12时，一个样本(204B字)不能组成整数个8位字，需要多个样本才行。   </p>
-<p>换句话说，先对样本添加控制字组成了N’宽度的204B字，再对其分为半字节组，然后将多个半字节组组成8位字，最后形成帧。(图中加结束位我觉得有点问题)  </p>
-<p>有点绕，反正就是对样本添加控制/结束位以8位字为单位组为帧。半字节组先不管我觉得也可以。     </p>
+<p>换句话说，先对样本添加控制字组成了N’宽度的204B字，再对其分为半字节组，然后将多个半字节组组成8位字，最后形成帧。  </p>
+<p>有点绕，反正就是对样本添加控制/结束位以8位字为单位组为帧。  </p>
 <p>需要注意的是：  </p>
 <blockquote>
 <p>传输层以并行数据将这些样本提供给数据链路。并行数据总线的宽度由成帧器结构决定，单字节为8位，双字节为16位，以此类推。  </p>
@@ -433,7 +435,9 @@
 <p>ILAS的主要作用是对齐链路的所有通道，验证链路参数，以及确定帧和多帧边界在接收器的输入数据流中的位置。   </p>
 </blockquote>
 <p>ILAS一般由4个多帧组成，如下图所示<br><img src="/2017/04/27/JESD204b入坑/ILAS阶段多帧.png" alt="ILAS阶段多帧.png" title="">    </p>
-<p>其中控制字符的含义如下所示，注意第二针/Q/字符之后的数据是链路配置参数，这个我觉得应该是去查具体使用的芯片手册。其他填充的数据为伪数据。<br><img src="/2017/04/27/JESD204b入坑/jesd204控制字符.png" alt="jesd204控制字符.png" title="">    </p>
+<p>其中控制字符的含义如下所示，其他填充的数据为伪数据。<br><img src="/2017/04/27/JESD204b入坑/jesd204控制字符.png" alt="jesd204控制字符.png" title=""></p>
+<p>第二帧/Q/字符之后的数据是链路配置参数，在204B协议标准中查到映射关系是<br><img src="/2017/04/27/JESD204b入坑/链路参数映射.png" alt="链路参数映射.png" title="">    </p>
+<p>其中链路配置参数的含义是<br><img src="/2017/04/27/JESD204b入坑/链路配置参数.png" alt="链路配置参数.png" title="">    </p>
 <p>3.用户数据阶段  </p>
 <blockquote>
 <p>在这一阶段，用户数据根据发送器(ADC)中定义并转发到接收器(FPGA)的链路参数，以流形式从发送器传输到接收器。<br>接收器模块处理并监视收到的数据有无错误，包括运行差异不正确(8B/10B错误)、不在表中(8B/10B错误)、意外控制字符、 ILAS不正确和通道间偏斜。  </p>
@@ -484,6 +488,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/08/JESD204b传输层组帧过程/" rel="prev" title="JESD204b传输层组帧过程">
+                JESD204b传输层组帧过程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -555,7 +563,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

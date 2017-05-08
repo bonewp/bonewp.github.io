@@ -292,6 +292,133 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/11/verilog中的加法/" itemprop="url">
+                  verilog中的加法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T18:00:01+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/11/verilog中的加法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/verilog中的加法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这两天调一个项目的时候涉及到了符号数的加法和限幅，调了好久才发现这里面的坑。。瞬间觉得自己基础有待提高啊</p>
+<h3 id="符号数的加法"><a href="#符号数的加法" class="headerlink" title="符号数的加法"></a>符号数的加法</h3><p>用补码来表示符号数，对两个符号数相加可以直接加法赋值，如下列代码，这是由补码的特性决定的，非常方便。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_1;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_2;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] add_ans;</div><div class="line"></div><div class="line">assign add_ans = sig_1 + sig_2;</div></pre></td></tr></table></figure></p>
+<h3 id="加法溢出的处理"><a href="#加法溢出的处理" class="headerlink" title="加法溢出的处理"></a>加法溢出的处理</h3><p>然而固定位数的加法会出现溢出的问题，要为结果考虑进位，因此为结果多添加一位。此时一定要注意！</p>
+<p><strong>符号数加法要进行符号位扩展！！</strong></p>
+<p>当时没有注意到这个，死活不知道为什么结果的进位消失了…示例代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_1;</div><div class="line">wire [<span class="number">31</span>:<span class="number">0</span>] sig_2;</div><div class="line">wire [<span class="number">32</span>:<span class="number">0</span>] add_ans;</div><div class="line"></div><div class="line">assign add_ans = &#123;sig_1[<span class="number">31</span>], sig_1&#125; + &#123;sig_2[<span class="number">31</span>], sig_2&#125;;</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/11/verilog中的加法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/09/写markdown时用到的特殊用法/" itemprop="url">
                   写markdown时用到的特殊用法
                 </a>
@@ -675,7 +802,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

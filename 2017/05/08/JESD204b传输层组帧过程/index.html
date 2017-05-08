@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="超外差,接收机," />
+  <meta name="keywords" content="jesd204b," />
 
 
 
@@ -86,19 +86,37 @@
 
 
 
-<meta name="description" content="本科时学习通信原理就接触了超外差式(superheterodyne)接收机，也知道超外差式接收机的原理和框图，现在做了一些相关项目对此类功能也是熟悉了很多，但就是从来没去关注过为什么叫做超外差这么个奇怪的名字。这两天赶硕士论文开题，补《雷达系统及其信息处理》，在雷达接收机章节中又看到这个词，才重新细细思考起这个词儿，然后突然觉得自己简直对不起学通信这个名号…连超外差这个词过了几年才明白。  
-首先">
+<meta name="description" content="之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   
+首先传输层是用来组帧的，将样本转换为non-scrambled Octects。   
+映射关系可以分为几种，包括：  
+
+单转换器(converter)至单通道(lane)链接(link)   
+多转换器(同一器件)至单通道链接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="超外差的概念">
-<meta property="og:url" content="http://bonewp.github.io.git/2016/09/24/超外差的概念/index.html">
+<meta property="og:title" content="JESD204b传输层组帧过程">
+<meta property="og:url" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="本科时学习通信原理就接触了超外差式(superheterodyne)接收机，也知道超外差式接收机的原理和框图，现在做了一些相关项目对此类功能也是熟悉了很多，但就是从来没去关注过为什么叫做超外差这么个奇怪的名字。这两天赶硕士论文开题，补《雷达系统及其信息处理》，在雷达接收机章节中又看到这个词，才重新细细思考起这个词儿，然后突然觉得自己简直对不起学通信这个名号…连超外差这个词过了几年才明白。  
-首先">
-<meta property="og:updated_time" content="2016-09-24T14:14:21.743Z">
+<meta property="og:description" content="之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   
+首先传输层是用来组帧的，将样本转换为non-scrambled Octects。   
+映射关系可以分为几种，包括：  
+
+单转换器(converter)至单通道(lane)链接(link)   
+多转换器(同一器件)至单通道链接">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下的用户数据格式.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下无控制字.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下有控制字.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下两个控制字的帧结构.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/结束位在新老版本中的位置.png">
+<meta property="og:updated_time" content="2017-05-08T07:44:10.431Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="超外差的概念">
-<meta name="twitter:description" content="本科时学习通信原理就接触了超外差式(superheterodyne)接收机，也知道超外差式接收机的原理和框图，现在做了一些相关项目对此类功能也是熟悉了很多，但就是从来没去关注过为什么叫做超外差这么个奇怪的名字。这两天赶硕士论文开题，补《雷达系统及其信息处理》，在雷达接收机章节中又看到这个词，才重新细细思考起这个词儿，然后突然觉得自己简直对不起学通信这个名号…连超外差这个词过了几年才明白。  
-首先">
+<meta name="twitter:title" content="JESD204b传输层组帧过程">
+<meta name="twitter:description" content="之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   
+首先传输层是用来组帧的，将样本转换为non-scrambled Octects。   
+映射关系可以分为几种，包括：  
+
+单转换器(converter)至单通道(lane)链接(link)   
+多转换器(同一器件)至单通道链接">
+<meta name="twitter:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下的用户数据格式.png">
 
 
 
@@ -119,9 +137,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/2016/09/24/超外差的概念/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/"/>
 
-  <title> 超外差的概念 | bonewp blog </title>
+  <title> JESD204b传输层组帧过程 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -293,7 +311,7 @@
             
             
               
-                超外差的概念
+                JESD204b传输层组帧过程
               
             
           </h1>
@@ -305,8 +323,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-24T20:50:23+08:00" content="2016-09-24">
-              2016-09-24
+            <time itemprop="dateCreated" datetime="2017-05-08T14:40:07+08:00" content="2017-05-08">
+              2017-05-08
             </time>
           </span>
 
@@ -319,8 +337,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/通信/" itemprop="url" rel="index">
-                    <span itemprop="name">通信</span>
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
                   </a>
                 </span>
 
@@ -335,8 +353,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/09/24/超外差的概念/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/24/超外差的概念/" itemprop="commentsCount"></span>
+                <a href="/2017/05/08/JESD204b传输层组帧过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/08/JESD204b传输层组帧过程/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -359,19 +377,27 @@
       
 
       
-        <p>本科时学习通信原理就接触了超外差式(superheterodyne)接收机，也知道超外差式接收机的原理和框图，现在做了一些相关项目对此类功能也是熟悉了很多，但就是从来没去关注过为什么叫做超外差这么个奇怪的名字。<br>这两天赶硕士论文开题，补《雷达系统及其信息处理》，在雷达接收机章节中又看到这个词，才重新细细思考起这个词儿，然后突然觉得自己简直对不起学通信这个名号…连超外差这个词过了几年才明白。  </p>
-<p>首先从这个词的起源说起，超外差来源于外差(heterodyne)，引用百度百科上的说法  </p>
-<blockquote>
-<p> heterodyne（外差原理）来自于希腊语的词根hetero（不同的）和dyn（功率）。<br>外差法的英文原意应该是 “不同频率信号作为驱动力的方法”, 用汉语可凝练成 “异频驱使法”, 再进一步, 就变成 “外差法” 了. 这个从外差法专利文档中也可以得到印证, 其在最后的保护范围声明中, 斐德森一口气开列了 9种情况, 核心内容都是”用两个以及两个以上频率的信号相作用产生新的频率的方法”。  </p>
-</blockquote>
-<p>也就是说本质是利用两个频率混频之后的结果得到所用信号的频率。一个词总结就是<strong>频谱搬移</strong>。<br>尼玛原来频移的技术是这么引入进来的，我现在做的硬件很多都在搞上/下变频、升/降采样，都跟着玩意儿有关，搞了这么久才知道精髓原来就是外差…  </p>
-<a id="more"></a>
-<p>再回到超外差，从名字可看出，超外差就是由外差发展而来的，引用维基百科的说法  </p>
-<blockquote>
-<p>超外差接收机是一种利用超外差原理的无线电接收机，1918年由美国无线电工程师埃德温·霍华德·阿姆斯特朗发明。超外差原理是一种利用机器内一个可变的振荡器产生的电波和外来信号混合以产生固定频率的中频信号。  </p>
-</blockquote>
-<p>也就是超外差多了一个从射频到中频的过程，这样接收处理就相对容易了，涉及到中频滤波等等。<br>其框图、优点之类的不再赘述了，百科中都有，总之超外差这个概念弄明白了，那么接收机的原理基本上也就有个数了。</p>
-<p>reference:<br><a href="https://zh.wikipedia.org/wiki/%E8%B6%85%E5%A4%96%E5%B7%AE%E6%94%B6%E9%9F%B3%E6%9C%BA" target="_blank" rel="external">超外差收音机-维基百科</a><br><a href="http://baike.baidu.com/view/1029112.htm#reference-[1]-1029112-wrap" target="_blank" rel="external">超外差-百度百科</a><br><a href="http://baike.baidu.com/subview/5032345/5035457.htm" target="_blank" rel="external">外差原理</a>  </p>
+        <p>之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   </p>
+<p>首先传输层是用来组帧的，将样本转换为non-scrambled Octects。   </p>
+<p>映射关系可以分为几种，包括：  </p>
+<ul>
+<li>单转换器(converter)至单通道(lane)链接(link)   </li>
+<li>多转换器(同一器件)至单通道链接</li>
+<li>单转换器至多通道链接</li>
+<li>多转换器(同一器件)至多通道链接</li>
+</ul>
+<p>目测在使用过程中多是最后一种映射，举例就用它了。注意到一个地方，多通道相对于单通道有一个HD(High Density)参数，HD=1表示一个样本会被分割至多个lanes。    </p>
+<p>然后明确一个点，就是多数情况下S=1，这样帧时钟等于采样时钟。另外看ADI的datasheet提到K一般取32。   </p>
+<p>多通道下将样本映射为Octects的过程如下图所示，其中重要的点就在于添加控制位/字和结束位/字。<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下的用户数据格式.png" alt="多通道下的用户数据格式.png" title="">    </p>
+<h3 id="控制位-字"><a href="#控制位-字" class="headerlink" title="控制位/字"></a>控制位/字</h3><p>控制位的添加是在样本映射为字的时候。     </p>
+<p>控制位的添加有两种方式，一种是按bit放在每个样本的LSB之后；另一种是将多个样本的控制位组为控制字，放在样本的后面。  </p>
+<p>CF就用于指示用的是哪种方式，CF=0为前者，CF&gt;0为后者。</p>
+<p>前者情况下的图示<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下无控制字.png" alt="多通道下无控制字.png" title="">    </p>
+<p>后者情况下可能能节省lane，如下图，最后一个lane专门用于传输控制字。<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下有控制字.png" alt="多通道下有控制字.png" title="">    </p>
+<p>注意CF是该链接(link)每帧总共的控制字，也就是说L个lanes被分为CF个组，每个组有L/CF个lanes、传输M/CF的样本(所以CF必须是L和M的公因数)，按组添加的控制字，如下图所示<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下两个控制字的帧结构.png" alt="多通道下两个控制字的帧结构.png" title="">    </p>
+<h3 id="结束位-字"><a href="#结束位-字" class="headerlink" title="结束位/字"></a>结束位/字</h3><p>结束位的添加是在字(word)扩展为半字节组(nibble group, NG)的时候。  </p>
+<p>之前我还不太理解NG的概念，看了标准才知道这是相对于老版本204添加的，老版本中结束位的添加只能在帧尾，新版本中通过NG的方式推荐将结束位插在每个样本的后面。当然这样会降低开销。如下图所示<br><img src="/2017/05/08/JESD204b传输层组帧过程/结束位在新老版本中的位置.png" alt="结束位在新老版本中的位置.png" title="">　　</p>
+<p>通过上述过程添加好控制位和结束位并做好映射关系后，就以帧为单位至数据链路层做下一步处理了。   </p>
 
       
     </div>
@@ -394,9 +420,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/超外差/" rel="tag">#超外差</a>
-          
-            <a href="/tags/接收机/" rel="tag">#接收机</a>
+            <a href="/tags/jesd204b/" rel="tag">#jesd204b</a>
           
         </div>
       
@@ -405,17 +429,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/25/usb体制及测控技术相关/" rel="next" title="usb体制及测控技术相关">
-                <i class="fa fa-chevron-left"></i> usb体制及测控技术相关
+              <a href="/2017/04/27/JESD204b入坑/" rel="next" title="JESD204b入坑">
+                <i class="fa fa-chevron-left"></i> JESD204b入坑
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/24/FM调制与解调/" rel="prev" title="FM调制与解调">
-                FM调制与解调 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -441,8 +461,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/09/24/超外差的概念/"
-           data-title="超外差的概念" data-url="http://bonewp.github.io.git/2016/09/24/超外差的概念/">
+      <div class="ds-thread" data-thread-key="2017/05/08/JESD204b传输层组帧过程/"
+           data-title="JESD204b传输层组帧过程" data-url="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/">
       </div>
     
   </div>
@@ -547,7 +567,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#控制位-字"><span class="nav-number">1.</span> <span class="nav-text">控制位/字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束位-字"><span class="nav-number">2.</span> <span class="nav-text">结束位/字</span></a></li></ol></div>
             
           </div>
         </section>
