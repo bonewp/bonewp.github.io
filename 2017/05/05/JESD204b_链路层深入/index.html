@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jesd204b," />
 
 
 
@@ -86,19 +86,24 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   
+同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。而关注">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://bonewp.github.io.git/2016/07/13/hello-world/index.html">
+<meta property="og:title" content="JESD204b_链路层深入">
+<meta property="og:url" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-07-13T13:01:49.112Z">
+<meta property="og:description" content="我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   
+同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。而关注">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/确定性延迟等于LMFC.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/确定性延迟最小情况.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/运用SYSREF实现帧时钟对齐.png">
+<meta property="og:image" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/最差情况下的DLU.png">
+<meta property="og:updated_time" content="2017-05-15T13:40:32.078Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="JESD204b_链路层深入">
+<meta name="twitter:description" content="我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   
+同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。而关注">
+<meta name="twitter:image" content="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/确定性延迟等于LMFC.png">
 
 
 
@@ -119,9 +124,9 @@ Quick">
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/2016/07/13/hello-world/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/"/>
 
-  <title> Hello World | bonewp blog </title>
+  <title> JESD204b_链路层深入 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -293,7 +298,7 @@ Quick">
             
             
               
-                Hello World
+                JESD204b_链路层深入
               
             
           </h1>
@@ -305,19 +310,38 @@ Quick">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-13T14:54:51+08:00" content="2016-07-13">
-              2016-07-13
+            <time itemprop="dateCreated" datetime="2017-05-05T10:53:07+08:00" content="2017-05-05">
+              2017-05-05
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/07/13/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/13/hello-world/" itemprop="commentsCount"></span>
+                <a href="/2017/05/05/JESD204b_链路层深入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/JESD204b_链路层深入/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -340,15 +364,43 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   </p>
+<p>同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。<br>而关注的确定性延迟就是在CGS至ILAS过渡的地方实现的。   </p>
+<p>同步链路的三个阶段的具体操作去翻入坑记，这里我重新梳理下确定性延迟的实现。   </p>
+<h3 id="SYSREF信号的作用"><a href="#SYSREF信号的作用" class="headerlink" title="SYSREF信号的作用"></a>SYSREF信号的作用</h3><p>标准中对SYSREF的描述是  </p>
+<blockquote>
+<p>The purpose of SYSREF is to identify the device clock edge that should be used to align thephase of the internal LMFC and frame clock.  </p>
+</blockquote>
+<p>子类1的确定性延迟是通过外部同步信号SYSREF来实现的。可以先想一下，如果没有SYSREF信号，而子类1下204B的各个器件的器件时钟不同，那么每个器件各自会有自己的帧时钟FC和多帧时钟LMFC，由于传输延迟等原因，每个器件的FC和LMFC肯定是不同步的。<br>如果不要求确定性延迟的话，就算FC/LMFC不同步也没关系，因为只要能确定帧边界，能解帧结构得到原始数据就行。   </p>
+<p>但是如果要求确定性延迟的话，就必须让FC/LMFC同步，这样只要TX知道自己是在哪个FC/LMFC开始发送的数据，RX知道自己是在哪FC/LMFC接收的数据，就能知道传输延迟是多少并能重复这个延迟的值，由于FC/LMFC都是由器件时钟得来得，所以确定性延迟的衡量精度就是器件时钟。      </p>
+<p>为了实现FC/LMFC同步，就通过一个外部SYSREF信号，TX和RX都检测这个SYSREF信号，它一有效，TX和RX就把LMFC计数器给重置，这样LMFC就同步了。   </p>
+<p>最简单的情况我想应该是在系统复位后的CGS阶段，TX和RX检测SYSREF做LMFC同步，这样SYSREF就只需要一个脉冲就可以了。标准中提到SYSREF可以是单脉冲、周期信号或带隙周期信号，当SYSREF为周期信号时，还需要考虑是否每次SYSREF有效都做同步或同步检查，是否重新同步时要求SYSREF信号等，这根据TX和RX的具体实现情况来看，当然最简单的就是SYSREF是和LMFC一样的周期信号，只在复位后的CGS阶段有效SYSREF做同步，以后都忽略SYSREF信号，当然这样的话缺点是以后会有LMFC失去同步的可能。   </p>
+<h3 id="确定性延迟等于LMFC示例"><a href="#确定性延迟等于LMFC示例" class="headerlink" title="确定性延迟等于LMFC示例"></a>确定性延迟等于LMFC示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟等于LMFC.png" alt="确定性延迟等于LMFC.png" title="">  
+<p>上图是标准中6.3节的示例，确定性延迟等于LMFC。  </p>
+<p>具体过程就是，CGS阶段TX和RX根据SYSREF同步LMFC，并且RX解除SYNC~，TX检测到SYNC~解除后的第一个LMFC进入ILAS阶段，RX在SYNC~解除后的第二个LMFC释放数据，这样确定性延迟就等于LMFC。   </p>
+<p>需要注意的是要求总传输延迟小于LMFC，否则当释放数据时还有lane的数据没有到达。  </p>
+<h3 id="确定性延迟最小示例"><a href="#确定性延迟最小示例" class="headerlink" title="确定性延迟最小示例"></a>确定性延迟最小示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟最小情况.png" alt="确定性延迟最小情况.png" title="">  
+<p>另一种情况是确定性延迟小于LMFC，这时需要自定义RX弹性缓冲区的释放时机。  </p>
+<p>我一开始对这个“释放时机”的选取不是很理解，看了DA芯片AD9144的实现，有了一点理解。   </p>
+<p>首先需要知道TX和RX的延迟，由两者得出可能的最大传输延迟，设置LMFC_rx为LMFC的延迟，值就是算出的最大延迟。这里LMFC_rx就相当于示例图中的Release Opportunity。</p>
+<p>这样的实现方式我觉得相比上一种要复杂一些，因为还需要查询TX和RX的处理延迟；但相对应的要节约缓冲区资源。在DA芯片上实现时资源有限，选择这样做能理解；而在FPGA上实现时，我觉得上一种要方便一点。   </p>
+<h3 id="SYSREF的生成"><a href="#SYSREF的生成" class="headerlink" title="SYSREF的生成"></a>SYSREF的生成</h3><p>从标准设计来说，SYSREF和DCLK都是从同一源器件生成，并分别连至各个204B器件去的。  </p>
+<p>根据MS-2433  </p>
+<blockquote>
+<p> 可使用FPGA为系统提供SYSREF事件。然而，除非它也使用并同步至发送到ADC的主机采样时钟，否则SYSREF信号从FPGA相位对齐至时钟将会很困难。<br>另一种方法是从FPGA相位对齐至时钟将会很困难。另一种方法由时钟发生或时钟分配芯片提供SYSREF信号，可通过发送至整个系统的信号相位同步至多个时钟。  </p>
+</blockquote>
+<h4 id="部署子类1的系统要求"><a href="#部署子类1的系统要求" class="headerlink" title="部署子类1的系统要求"></a>部署子类1的系统要求</h4><p>根据MS-2672</p>
+<blockquote>
+<p>JESD204B系统中确定性延迟的精度和可靠性取决于器件时钟与SYSREF之间的关系。器件时钟为系统参考时钟，而采样时钟(典型情况)、 JESD204B时钟和串行器时钟是从中推导出来的。它用来捕捉SYSREF，并完成帧和多帧时钟的前沿相位对齐。  </p>
+</blockquote>
+<img src="/2017/05/05/JESD204b_链路层深入/运用SYSREF实现帧时钟对齐.png" alt="运用SYSREF实现帧时钟对齐.png" title="">  
+<p>所以说DCLK越高，所能达到的精度越高，但DCLK不可能无限地高上去，看Note中常以DCLK=2Fs举例说明。   </p>
+<h3 id="确定性延迟的精度"><a href="#确定性延迟的精度" class="headerlink" title="确定性延迟的精度"></a>确定性延迟的精度</h3><p>根据MS-2677的2.1节可知，确定性延迟的精度取决于器件时钟和SYSREF与系统中这些信号的分布偏斜之间的时序关系。也就是SYSREF要满足相对于DCLK的建立保持时间。<br>但DCLK通常等于或高于采样速率(GHz范围内)，这时要达到建立保持时间要求非常困难，所以可能需要对SYSREF相对DCLK的相位偏移进行编程，ADI推荐AD9250。  </p>
+<p>而AD芯片AD9691的SYSREF建立/保持窗口监测功能就是提供给相位偏移编程使用的。这是在走线长度匹配法之后的“高级解决方法”。    </p>
+<p>回过头来看一下DLU(deterministic latency uncertainty)，当SYSREF捕获的建立和保持时间要求未在系统中每个器件处得到满足时，为最差情况下的DCU = DS_SYSREF + T_DCLK，同时也等于LMFC的对齐误差。其中DS_SYSREF为SYSREF分布偏斜。<br><img src="/2017/05/05/JESD204b_链路层深入/最差情况下的DLU.png" alt="最差情况下的DLU.png" title="">  </p>
+<p>这样的话通常DLU以零点几ns为单位，在许多应用中DLU最差情况能达到可接受水平，也就不必严格控制器件时钟分布偏斜，注意确保SYSREF的脉冲宽度大于等于2T_DCLK即可。   </p>
+<p>总结下来就是，看DLU是不是满足应用要求，满足的话就把SYSREF脉冲宽度搞宽点，不满足就用走线匹配或者相位偏移编程来调整SYSREF。   </p>
+<p>另一方面，使用DCLK为采样时钟整数倍的好处，是在多器件同步时，要求DLU=采样时钟的正负1/2，若DCLK为采样时钟的2倍，则刚好可以满足要求，那么只要能做到的话，尽量让DCLK更高。   </p>
 
       
     </div>
@@ -369,17 +421,27 @@ Quick">
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/jesd204b/" rel="tag">#jesd204b</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/27/JESD204b入坑/" rel="next" title="JESD204b入坑">
+                <i class="fa fa-chevron-left"></i> JESD204b入坑
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/13/Vivado-IO-Constrain/" rel="prev" title="Vivado IO Constraint">
-                Vivado IO Constraint <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/08/JESD204b传输层组帧过程/" rel="prev" title="JESD204b传输层组帧过程">
+                JESD204b传输层组帧过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -406,8 +468,8 @@ Quick">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/07/13/hello-world/"
-           data-title="Hello World" data-url="http://bonewp.github.io.git/2016/07/13/hello-world/">
+      <div class="ds-thread" data-thread-key="2017/05/05/JESD204b_链路层深入/"
+           data-title="JESD204b_链路层深入" data-url="http://bonewp.github.io.git/2017/05/05/JESD204b_链路层深入/">
       </div>
     
   </div>
@@ -512,7 +574,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSREF信号的作用"><span class="nav-number">1.</span> <span class="nav-text">SYSREF信号的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定性延迟等于LMFC示例"><span class="nav-number">2.</span> <span class="nav-text">确定性延迟等于LMFC示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定性延迟最小示例"><span class="nav-number">3.</span> <span class="nav-text">确定性延迟最小示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSREF的生成"><span class="nav-number">4.</span> <span class="nav-text">SYSREF的生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#部署子类1的系统要求"><span class="nav-number">4.1.</span> <span class="nav-text">部署子类1的系统要求</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定性延迟的精度"><span class="nav-number">5.</span> <span class="nav-text">确定性延迟的精度</span></a></li></ol></div>
             
           </div>
         </section>

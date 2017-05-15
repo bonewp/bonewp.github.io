@@ -425,6 +425,162 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/05/JESD204b_链路层深入/" itemprop="url">
+                  JESD204b_链路层深入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-05T10:53:07+08:00" content="2017-05-05">
+              2017-05-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/05/JESD204b_链路层深入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/JESD204b_链路层深入/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   </p>
+<p>同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。<br>而关注的确定性延迟就是在CGS至ILAS过渡的地方实现的。   </p>
+<p>同步链路的三个阶段的具体操作去翻入坑记，这里我重新梳理下确定性延迟的实现。   </p>
+<h3 id="SYSREF信号的作用"><a href="#SYSREF信号的作用" class="headerlink" title="SYSREF信号的作用"></a>SYSREF信号的作用</h3><p>标准中对SYSREF的描述是  </p>
+<blockquote>
+<p>The purpose of SYSREF is to identify the device clock edge that should be used to align thephase of the internal LMFC and frame clock.  </p>
+</blockquote>
+<p>子类1的确定性延迟是通过外部同步信号SYSREF来实现的。可以先想一下，如果没有SYSREF信号，而子类1下204B的各个器件的器件时钟不同，那么每个器件各自会有自己的帧时钟FC和多帧时钟LMFC，由于传输延迟等原因，每个器件的FC和LMFC肯定是不同步的。<br>如果不要求确定性延迟的话，就算FC/LMFC不同步也没关系，因为只要能确定帧边界，能解帧结构得到原始数据就行。   </p>
+<p>但是如果要求确定性延迟的话，就必须让FC/LMFC同步，这样只要TX知道自己是在哪个FC/LMFC开始发送的数据，RX知道自己是在哪FC/LMFC接收的数据，就能知道传输延迟是多少并能重复这个延迟的值，由于FC/LMFC都是由器件时钟得来得，所以确定性延迟的衡量精度就是器件时钟。      </p>
+<p>为了实现FC/LMFC同步，就通过一个外部SYSREF信号，TX和RX都检测这个SYSREF信号，它一有效，TX和RX就把LMFC计数器给重置，这样LMFC就同步了。   </p>
+<p>最简单的情况我想应该是在系统复位后的CGS阶段，TX和RX检测SYSREF做LMFC同步，这样SYSREF就只需要一个脉冲就可以了。标准中提到SYSREF可以是单脉冲、周期信号或带隙周期信号，当SYSREF为周期信号时，还需要考虑是否每次SYSREF有效都做同步或同步检查，是否重新同步时要求SYSREF信号等，这根据TX和RX的具体实现情况来看，当然最简单的就是SYSREF是和LMFC一样的周期信号，只在复位后的CGS阶段有效SYSREF做同步，以后都忽略SYSREF信号，当然这样的话缺点是以后会有LMFC失去同步的可能。   </p>
+<h3 id="确定性延迟等于LMFC示例"><a href="#确定性延迟等于LMFC示例" class="headerlink" title="确定性延迟等于LMFC示例"></a>确定性延迟等于LMFC示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟等于LMFC.png" alt="确定性延迟等于LMFC.png" title="">  
+<p>上图是标准中6.3节的示例，确定性延迟等于LMFC。  </p>
+<p>具体过程就是，CGS阶段TX和RX根据SYSREF同步LMFC，并且RX解除SYNC~，TX检测到SYNC~解除后的第一个LMFC进入ILAS阶段，RX在SYNC~解除后的第二个LMFC释放数据，这样确定性延迟就等于LMFC。   </p>
+<p>需要注意的是要求总传输延迟小于LMFC，否则当释放数据时还有lane的数据没有到达。  </p>
+<h3 id="确定性延迟最小示例"><a href="#确定性延迟最小示例" class="headerlink" title="确定性延迟最小示例"></a>确定性延迟最小示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟最小情况.png" alt="确定性延迟最小情况.png" title="">  
+<p>另一种情况是确定性延迟小于LMFC，这时需要自定义RX弹性缓冲区的释放时机。  </p>
+<p>我一开始对这个“释放时机”的选取不是很理解，看了DA芯片AD9144的实现，有了一点理解。   </p>
+<p>首先需要知道TX和RX的延迟，由两者得出可能的最大传输延迟，设置LMFC_rx为LMFC的延迟，值就是算出的最大延迟。这里LMFC_rx就相当于示例图中的Release Opportunity。</p>
+<p>这样的实现方式我觉得相比上一种要复杂一些，因为还需要查询TX和RX的处理延迟；但相对应的要节约缓冲区资源。在DA芯片上实现时资源有限，选择这样做能理解；而在FPGA上实现时，我觉得上一种要方便一点。   </p>
+<h3 id="SYSREF的生成"><a href="#SYSREF的生成" class="headerlink" title="SYSREF的生成"></a>SYSREF的生成</h3><p>从标准设计来说，SYSREF和DCLK都是从同一源器件生成，并分别连至各个204B器件去的。  </p>
+<p>根据MS-2433  </p>
+<blockquote>
+<p> 可使用FPGA为系统提供SYSREF事件。然而，除非它也使用并同步至发送到ADC的主机采样时钟，否则SYSREF信号从FPGA相位对齐至时钟将会很困难。<br>另一种方法是从FPGA相位对齐至时钟将会很困难。另一种方法由时钟发生或时钟分配芯片提供SYSREF信号，可通过发送至整个系统的信号相位同步至多个时钟。  </p>
+</blockquote>
+<h4 id="部署子类1的系统要求"><a href="#部署子类1的系统要求" class="headerlink" title="部署子类1的系统要求"></a>部署子类1的系统要求</h4><p>根据MS-2672</p>
+<blockquote>
+<p>JESD204B系统中确定性延迟的精度和可靠性取决于器件时钟与SYSREF之间的关系。器件时钟为系统参考时钟，而采样时钟(典型情况)、 JESD204B时钟和串行器时钟是从中推导出来的。它用来捕捉SYSREF，并完成帧和多帧时钟的前沿相位对齐。  </p>
+</blockquote>
+<img src="/2017/05/05/JESD204b_链路层深入/运用SYSREF实现帧时钟对齐.png" alt="运用SYSREF实现帧时钟对齐.png" title="">  
+<p>所以说DCLK越高，所能达到的精度越高，但DCLK不可能无限地高上去，看Note中常以DCLK=2Fs举例说明。   </p>
+<h3 id="确定性延迟的精度"><a href="#确定性延迟的精度" class="headerlink" title="确定性延迟的精度"></a>确定性延迟的精度</h3><p>根据MS-2677的2.1节可知，确定性延迟的精度取决于器件时钟和SYSREF与系统中这些信号的分布偏斜之间的时序关系。也就是SYSREF要满足相对于DCLK的建立保持时间。<br>但DCLK通常等于或高于采样速率(GHz范围内)，这时要达到建立保持时间要求非常困难，所以可能需要对SYSREF相对DCLK的相位偏移进行编程，ADI推荐AD9250。  </p>
+<p>而AD芯片AD9691的SYSREF建立/保持窗口监测功能就是提供给相位偏移编程使用的。这是在走线长度匹配法之后的“高级解决方法”。    </p>
+<p>回过头来看一下DLU(deterministic latency uncertainty)，当SYSREF捕获的建立和保持时间要求未在系统中每个器件处得到满足时，为最差情况下的DCU = DS_SYSREF + T_DCLK，同时也等于LMFC的对齐误差。其中DS_SYSREF为SYSREF分布偏斜。<br><img src="/2017/05/05/JESD204b_链路层深入/最差情况下的DLU.png" alt="最差情况下的DLU.png" title="">  </p>
+<p>这样的话通常DLU以零点几ns为单位，在许多应用中DLU最差情况能达到可接受水平，也就不必严格控制器件时钟分布偏斜，注意确保SYSREF的脉冲宽度大于等于2T_DCLK即可。   </p>
+<p>总结下来就是，看DLU是不是满足应用要求，满足的话就把SYSREF脉冲宽度搞宽点，不满足就用走线匹配或者相位偏移编程来调整SYSREF。   </p>
+<p>另一方面，使用DCLK为采样时钟整数倍的好处，是在多器件同步时，要求DLU=采样时钟的正负1/2，若DCLK为采样时钟的2倍，则刚好可以满足要求，那么只要能做到的话，尽量让DCLK更高。   </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/27/JESD204b入坑/" itemprop="url">
                   JESD204b入坑
                 </a>
@@ -1408,135 +1564,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/28/雷达波形与信号/" itemprop="url">
-                  雷达波形与信号
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-28T14:24:19+08:00" content="2017-03-28">
-              2017-03-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/雷达/" itemprop="url" rel="index">
-                    <span itemprop="name">雷达</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/28/雷达波形与信号/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/28/雷达波形与信号/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="雷达的分辨率"><a href="#雷达的分辨率" class="headerlink" title="雷达的分辨率"></a>雷达的分辨率</h3><p>雷达波形$u(t)$的自相关函数主瓣宽度越窄，其距离分辨能力越强。即若要时间（距离）分辨率好，应选择这样的信号，即它通过匹配滤波器后应该输出很窄的主瓣波峰。这样的信号或是具有很短持续时间的脉冲，或是具有很宽频谱的宽带波形。  </p>
-<p>瑞利时间分辨率：$\delta_t = 1/B$，或等效地，瑞利距离分辨率：$\delta_r = c/{2B}$。  </p>
-<p>多普勒频率分辨率:$\delta_{fd} = 1/T$，或对目标径向速度分辨率:$\delta_v = \lambda / {2T}$。  </p>
-<p>总结：</p>
-<ol>
-<li><strong>雷达的距离/时间分辨率由雷达发射信号的带宽决定。</strong> 该带宽可以是瞬时的(如极窄的脉冲)，也可以是合成的(通过时间换取，如脉冲持续时间长的线性调频波)。在实际应用中，该宽带信号可是窄脉冲波形、线性调频波形、频率步进波形、随机或伪随机噪声波形及其他任何宽带调制信号。  </li>
-<li><strong>雷达的速度/多普勒分辨率由信号的持续时间决定。</strong> 持续时间越长，分辨率越高。可通过发射持续时间长的脉冲或通过多个脉冲的相参积累等实现。  </li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/03/28/雷达波形与信号/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1582,7 +1609,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
