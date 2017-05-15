@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下有控制字.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/多通道下两个控制字的帧结构.png">
 <meta property="og:image" content="http://bonewp.github.io.git/2017/05/08/JESD204b传输层组帧过程/结束位在新老版本中的位置.png">
-<meta property="og:updated_time" content="2017-05-08T07:51:18.829Z">
+<meta property="og:updated_time" content="2017-05-09T03:00:40.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JESD204b传输层组帧过程">
 <meta name="twitter:description" content="之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   
@@ -396,6 +396,7 @@
 <p>前者情况下的图示<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下无控制字.png" alt="多通道下无控制字.png" title="">    </p>
 <p>后者情况下可能能节省lane，如下图，最后一个lane专门用于传输控制字。<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下有控制字.png" alt="多通道下有控制字.png" title="">    </p>
 <p>注意CF是该链接(link)每帧总共的控制字，也就是说L个lanes被分为CF个组，每个组有L/CF个lanes、传输M/CF的样本(所以CF必须是L和M的公因数)，按组添加的控制字，如下图所示<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下两个控制字的帧结构.png" alt="多通道下两个控制字的帧结构.png" title="">    </p>
+<p>阅读datasheet的时候发现用的AD和DA都是固定CF=0，这样实现方便一些？  </p>
 <h3 id="结束位-字"><a href="#结束位-字" class="headerlink" title="结束位/字"></a>结束位/字</h3><p>结束位的添加是在字(word)扩展为半字节组(nibble group, NG)的时候。  </p>
 <p>之前我还不太理解NG的概念，看了标准才知道这是相对于老版本204添加的，老版本中结束位的添加只能在帧尾，新版本中通过NG的方式推荐将结束位插在每个样本的后面。当然这样会降低开销。如下图所示<br><img src="/2017/05/08/JESD204b传输层组帧过程/结束位在新老版本中的位置.png" alt="结束位在新老版本中的位置.png" title="">　　</p>
 <p>通过上述过程添加好控制位和结束位并做好映射关系后，就以帧为单位至数据链路层做下一步处理了。   </p>
