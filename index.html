@@ -292,6 +292,130 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/10/JESD204b链路层深入/" itemprop="url">
+                  JESD204b链路层深入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-10T10:53:07+08:00" content="2017-05-10">
+              2017-05-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/10/JESD204b链路层深入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/10/JESD204b链路层深入/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   </p>
+<p>同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。<br>而关注的确定性延迟就是在CGS至ILAS过渡的地方实现的。   </p>
+<p>同步链路的三个阶段的具体操作去翻入坑记，这里我重新梳理下确定性延迟的实现。   </p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/05/10/JESD204b链路层深入/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/05/08/AD9691的使用/" itemprop="url">
                   AD9691的使用
                 </a>
@@ -497,130 +621,6 @@
 <p>多通道下将样本映射为Octects的过程如下图所示，其中重要的点就在于添加控制位/字和结束位/字。<br><img src="/2017/05/08/JESD204b传输层组帧过程/多通道下的用户数据格式.png" alt="多通道下的用户数据格式.png" title="">    </p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/05/08/JESD204b传输层组帧过程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/05/JESD204b链路层深入/" itemprop="url">
-                  JESD204b链路层深入
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-05T10:53:07+08:00" content="2017-05-05">
-              2017-05-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/study-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">study notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/05/05/JESD204b链路层深入/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/JESD204b链路层深入/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   </p>
-<p>同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。<br>而关注的确定性延迟就是在CGS至ILAS过渡的地方实现的。   </p>
-<p>同步链路的三个阶段的具体操作去翻入坑记，这里我重新梳理下确定性延迟的实现。   </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/05/05/JESD204b链路层深入/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
