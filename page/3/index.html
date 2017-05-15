@@ -292,6 +292,134 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/18/const限定符相关/" itemprop="url">
+                  const限定符相关
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-18T18:48:24+08:00" content="2016-08-18">
+              2016-08-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/18/const限定符相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/const限定符相关/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>阅读const限定符一节的时候很是绕了点，发现这里很容易混淆，所以记录一下。</p>
+<p>在需要定义变量的值不能被改变的时候，使用const加以限定，如<code>const int buffSize = 512;</code>这里是指变量本身是常量。</p>
+<p>而在定义引用和指针的时候，注意是指<strong>引用或指针是指向常量的引用或指针</strong>，如<code>const int *p;</code>，这里指针p是<strong>指向常量的指针(pointer to const)</strong>， p指向的值必须是一个const类型，而p本身的值（即所存储的地址）则可以改变。这里一定要明确的概念就是<strong>指向常量的引用/指针不能用于改变其绑定/所指对象的值</strong>。</p>
+<p>由于引用在初始化后不能再更改绑定对象，不用多说。而要让指针本身是常量的话，需要使用<code>*const</code>来定义<strong>常量指针(const pointer)</strong>。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *<span class="keyword">const</span> p = &amp;i;  <span class="comment">//p本身的值不能再改变，始终指向i</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> pip = &amp;pi; <span class="comment">//pip是一个指向常量的常量指针</span></div></pre></td></tr></table></figure></p>
+<p>由此可见，指针本身是常量和指向的对象是常量为两个独立问题。</p>
+<blockquote>
+<p>用名词<strong>顶层const(top-level const)</strong>表示指针本身为 常量，而用名词<strong>底层const(low-level const)</strong>表示指针所指的对象为一个常量。  </p>
+</blockquote>
+<p>顶层const可用于基本类型在内的任意对像，而底层const则与指针和引用等复合类型的基本类型部分有关。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/17/术语：何为对象/" itemprop="url">
                   术语：何为对象
                 </a>
@@ -928,7 +1056,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -945,7 +1073,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

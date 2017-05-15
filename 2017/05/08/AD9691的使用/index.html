@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="jesd204b ad9691," />
 
 
 
@@ -86,15 +86,22 @@
 
 
 
-<meta name="description" content="かわいいでしょう">
-<meta property="og:type" content="website">
-<meta property="og:title" content="bonewp blog">
-<meta property="og:url" content="http://bonewp.github.io.git/tags/verilog/index.html">
+<meta name="description" content="AD9691时钟输入范围0.3~4GHz，当时钟频率为采样率的整数倍时，需要使用input clock divider。  
+DA可直接输入时钟源(~2.8GHz)，或使用内置PLL(f_ref=35M~1GHz)。
+DA也就是204B的RX，还需要注意Link Delay，让LMFC有相同延迟–&amp;gt;LMFC_rx对应帧边界。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AD9691的使用">
+<meta property="og:url" content="http://bonewp.github.io.git/2017/05/08/AD9691的使用/index.html">
 <meta property="og:site_name" content="bonewp blog">
-<meta property="og:description" content="かわいいでしょう">
+<meta property="og:description" content="AD9691时钟输入范围0.3~4GHz，当时钟频率为采样率的整数倍时，需要使用input clock divider。  
+DA可直接输入时钟源(~2.8GHz)，或使用内置PLL(f_ref=35M~1GHz)。
+DA也就是204B的RX，还需要注意Link Delay，让LMFC有相同延迟–&amp;gt;LMFC_rx对应帧边界。">
+<meta property="og:updated_time" content="2017-05-09T14:36:19.816Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bonewp blog">
-<meta name="twitter:description" content="かわいいでしょう">
+<meta name="twitter:title" content="AD9691的使用">
+<meta name="twitter:description" content="AD9691时钟输入范围0.3~4GHz，当时钟频率为采样率的整数倍时，需要使用input clock divider。  
+DA可直接输入时钟源(~2.8GHz)，或使用内置PLL(f_ref=35M~1GHz)。
+DA也就是204B的RX，还需要注意Link Delay，让LMFC有相同延迟–&amp;gt;LMFC_rx对应帧边界。">
 
 
 
@@ -115,9 +122,9 @@
 
 
 
-  <link rel="canonical" href="http://bonewp.github.io.git/tags/verilog/"/>
+  <link rel="canonical" href="http://bonewp.github.io.git/2017/05/08/AD9691的使用/"/>
 
-  <title> 标签: verilog | bonewp blog </title>
+  <title> AD9691的使用 | bonewp blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -147,7 +154,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,46 +275,150 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        verilog
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AD9691的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-08T21:08:08+08:00" content="2017-05-08">
+              2017-05-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/study-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">study notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/08/AD9691的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/08/AD9691的使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>AD9691时钟输入范围0.3~4GHz，当时钟频率为采样率的整数倍时，需要使用input clock divider。  </p>
+<p>DA可直接输入时钟源(~2.8GHz)，或使用内置PLL(f_ref=35M~1GHz)。</p>
+<p>DA也就是204B的RX，还需要注意Link Delay，让LMFC有相同延迟–&gt;LMFC_rx对应帧边界。  </p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/08/11/verilog中的加法/" itemprop="url">
-              
-                <span itemprop="name">verilog中的加法</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-11T18:00:01+08:00"
-              content="2016-08-11" >
-          08-11
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jesd204b-ad9691/" rel="tag">#jesd204b ad9691</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/08/JESD204b传输层组帧过程/" rel="next" title="JESD204b传输层组帧过程">
+                <i class="fa fa-chevron-left"></i> JESD204b传输层组帧过程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -315,6 +426,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/08/AD9691的使用/"
+           data-title="AD9691的使用" data-url="http://bonewp.github.io.git/2017/05/08/AD9691的使用/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -334,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/k_on_1.png"
@@ -399,6 +527,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -495,6 +634,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 

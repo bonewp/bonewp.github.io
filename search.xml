@@ -4,6 +4,15 @@
   
     
     <entry>
+      <title><![CDATA[AD9691的使用]]></title>
+      <url>http://bonewp.github.io.git/2017/05/08/AD9691%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<p>AD9691时钟输入范围0.3~4GHz，当时钟频率为采样率的整数倍时，需要使用input clock divider。  </p>
+<p>DA可直接输入时钟源(~2.8GHz)，或使用内置PLL(f_ref=35M~1GHz)。</p>
+<p>DA也就是204B的RX，还需要注意Link Delay，让LMFC有相同延迟–&gt;LMFC_rx对应帧边界。  </p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JESD204b传输层组帧过程]]></title>
       <url>http://bonewp.github.io.git/2017/05/08/JESD204b%E4%BC%A0%E8%BE%93%E5%B1%82%E7%BB%84%E5%B8%A7%E8%BF%87%E7%A8%8B/</url>
       <content type="html"><![CDATA[<p>之前的入坑篇是看ADI的Survival-Guide，结果我发现还是不如直接看官方标准来得快啊…又是走了条弯路。之前看的稀里糊涂，这次重新整理下传输层组帧的过程。   </p>
@@ -33,11 +42,12 @@
     </entry>
     
     <entry>
-      <title><![CDATA[JESD204b_链路层深入]]></title>
-      <url>http://bonewp.github.io.git/2017/05/05/JESD204b_%E9%93%BE%E8%B7%AF%E5%B1%82%E6%B7%B1%E5%85%A5/</url>
+      <title><![CDATA[JESD204b链路层深入]]></title>
+      <url>http://bonewp.github.io.git/2017/05/05/JESD204b%E9%93%BE%E8%B7%AF%E5%B1%82%E6%B7%B1%E5%85%A5/</url>
       <content type="html"><![CDATA[<p>我把204b的标准看下来，感觉链路层在整个204b中是最重要且最复杂的地方，因为是在链路层建立的同步链路，且子类1的确定性延迟也是在这里实现的。   </p>
 <p>同步链路的建立，也就是确定帧边界与多帧边界，这通过三个阶段来实现————CGS、ILAS和DATA，这在入坑记中已经记录过了，CGS是TX发一堆K28.5字符直到RX将SYNC~解除置位，ILAS是按照规定格式发送四个多帧，最后进入数据阶段。<br>而关注的确定性延迟就是在CGS至ILAS过渡的地方实现的。   </p>
 <p>同步链路的三个阶段的具体操作去翻入坑记，这里我重新梳理下确定性延迟的实现。   </p>
+<a id="more"></a>
 <h3 id="SYSREF信号的作用"><a href="#SYSREF信号的作用" class="headerlink" title="SYSREF信号的作用"></a>SYSREF信号的作用</h3><p>标准中对SYSREF的描述是  </p>
 <blockquote>
 <p>The purpose of SYSREF is to identify the device clock edge that should be used to align thephase of the internal LMFC and frame clock.  </p>
@@ -46,11 +56,11 @@
 <p>但是如果要求确定性延迟的话，就必须让FC/LMFC同步，这样只要TX知道自己是在哪个FC/LMFC开始发送的数据，RX知道自己是在哪FC/LMFC接收的数据，就能知道传输延迟是多少并能重复这个延迟的值，由于FC/LMFC都是由器件时钟得来得，所以确定性延迟的衡量精度就是器件时钟。      </p>
 <p>为了实现FC/LMFC同步，就通过一个外部SYSREF信号，TX和RX都检测这个SYSREF信号，它一有效，TX和RX就把LMFC计数器给重置，这样LMFC就同步了。   </p>
 <p>最简单的情况我想应该是在系统复位后的CGS阶段，TX和RX检测SYSREF做LMFC同步，这样SYSREF就只需要一个脉冲就可以了。标准中提到SYSREF可以是单脉冲、周期信号或带隙周期信号，当SYSREF为周期信号时，还需要考虑是否每次SYSREF有效都做同步或同步检查，是否重新同步时要求SYSREF信号等，这根据TX和RX的具体实现情况来看，当然最简单的就是SYSREF是和LMFC一样的周期信号，只在复位后的CGS阶段有效SYSREF做同步，以后都忽略SYSREF信号，当然这样的话缺点是以后会有LMFC失去同步的可能。   </p>
-<h3 id="确定性延迟等于LMFC示例"><a href="#确定性延迟等于LMFC示例" class="headerlink" title="确定性延迟等于LMFC示例"></a>确定性延迟等于LMFC示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟等于LMFC.png" alt="确定性延迟等于LMFC.png" title="">  
+<h3 id="确定性延迟等于LMFC示例"><a href="#确定性延迟等于LMFC示例" class="headerlink" title="确定性延迟等于LMFC示例"></a>确定性延迟等于LMFC示例</h3><img src="/2017/05/05/JESD204b链路层深入/确定性延迟等于LMFC.png" alt="确定性延迟等于LMFC.png" title="">  
 <p>上图是标准中6.3节的示例，确定性延迟等于LMFC。  </p>
 <p>具体过程就是，CGS阶段TX和RX根据SYSREF同步LMFC，并且RX解除SYNC~，TX检测到SYNC~解除后的第一个LMFC进入ILAS阶段，RX在SYNC~解除后的第二个LMFC释放数据，这样确定性延迟就等于LMFC。   </p>
 <p>需要注意的是要求总传输延迟小于LMFC，否则当释放数据时还有lane的数据没有到达。  </p>
-<h3 id="确定性延迟最小示例"><a href="#确定性延迟最小示例" class="headerlink" title="确定性延迟最小示例"></a>确定性延迟最小示例</h3><img src="/2017/05/05/JESD204b_链路层深入/确定性延迟最小情况.png" alt="确定性延迟最小情况.png" title="">  
+<h3 id="确定性延迟最小示例"><a href="#确定性延迟最小示例" class="headerlink" title="确定性延迟最小示例"></a>确定性延迟最小示例</h3><img src="/2017/05/05/JESD204b链路层深入/确定性延迟最小情况.png" alt="确定性延迟最小情况.png" title="">  
 <p>另一种情况是确定性延迟小于LMFC，这时需要自定义RX弹性缓冲区的释放时机。  </p>
 <p>我一开始对这个“释放时机”的选取不是很理解，看了DA芯片AD9144的实现，有了一点理解。   </p>
 <p>首先需要知道TX和RX的延迟，由两者得出可能的最大传输延迟，设置LMFC_rx为LMFC的延迟，值就是算出的最大延迟。这里LMFC_rx就相当于示例图中的Release Opportunity。</p>
@@ -64,11 +74,11 @@
 <blockquote>
 <p>JESD204B系统中确定性延迟的精度和可靠性取决于器件时钟与SYSREF之间的关系。器件时钟为系统参考时钟，而采样时钟(典型情况)、 JESD204B时钟和串行器时钟是从中推导出来的。它用来捕捉SYSREF，并完成帧和多帧时钟的前沿相位对齐。  </p>
 </blockquote>
-<img src="/2017/05/05/JESD204b_链路层深入/运用SYSREF实现帧时钟对齐.png" alt="运用SYSREF实现帧时钟对齐.png" title="">  
+<img src="/2017/05/05/JESD204b链路层深入/运用SYSREF实现帧时钟对齐.png" alt="运用SYSREF实现帧时钟对齐.png" title="">  
 <p>所以说DCLK越高，所能达到的精度越高，但DCLK不可能无限地高上去，看Note中常以DCLK=2Fs举例说明。   </p>
 <h3 id="确定性延迟的精度"><a href="#确定性延迟的精度" class="headerlink" title="确定性延迟的精度"></a>确定性延迟的精度</h3><p>根据MS-2677的2.1节可知，确定性延迟的精度取决于器件时钟和SYSREF与系统中这些信号的分布偏斜之间的时序关系。也就是SYSREF要满足相对于DCLK的建立保持时间。<br>但DCLK通常等于或高于采样速率(GHz范围内)，这时要达到建立保持时间要求非常困难，所以可能需要对SYSREF相对DCLK的相位偏移进行编程，ADI推荐AD9250。  </p>
 <p>而AD芯片AD9691的SYSREF建立/保持窗口监测功能就是提供给相位偏移编程使用的。这是在走线长度匹配法之后的“高级解决方法”。    </p>
-<p>回过头来看一下DLU(deterministic latency uncertainty)，当SYSREF捕获的建立和保持时间要求未在系统中每个器件处得到满足时，为最差情况下的DCU = DS_SYSREF + T_DCLK，同时也等于LMFC的对齐误差。其中DS_SYSREF为SYSREF分布偏斜。<br><img src="/2017/05/05/JESD204b_链路层深入/最差情况下的DLU.png" alt="最差情况下的DLU.png" title="">  </p>
+<p>回过头来看一下DLU(deterministic latency uncertainty)，当SYSREF捕获的建立和保持时间要求未在系统中每个器件处得到满足时，为最差情况下的DCU = DS_SYSREF + T_DCLK，同时也等于LMFC的对齐误差。其中DS_SYSREF为SYSREF分布偏斜。<br><img src="/2017/05/05/JESD204b链路层深入/最差情况下的DLU.png" alt="最差情况下的DLU.png" title="">  </p>
 <p>这样的话通常DLU以零点几ns为单位，在许多应用中DLU最差情况能达到可接受水平，也就不必严格控制器件时钟分布偏斜，注意确保SYSREF的脉冲宽度大于等于2T_DCLK即可。   </p>
 <p>总结下来就是，看DLU是不是满足应用要求，满足的话就把SYSREF脉冲宽度搞宽点，不满足就用走线匹配或者相位偏移编程来调整SYSREF。   </p>
 <p>另一方面，使用DCLK为采样时钟整数倍的好处，是在多器件同步时，要求DLU=采样时钟的正负1/2，若DCLK为采样时钟的2倍，则刚好可以满足要求，那么只要能做到的话，尽量让DCLK更高。   </p>
